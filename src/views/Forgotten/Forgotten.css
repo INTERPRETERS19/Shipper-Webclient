@@ -24,10 +24,10 @@
 }
 .logo img {
   position: absolute;
-  height: 150px;
+  height: 80px;
   width: auto;
-  top: 20px;
-  left: -10px;
+  top: 10px;
+  left: 10px;
 }
 .right {
   width: 40%;
@@ -40,7 +40,7 @@
 }
 .content {
   padding-top: 30%;
-  padding-left: 5em;
+  padding-left: 3em;
   display: block;
   margin-left: auto;
   margin-right: auto;

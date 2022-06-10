@@ -1,10 +1,13 @@
 import React from "react";
 import "./GetStarted.css";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 // import { Link } from "react-router-dom";
 
 const GetStarted = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="root">
       <div className="titles">
@@ -17,14 +20,14 @@ const GetStarted = () => {
         </p>
         <Button
           variant="contained"
+          onClick={() => navigate("/home")}
           sx={{
             backgroundColor: "#112c48",
             margin: 6,
             padding: 3,
             gap: 9.7,
-            width: "35%",
             height: 38.27,
-            borderRadius: 4,
+            borderRadius: 3,
           }}
         >
           <NavLink activeClassName="active" to="/login">

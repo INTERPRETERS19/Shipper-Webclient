@@ -14,7 +14,7 @@ export const SidebarData = [
   },
   {
     title: "Shipments",
-    path: "/shipments",
+    path: "sh",
     icon: <IoIcons.IoIosPaper />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import * as FaIcons from "react-icons/fa";
-//import * as AiIcons from "react-icons/ai";
+//import * as FaIcons from "react-icons/fa";
+import logo from "../../src/assets/logo.PNG";
 import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
 import { IconContext } from "react-icons/lib";
@@ -10,9 +10,9 @@ import { IconContext } from "react-icons/lib";
 const Nav = styled.div`
   background: #071a2f;
   height: 60px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  position: fixed;
+  z-index: 100;
+  width: 100vw;
   border-style: solid;
   border-width: 0.5px;
   border-bottom-color: #112c48;
@@ -36,8 +36,9 @@ const SidebarNav = styled.nav`
   display: flex;
   justify-content: center;
   position: fixed;
-  top: 0;
-  left: ${({ sidebar }) => (sidebar ? "0" : "-100%")};
+  top: 65px;
+
+  ${"" /* left: ${({ sidebar }) => (sidebar ? "0" : "-100%")}; */}
   transition: 350ms;
   z-index: 10;
   overflow: auto;
@@ -50,7 +51,7 @@ const SidebarWrap = styled.div`
 `;
 
 const Sidebar = () => {
-  const [sidebar, setSidebar] = useState(false);
+  const [sidebar, setSidebar] = useState(true);
 
   const showSidebar = () => setSidebar(!sidebar);
 
@@ -58,15 +59,40 @@ const Sidebar = () => {
     <>
       <IconContext.Provider value={{ color: "#fff", size: 20 }}>
         <Nav>
-          <NavIcon to="#">
-            <FaIcons.FaBars onClick={showSidebar} size={30} color={"#fff"} />
-          </NavIcon>
+          <div
+            style={{
+              display: "flex",
+              flex: "row",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                alignSelf: "center",
+                textAlign: "center",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <img src={logo} alt="logo" height="60" width="60" />
+            </div>
+            <div
+              style={{
+                color: "#fff",
+                fontSize: 24,
+                textAlign: "center",
+                justifyContent: "center",
+                alignItems: "center",
+                alignSelf: "center",
+                textDecoration: "none",
+              }}
+            >
+              IndexCloud
+            </div>
+          </div>
         </Nav>
         <SidebarNav sidebar={sidebar}>
           <SidebarWrap>
-            <NavIcon to="#">
-              <FaIcons.FaChevronLeft onClick={showSidebar} />
-            </NavIcon>
             {SidebarData.map((item, index) => {
               return <SubMenu item={item} key={index} />;
             })}

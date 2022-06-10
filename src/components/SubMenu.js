@@ -9,7 +9,8 @@ const SidebarLink = styled(Link)`
   align-items: center;
   padding: 20px;
   list-style: none;
-  height: 55px;
+  margin-top: 20px;
+  height: 45px;
   text-decoration: none;
   font-size: 16px;
 
@@ -26,7 +27,7 @@ const SidebarLabel = styled.span`
 
 const DropdownLink = styled(Link)`
   background: #0a1929;
-  height: 45px;
+  height: 55px;
   padding-left: 3rem;
   display: flex;
   align-items: center;
@@ -53,19 +54,39 @@ const SubMenu = ({ item }) => {
 
   return (
     <>
-      <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
-        <div>
-          {item.icon}
-          <SidebarLabel>{item.title}</SidebarLabel>
-        </div>
-        <div>
-          {item.subNav && subnav
-            ? item.iconOpened
-            : item.subNav
-            ? item.iconClosed
-            : null}
-        </div>
-      </SidebarLink>
+      {item.path === "sh" ? (
+        <SidebarLink to onClick={item.subNav && showSubnav}>
+          {" "}
+          <div>
+            {item.icon}
+            <SidebarLabel>{item.title}</SidebarLabel>
+          </div>
+          <div>
+            {item.subNav && subnav
+              ? item.iconOpened
+              : item.subNav
+              ? item.iconClosed
+              : null}
+          </div>
+        </SidebarLink>
+      ) : (
+        <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
+          {" "}
+          <div>
+            {item.icon}
+            <SidebarLabel>{item.title}</SidebarLabel>
+          </div>
+          <div>
+            {item.subNav && subnav
+              ? item.iconOpened
+              : item.subNav
+              ? item.iconClosed
+              : null}
+          </div>
+        </SidebarLink>
+      )}
+      {/* <SidebarLink onClick={item.subNav && showSubnav}> */}
+
       {subnav &&
         item.subNav.map((item, index) => {
           return (
