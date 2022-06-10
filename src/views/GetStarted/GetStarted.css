@@ -1,0 +1,27 @@
+.root {
+  margin: 0;
+  background-color: #001e3c;
+}
+.titles {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  height: 80vh;
+  justify-content: center;
+}
+.firstline {
+  font-size: 40px;
+  font-weight: 700;
+  width: 800px;
+  text-align: center;
+  padding: 20px;
+  color: rgb(161, 161, 161);
+}
+.titles p {
+  font-size: 22px;
+  font-weight: 100;
+  width: 900px;
+  text-align: center;
+  color: #fff;
+}

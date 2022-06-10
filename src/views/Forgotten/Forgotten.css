@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans&family=Poppins:wght@100;700&family=Roboto:wght@300&display=swap");
+.root {
+  max-width: 100vw;
+  max-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  flex-direction: "row";
+  overflow-y: hidden;
+}
+
+.left {
+  width: 60%;
+  padding: 2em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.forgot img {
+  height: 30em;
+}
+.logo img {
+  position: absolute;
+  height: 150px;
+  width: auto;
+  top: 20px;
+  left: -10px;
+}
+.right {
+  width: 40%;
+  padding: 2em;
+  background: linear-gradient(to right, #e2e2e2 40%, #f4f4f4 100%);
+  min-height: 100vh;
+  display: flex;
+  /* align-content: center; */
+  flex-direction: column;
+}
+.content {
+  padding-top: 30%;
+  padding-left: 5em;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+/*@media screen and (max-width: 600px) {
+  .root {
+    flex-direction: row;
+  }
+
+  .left {
+    width: auto;
+     min-height: 200px; 
+  }
+
+  .right {
+    background: #aa0000;
+  }
+}*/
+
+.line1 {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 10px;
+  align-items: center;
+  color: #000000;
+  padding: 20px;
+}
+.line2 {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 64px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+.right p {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  width: fit-content;
+  padding: 20px;
+  font-family: "Roboto", sans-serif;
+}
+.input {
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 11.6349px 20.3611px;
+  gap: 9.7px;
+
+  position: absolute;
+  width: 400px;
+  height: 38.27px;
+  left: 116px;
+  top: 388px;
+
+  background: #ffffff;
+  border: 1.33188px solid #f0f0f0;
+  border-radius: 10.655px;
+}
+.back {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 60px;
+}
