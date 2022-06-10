@@ -1,6 +1,8 @@
 import React from "react";
 import "./GetStarted.css";
 import Button from "@mui/material/Button";
+import { NavLink } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const GetStarted = () => {
   return (
@@ -25,7 +27,10 @@ const GetStarted = () => {
             borderRadius: 4,
           }}
         >
-          Get Started
+          <NavLink activeClassName="active" to="/login">
+            Get Started
+          </NavLink>
+          {/* <Link to="/login"> Get Started</Link> */}
         </Button>
       </div>
     </div>
