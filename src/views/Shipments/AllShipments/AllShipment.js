@@ -380,94 +380,104 @@ export default function AllShipments() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <SideBar />
-      <Paper
-        sx={{
-          width: "80%",
-          /* mb: 5,*/
-          marginTop: 5,
-
-          backgroundColor: "#fff",
-          display: "flex",
-          flexDirection: "column",
-          marginLeft: "10%",
-        }}
-      >
-        <EnhancedTableToolbar numSelected={selected.length} />
-        <TableContainer>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {/* if you don't need to support IE11, you can replace the `stableSort` call with:
+    <div
+      style={{
+        backgroundColor: "#f5f5f5",
+        width: "100%",
+        height: "100vh",
+      }}
+    >
+      <Box sx={{ width: "100%", height: "100%" }}>
+        <SideBar />
+        <div style={{ paddingTop: 100 }}>
+          <Paper
+            sx={{
+              width: "70%",
+              display: "flex",
+              flexDirection: "column",
+              marginLeft: 45,
+            }}
+          >
+            <EnhancedTableToolbar numSelected={selected.length} />
+            <TableContainer>
+              <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+                <EnhancedTableHead
+                  numSelected={selected.length}
+                  order={order}
+                  orderBy={orderBy}
+                  onSelectAllClick={handleSelectAllClick}
+                  onRequestSort={handleRequestSort}
+                  rowCount={rows.length}
+                />
+                <TableBody>
+                  {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
 
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.CreatedDate);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                  {stableSort(rows, getComparator(order, orderBy))
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, index) => {
+                      const isItemSelected = isSelected(row.CreatedDate);
+                      const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      align="Left"
-                      onClick={(event) => handleClick(event, row.CreatedDate)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.CreatedDate}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell
-                        align="left"
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
-                        {row.CreatedDate}
-                      </TableCell>
-                      <TableCell align="left">{row.ID}</TableCell>
-                      <TableCell align="left">{row.RecipientName}</TableCell>
-                      <TableCell align="left">{row.Phone}</TableCell>
-                      <TableCell align="left">{row.Description}</TableCell>
-                      <TableCell align="left">{row.District}</TableCell>
-                      <TableCell align="left">{row.City}</TableCell>
-                      <TableCell align="left">{row.COD}</TableCell>
-                      <TableCell align="left">{row.Status}</TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </Box>
+                      return (
+                        <TableRow
+                          hover
+                          align="Left"
+                          onClick={(event) =>
+                            handleClick(event, row.CreatedDate)
+                          }
+                          role="checkbox"
+                          aria-checked={isItemSelected}
+                          tabIndex={-1}
+                          key={row.CreatedDate}
+                          selected={isItemSelected}
+                        >
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              color="primary"
+                              checked={isItemSelected}
+                              inputProps={{
+                                "aria-labelledby": labelId,
+                              }}
+                            />
+                          </TableCell>
+                          <TableCell
+                            align="left"
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          >
+                            {row.CreatedDate}
+                          </TableCell>
+                          <TableCell align="left">{row.ID}</TableCell>
+                          <TableCell align="left">
+                            {row.RecipientName}
+                          </TableCell>
+                          <TableCell align="left">{row.Phone}</TableCell>
+                          <TableCell align="left">{row.Description}</TableCell>
+                          <TableCell align="left">{row.District}</TableCell>
+                          <TableCell align="left">{row.City}</TableCell>
+                          <TableCell align="left">{row.COD}</TableCell>
+                          <TableCell align="left">{row.Status}</TableCell>
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </div>
+      </Box>
+    </div>
   );
 }
