@@ -18,7 +18,6 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { visuallyHidden } from "@mui/utils";
 import SideBar from "../../../components/Sidebar";
 
 function createData(
@@ -236,16 +235,12 @@ function EnhancedTableHead(props) {
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
+              hideSortIcon="false"
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
             </TableSortLabel>
           </TableCell>
         ))}
@@ -324,16 +319,9 @@ EnhancedTableToolbar.propTypes = {
 
 export default function AllShipments() {
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -375,21 +363,18 @@ export default function AllShipments() {
 
   const isSelected = (CreatedDate) => selected.indexOf(CreatedDate) !== -1;
 
-  // Avoid a layout jump when reaching the last page with empty rows.
-  const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
-
   return (
     <div
       style={{
         backgroundColor: "#f5f5f5",
+
         width: "100%",
         height: "100vh",
       }}
     >
       <Box sx={{ width: "100%", height: "100%" }}>
         <SideBar />
-        <div style={{ paddingTop: 100 }}>
+        <div style={{ paddingTop: 140 }}>
           <Paper
             sx={{
               width: "70%",
@@ -404,16 +389,14 @@ export default function AllShipments() {
                 <EnhancedTableHead
                   numSelected={selected.length}
                   order={order}
-                  orderBy={orderBy}
                   onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
                   rowCount={rows.length}
                 />
                 <TableBody>
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
 
-                  {stableSort(rows, getComparator(order, orderBy))
+                  {stableSort(rows, getComparator(order))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
                       const isItemSelected = isSelected(row.CreatedDate);

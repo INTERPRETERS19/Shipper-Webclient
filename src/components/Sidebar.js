@@ -6,6 +6,8 @@ import logo from "../../src/assets/logo.PNG";
 import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
 import { IconContext } from "react-icons/lib";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 
 const Nav = styled.div`
   background: #071a2f;
@@ -74,7 +76,7 @@ const Sidebar = () => {
                 alignItems: "center",
               }}
             >
-              <img src={logo} alt="logo" height="60" width="60" />
+              <img src={logo} alt="logo" height="55" width="55" />
             </div>
             <div
               style={{
@@ -88,6 +90,36 @@ const Sidebar = () => {
               }}
             >
               IndexCloud
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                left: "91.5%",
+                padding: "10px",
+              }}
+            >
+              <AccountCircleIcon
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  color: "#fff",
+                }}
+              />
+            </div>
+            <div
+              style={{
+                position: "absolute",
+                left: "95%",
+                padding: "10px",
+              }}
+            >
+              <PowerSettingsNewIcon
+                sx={{
+                  width: "35px",
+                  height: "35px",
+                  color: "#fff",
+                }}
+              />
             </div>
           </div>
         </Nav>

@@ -1,7 +1,7 @@
 import React from "react";
 import "./GetStarted.css";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const GetStarted = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const GetStarted = () => {
             borderRadius: 3,
           }}
         >
-          Get Started
+          <Link to="/login"> Get Started</Link>
         </Button>
       </div>
     </div>

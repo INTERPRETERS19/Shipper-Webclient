@@ -56,7 +56,7 @@ export const SidebarData = [
   },
   {
     title: "Returns",
-    path: "/returns",
+    path: "sh",
     icon: <IoIcons.IoIosPaper />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -88,7 +88,7 @@ export const SidebarData = [
   },
   {
     title: "Pickups",
-    path: "/team",
+    path: "sh",
     icon: <IoIcons.IoMdPeople />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -102,8 +102,8 @@ export const SidebarData = [
   },
 
   {
-    title: "Orders",
-    path: "/orders",
+    title: "Account Settings",
+    path: "sh",
     icon: <FaIcons.FaEnvelopeOpenText />,
 
     iconClosed: <RiIcons.RiArrowDownSFill />,
@@ -111,19 +111,14 @@ export const SidebarData = [
 
     subNav: [
       {
-        title: "Pending Orders",
-        path: "/orders/pending",
+        title: "Edit Profile",
+        path: "/settings/prof",
         icon: <IoIcons.IoIosPaper />,
       },
       {
-        title: "Generate Order URL",
-        path: "/orders/generate",
+        title: "CHange Password",
+        path: "/settings/changepassword",
         icon: <IoIcons.IoIosPaper />,
-      },
-      {
-        title: "Order URL List",
-        path: "/orders/list",
-        icon: <IoIcons.IoMdHelpCircle />,
       },
     ],
   },
