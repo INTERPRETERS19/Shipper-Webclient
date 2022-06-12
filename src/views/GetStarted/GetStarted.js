@@ -18,7 +18,6 @@ const GetStarted = () => {
         </p>
         <Button
           variant="contained"
-          onClick={() => navigate("/home")}
           sx={{
             backgroundColor: "#112c48",
             margin: 6,
@@ -26,6 +25,7 @@ const GetStarted = () => {
             gap: 9.7,
             height: 38.27,
             borderRadius: 3,
+            textDecoration: "none",
           }}
         >
           <Link to="/login"> Get Started</Link>
