@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import forgot from "./forgot.png";
-import logo from "../../assets/logo.PNG";
+import logo from "../../assets/logo2.PNG";
+import Client from "../../api/Client";
 
 import "./Forgotten.css";
 
 function ForgottenPassword() {
+  const [email, setEmail] = useState();
+  const submitPressed = async () => {
+    console.log(email);
+    const res = await Client.post("/requestResetPassword", {
+      email: email,
+    });
+    console.log(res.data);
+    // if (res.data.success) {
+    //   console.log("success");
+    // }
+  };
+
   return (
     <div className="root" style={{ backgroundColor: "#fff" }}>
       <div className="left">
@@ -27,8 +40,7 @@ function ForgottenPassword() {
             </div>
           </div>
           <p>
-            Please enter your verification code sent to your mobile number
-            +94*******170{" "}
+            Please enter your E-mail to receive the link to reset your password.
           </p>
           <input
             Style="box-sizing: border-box;
@@ -44,10 +56,13 @@ function ForgottenPassword() {
               border: 1.33188px solid #f0f0f0;
               border-radius: 10.655px;"
             type="text"
-            placeholder="Verification code"
+            placeholder="E-mail"
+            value={email}
+            onBlur={(event) => setEmail(event.target.value)}
           />
           <Button
             variant="contained"
+            onClick={submitPressed}
             sx={{
               backgroundColor: "#001E3C",
               margin: 3,
@@ -62,6 +77,7 @@ function ForgottenPassword() {
           </Button>
           <div className="back">
             <Button
+              onClick={submitPressed}
               variant="text"
               sx={{
                 color: "#75B6D9",

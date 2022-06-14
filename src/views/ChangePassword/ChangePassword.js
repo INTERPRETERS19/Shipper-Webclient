@@ -1,40 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@mui/material/Button";
 //import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import logo from "../../assets/logo.PNG";
+import logo from "../../assets/logo2.PNG";
 import login from "../../assets/login.jpg";
 //import { NavLink } from "react-router-dom";
 import "./ChangePassword.css";
+import Client from "../../api/Client";
 
 function ChangePassword() {
+  const [password, setPassword] = useState();
+  const newPressed = async () => {
+    console.log(password);
+    const res = await Client.post("/resetPassword", {
+      password: password,
+    });
+    console.log(res.data);
+  };
+
   return (
     <div className="logroot" style={{ backgroundColor: "#fff" }}>
       <div className="l">
         <section>
           <form>
-            <div className="line1st">Change</div>
+            <div className="line1st">Reset</div>
             <div className="line2nd">
               <span Style="color: #75B6D9">Pass</span>word
             </div>
             {/* <label htmlFor="username">Old Password</label> */}
             <div className="contents">
-              <input
-                Style="box-sizing: border-box;
-              flex-direction: column;
-              justify-content: center;
-              padding: 15px;
-              margin:12px;
-              gap: 9.7px;
-              width: 85%;
-              background: #fff;
-              border: 1.33188px solid #f0f0f0;
-              border-radius: 10.655px;"
-                type="text"
-                placeholder="Old Password"
-              />
               {/* <label htmlFor="password">New Password</label> */}
+
               <input
                 Style="box-sizing: border-box;
+
               flex-direction: column;
               justify-content: center;
               padding: 15px;
@@ -46,26 +44,13 @@ function ChangePassword() {
               border-radius: 10.655px;"
                 type="text"
                 placeholder="New Password"
-              />
-              {/* <label htmlFor="password">New Password</label> */}
-              <input
-                Style="box-sizing: border-box;
-
-              flex-direction: column;
-              justify-content: center;
-              padding: 15px;
-              margin:12px;
-              gap: 9.7px;
-              width: 85%;
-              background: #fff;
-              border: 1.33188px solid #f0f0f0;
-              border-radius: 10.655px;"
-                type="text"
-                placeholder="Confirm Password"
+                value={password}
+                onBlur={(event) => setPassword(event.target.value)}
               />
 
               <Button
                 variant="contained"
+                onClick={newPressed}
                 sx={{
                   backgroundColor: "#001E3C",
                   margin: 2,

@@ -16,7 +16,7 @@ const MainRoute = () => {
         <Route path="/" element={<GetStarted />} />
         <Route path="/home" element={<Home />} />
         <Route path="/fp" element={<ForgottenPassword />} />
-        <Route path="/changepw" element={<ChangePassword />} />
+        <Route path="/passwordReset" element={<ChangePassword />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/shipments/allshipments" element={<AllShipments />} />
