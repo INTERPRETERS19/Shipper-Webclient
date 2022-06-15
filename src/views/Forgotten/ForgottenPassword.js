@@ -4,17 +4,27 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import forgot from "./forgot.png";
 import logo from "../../assets/logo2.PNG";
 import Client from "../../api/Client";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
 
 import "./Forgotten.css";
 
 function ForgottenPassword() {
   const [email, setEmail] = useState();
+  const [success, setSuccess] = useState();
   const submitPressed = async () => {
     console.log(email);
     const res = await Client.post("/requestResetPassword", {
       email: email,
     });
-    console.log(res.data);
+    if (res.data.success) {
+      setSuccess(true);
+    } else {
+      setSuccess(false);
+    }
+    // console.log(res.data);
+    console.log(res.data.success);
     // if (res.data.success) {
     //   console.log("success");
     // }
@@ -32,6 +42,20 @@ function ForgottenPassword() {
       </div>
 
       <div className=" right">
+        <Stack sx={{ width: "100%" }} spacing={2}>
+          {success && (
+            <Alert severity="info">
+              <AlertTitle>Success</AlertTitle>
+              This is a success alert — <strong>check it out!</strong>
+            </Alert>
+          )}
+          {success === false && (
+            <Alert severity="error">
+              <AlertTitle>Error</AlertTitle>
+              This is an error alert — <strong>check it out!</strong>
+            </Alert>
+          )}
+        </Stack>
         <div className=" content">
           <div className="heading">
             <div className="line1">Reset your</div>
