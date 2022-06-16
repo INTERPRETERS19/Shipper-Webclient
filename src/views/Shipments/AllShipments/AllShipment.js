@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -9,42 +9,46 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
+//import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
+//import { visuallyHidden } from "@mui/utils";
 import SideBar from "../../../components/Sidebar";
+import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
 
 function createData(
-  CreatedDate,
-  ID,
-  RecipientName,
-  Phone,
-  Description,
-  District,
-  City,
+  created_at,
+  id,
+  recipient_name,
+  mobile_phone_number,
+  description,
+  receipient_address_district,
+  receipient_address_city,
   COD,
-  Status
+  current_status
 ) {
   return {
-    CreatedDate,
-    ID,
-    RecipientName,
-    Phone,
-    Description,
-    District,
-    City,
+    created_at,
+    id,
+    recipient_name,
+    mobile_phone_number,
+    description,
+    receipient_address_district,
+    receipient_address_city,
     COD,
-    Status,
+    current_status,
   };
 }
 
-const rows = [
+let rows = [
   createData(
     "11/05/2022 11.42am",
     34393535,
@@ -223,25 +227,30 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              "aria-label": "select all Shipments",
+              "aria-label": "select all desserts",
             }}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align="Left"
+            align={"left"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            <TableSortLabel
-              hideSortIcon="false"
+            {headCell.label}
+            {/* <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
-            </TableSortLabel>
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
+                </Box>
+              ) : null}
+            </TableSortLabel> */}
           </TableCell>
         ))}
       </TableRow>
@@ -286,9 +295,8 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: "1 1 100%", padding: 3 }}
-          variant="h4"
-          TableSortLabel
+          sx={{ flex: "1 1 100%" }}
+          variant="h6"
           id="tableTitle"
           component="div"
         >
@@ -317,27 +325,42 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function AllShipments() {
-  const [order, setOrder] = React.useState("asc");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+export default function AllShipment() {
+  const { allShipments, getAllShipments } = useContext(ShipmentContext);
+  useEffect(() => {
+    getAllShipments();
+    console.log(allShipments);
+  }, []);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("calories");
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [dense, setDense] = useState(false);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.CreatedDate);
+      const newSelecteds = (
+        allShipments !== undefined ? allShipments.data : []
+      ).map((n) => n._id);
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, CreatedDate) => {
-    const selectedIndex = selected.indexOf(CreatedDate);
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, CreatedDate);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -361,7 +384,21 @@ export default function AllShipments() {
     setPage(0);
   };
 
-  const isSelected = (CreatedDate) => selected.indexOf(CreatedDate) !== -1;
+  const handleChangeDense = (event) => {
+    setDense(event.target.checked);
+  };
+
+  const isSelected = (id) => selected.indexOf(id) !== -1;
+
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0
+      ? Math.max(
+          0,
+          (1 + page) * rowsPerPage -
+            (allShipments !== undefined ? allShipments.count : 0)
+        )
+      : 0;
 
   return (
     <div
@@ -385,34 +422,40 @@ export default function AllShipments() {
           >
             <EnhancedTableToolbar numSelected={selected.length} />
             <TableContainer>
-              <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+              <Table
+                sx={{ minWidth: 750 }}
+                aria-labelledby="tableTitle"
+                size={dense ? "small" : "medium"}
+              >
                 <EnhancedTableHead
                   numSelected={selected.length}
                   order={order}
+                  orderBy={orderBy}
                   onSelectAllClick={handleSelectAllClick}
-                  rowCount={rows.length}
+                  onRequestSort={handleRequestSort}
+                  rowCount={allShipments !== undefined ? allShipments.count : 0}
                 />
                 <TableBody>
                   {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-
-                  {stableSort(rows, getComparator(order))
+                  {stableSort(
+                    allShipments !== undefined ? allShipments.data : [],
+                    getComparator(order, orderBy)
+                  )
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const isItemSelected = isSelected(row.CreatedDate);
+                      const isItemSelected = isSelected(row._id);
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
                         <TableRow
                           hover
                           align="Left"
-                          onClick={(event) =>
-                            handleClick(event, row.CreatedDate)
-                          }
+                          onClick={(event) => handleClick(event, row._id)}
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
-                          key={row.CreatedDate}
+                          key={row._id}
                           selected={isItemSelected}
                         >
                           <TableCell padding="checkbox">
@@ -431,28 +474,49 @@ export default function AllShipments() {
                             scope="row"
                             padding="none"
                           >
-                            {row.CreatedDate}
+                            {row.created_at.substring(0, 10)}
                           </TableCell>
-                          <TableCell align="left">{row.ID}</TableCell>
+                          <TableCell align="left">{row.id}</TableCell>
                           <TableCell align="left">
-                            {row.RecipientName}
+                            {row.recipient_name}
                           </TableCell>
-                          <TableCell align="left">{row.Phone}</TableCell>
-                          <TableCell align="left">{row.Description}</TableCell>
-                          <TableCell align="left">{row.District}</TableCell>
-                          <TableCell align="left">{row.City}</TableCell>
+                          <TableCell align="left">
+                            {row.mobile_phone_number}
+                          </TableCell>
+                          <TableCell align="left">{row.description}</TableCell>
+                          <TableCell align="left">
+                            {row.receipient_address !== undefined
+                              ? row.receipient_address.district
+                              : ""}
+                          </TableCell>
+                          <TableCell align="left">
+                            {row.receipient_address !== undefined
+                              ? row.receipient_address.city
+                              : ""}
+                          </TableCell>
                           <TableCell align="left">{row.COD}</TableCell>
-                          <TableCell align="left">{row.Status}</TableCell>
+                          <TableCell align="left">
+                            {row.current_status}
+                          </TableCell>
                         </TableRow>
                       );
                     })}
+                  {emptyRows > 0 && (
+                    <TableRow
+                      style={{
+                        height: (dense ? 33 : 53) * emptyRows,
+                      }}
+                    >
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={rows.length}
+              count={allShipments !== undefined ? allShipments.count : 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -460,6 +524,10 @@ export default function AllShipments() {
             />
           </Paper>
         </div>
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Dense padding"
+        />
       </Box>
     </div>
   );

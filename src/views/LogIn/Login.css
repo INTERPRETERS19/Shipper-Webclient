@@ -9,7 +9,29 @@
   flex: 1;
   flex-direction: "row";
 }
-
+.errorText {
+  font-family: "Poppins-Regular";
+  color: "red";
+  font-size: 18;
+  text-align: "center";
+  background-color: "#FFaaaB";
+  border-radius: 9;
+}
+.inputColoum {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+  gap: 9.7px;
+  width: 85%;
+  background: #ffffff;
+  border: 1.33188px solid #f0f0f0;
+  border-radius: 10.655px;
+}
 .l {
   width: 45%;
   display: block;
@@ -31,7 +53,7 @@ section {
   max-width: 500px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   /* background-color: rgba(0,0,0,0.4);  */
 }
 
@@ -43,7 +65,7 @@ form {
   padding-bottom: 1rem;
   padding-top: 2rem;
 }
-label {
+.label {
   text-align: left;
   margin: 20px;
   margin-bottom: 10px;
@@ -64,28 +86,6 @@ label {
   /* display: flex;
   flex-direction: column; */
 }
-
-/* .content {
-  padding-top: 30%;
-  padding-left: 5em;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-} */
-/*@media screen and (max-width: 600px) {
-  .root {
-    flex-direction: row;
-  }
-
-  .left {
-    width: auto;
-     min-height: 200px; 
-  }
-
-  .right {
-    background: #aa0000;
-  }
-}*/
 
 .line1st {
   font-family: "Poppins", sans-serif;
@@ -133,8 +133,9 @@ label {
 }
 .back {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  margin-top: 5px;
-  padding-right: 35px;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-left: 250px;
 }

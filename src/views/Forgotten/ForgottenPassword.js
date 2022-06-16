@@ -46,13 +46,14 @@ function ForgottenPassword() {
           {success && (
             <Alert severity="info">
               <AlertTitle>Success</AlertTitle>
-              This is a success alert — <strong>check it out!</strong>
+              Reset password link sent successfully —{" "}
+              <strong>check it out!</strong>
             </Alert>
           )}
           {success === false && (
             <Alert severity="error">
               <AlertTitle>Error</AlertTitle>
-              This is an error alert — <strong>check it out!</strong>
+              <strong> Invalid E-mail !!! </strong>
             </Alert>
           )}
         </Stack>
