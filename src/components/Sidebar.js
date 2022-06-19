@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-//import * as FaIcons from "react-icons/fa";
 import logo from "../../src/assets/logo.PNG";
 import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
 import { IconContext } from "react-icons/lib";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
+import { useLogin } from "../context/LoginProvider/LoginProvider";
 
 const Nav = styled.div`
   background: #071a2f;
@@ -54,9 +54,11 @@ const SidebarWrap = styled.div`
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(true);
-
+  const { setIsLoggedIn } = useLogin();
   const showSidebar = () => setSidebar(!sidebar);
-
+  const logOutPressed = () => {
+    setIsLoggedIn(false);
+  };
   return (
     <>
       <IconContext.Provider value={{ color: "#fff", size: 20 }}>
@@ -114,6 +116,7 @@ const Sidebar = () => {
               }}
             >
               <PowerSettingsNewIcon
+                onClick={logOutPressed}
                 sx={{
                   width: "35px",
                   height: "35px",

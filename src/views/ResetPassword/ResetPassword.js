@@ -1,52 +1,41 @@
 import React, { useState } from "react";
-import "./ChangePassword.css";
+import "./ResetPassword.css";
 import Client from "../../api/Client";
 import login from "../../assets/login.jpg";
 import logo from "../../assets/logo2.PNG";
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 
-//import { useLogin } from "../../context/LoginProvider/LoginProvider";
-
-function ChangePassword() {
+function ResetPassword() {
   const navigate = useNavigate();
-  const currentUser = JSON.parse(localStorage.getItem("user"));
-  const [error, setError] = useState({ value: false, message: "" });
-
-  // console.log(currentUser);
+  const [searchParams] = useSearchParams();
+  const [error, setError] = useState(false);
 
   const newPressed = async (values) => {
-    console.log(currentUser);
-    const res = await Client.post("/changePassword", {
-      oldPassword: values.oldPassword,
+    const res = await Client.post("/resetPassword", {
       password: values.password,
-      userId: currentUser.id,
+      token: searchParams.get("token"),
+      userId: searchParams.get("id"),
     });
-    if (res.data.success) {
-      console.log(res.data);
-      console.log(currentUser);
+    if (res.data) {
       navigate("/home");
     } else {
-      console.log(res.data);
-      setError({ value: true, message: res.data.message });
+      setError(true);
     }
   };
 
   const formik = useFormik({
     initialValues: {
-      oldPassword: "",
       password: "",
       confirmPassword: "",
     },
     validationSchema: Yup.object({
-      oldPassword: Yup.string().required("Old Password is required!"),
       password: Yup.string()
         .trim()
         .min(8, "Password is too short!")
@@ -62,7 +51,7 @@ function ChangePassword() {
   });
 
   return (
-    <div className="ChangePassword" style={{}}>
+    <div className="ResetPassword">
       <div className="left">
         <div className="logo">
           <img src={logo} alt="logo" />
@@ -70,15 +59,15 @@ function ChangePassword() {
         <div className="formAlign">
           <form onSubmit={formik.handleSubmit}>
             <div className="alert">
-              {error.value && (
+              {error && (
                 <Alert severity="error">
                   <AlertTitle>Error</AlertTitle>
-                  <strong>{error.message}</strong>
+                  <strong>Token is expired or invalid</strong>
                 </Alert>
               )}
             </div>
             <br />
-            <div className="line1">Change</div>
+            <div className="line1">Reset</div>
             <div className="line2">
               <p>
                 <span Style="color: #75B6D9">Pass</span>word
@@ -89,28 +78,10 @@ function ChangePassword() {
             <div className="contents">
               <TextField
                 error={Boolean(
-                  formik.touched.oldPassword && formik.errors.oldPassword
-                )}
-                helperText={
-                  formik.touched.oldPassword && formik.errors.oldPassword
-                }
-                label="Old Password *"
-                margin="normal"
-                name="oldPassword"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                type="password"
-                value={formik.values.oldPassword}
-                variant="outlined"
-                sx={{ minWidth: "80%" }}
-              />
-              <br />
-              <TextField
-                error={Boolean(
                   formik.touched.password && formik.errors.password
                 )}
                 helperText={formik.touched.password && formik.errors.password}
-                label="New Password *"
+                label="Password *"
                 margin="normal"
                 name="password"
                 onBlur={formik.handleBlur}
@@ -164,10 +135,10 @@ function ChangePassword() {
       </div>
 
       <div className="right">
-        <img src={login} alt="login" />
+        <img src={login} alt="login" />{" "}
       </div>
     </div>
   );
 }
 
-export default ChangePassword;
+export default ResetPassword;

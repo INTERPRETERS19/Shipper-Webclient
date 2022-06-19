@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import logo from "../../assets/logo2.PNG";
 import login from "../../assets/login.jpg";
-import { Grid } from "@mui/material";
+//import { Grid } from "@mui/material";
 import useForms from "../../components/useForms";
 import client from "../../api/Client";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ const initialValues = {
 function Login() {
   const [values, setValues, handleInputChange] = useForms(initialValues);
   const [error, setError] = useState("");
-  const { setIsLoggedIn } = useLogin();
+  const { setIsLoggedIn, setProfile, profile } = useLogin();
   const navigate = useNavigate();
 
   const validate = () => {
@@ -44,14 +44,13 @@ function Login() {
     e.preventDefault();
     if (validate()) {
       try {
-        console.log(values.email);
+        // console.log(values.email);
         const responces = await client.post("/signin", { ...values });
-        console.log(responces.data);
-
-        console.log(responces.data.success);
-
+        // console.log(responces.data);
+        // console.log(responces.data.success);
         if (responces.data.success) {
-          console.log(responces.data.user);
+          setProfile(responces.data.user);
+          console.log(profile);
           setIsLoggedIn(true);
           navigate("/home");
         } else {
@@ -73,33 +72,34 @@ function Login() {
     navigate("/fp");
   };
   return (
-    <div className="logroot" style={{ backgroundColor: "#fff" }}>
-      <div className="l">
-        <section>
+    <div className="SignUp" style={{ backgroundColor: "#fff" }}>
+      <div className="left">
+        <div className="logo">
+          <img src={logo} alt="logo" />
+        </div>
+        <div className="formAlign">
           <form>
-            <Grid container>
-              <Grid item>
-                <div className="line1st">Welcome To</div>
-                <div className="line2nd">
-                  <span Style="color: #75B6D9">Index</span>Cloud
-                </div>
-              </Grid>
-              <div>
-                <Grid className="logroot">
-                  {error ? (
-                    <p
-                      style={{
-                        color: "red",
-                        fontSize: 18,
-                        textAlign: "center",
-                      }}
-                    >
-                      {error}
-                    </p>
-                  ) : null}
-                </Grid>
-              </div>
-              <label htmlFor="username">Username:</label>
+            <div className="line1">Welcome To</div>
+            <div className="line2">
+              <span Style="color: #75B6D9">Index</span>Cloud
+            </div>
+            <br />
+            <br />
+
+            <div className="error">
+              {error ? (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: 18,
+                    textAlign: "center",
+                  }}
+                >
+                  {error}
+                </p>
+              ) : null}
+            </div>
+            <div className="contents">
               <input
                 className="inputColoum"
                 type="text"
@@ -109,7 +109,7 @@ function Login() {
                 onChange={handleInputChange}
                 required
               />
-              <label htmlFor="password">Password:</label>
+              <br />
               <input
                 className="inputColoum"
                 type="password"
@@ -119,6 +119,7 @@ function Login() {
                 onChange={handleInputChange}
                 required
               />
+              <br />
               <div className="back">
                 <Button
                   variant="text"
@@ -130,19 +131,19 @@ function Login() {
                   }}
                   onClick={forgetPressed}
                 >
-                  &nbsp; forget your password?
+                  Forget your password?
                 </Button>
               </div>
               <Button
                 variant="contained"
                 sx={{
                   backgroundColor: "#001E3C",
-                  margin: 2,
-                  padding: 3,
-                  gap: 9.7,
-                  width: "85%",
-                  height: 38.27,
-                  borderRadius: 2,
+                  minWidth: "80%",
+                  alignItems: "center",
+                  textAlign: "center",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  height: 50,
                 }}
                 onClick={handleSubmit}
               >
@@ -150,34 +151,27 @@ function Login() {
               </Button>
               <p className="logroot">
                 Need an Account?
-                <br />
                 <span className="line">
                   <Button
                     variant="text"
                     sx={{
                       color: "#75B6D9",
                       fontSize: 16,
-                      flexDirection: "flex-end",
                       textTransform: "none",
                       fontWeight: 600,
                     }}
                     onClick={signupPressed}
                   >
-                    {/* <NavLink activeClassName="active" to="/signup"> */}
                     Sign Up
-                    {/* </NavLink> */}
                   </Button>
                 </span>
               </p>
-            </Grid>
+            </div>
           </form>
-        </section>
-      </div>
-      <div className="logo">
-        <img src={logo} alt="logo" />
+        </div>
       </div>
 
-      <div className="r">
+      <div className="right">
         <img src={login} alt="login" />
       </div>
     </div>

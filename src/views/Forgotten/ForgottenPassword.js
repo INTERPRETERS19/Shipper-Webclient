@@ -1,118 +1,141 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import forgot from "./forgot.png";
 import logo from "../../assets/logo2.PNG";
 import Client from "../../api/Client";
+import "./Forgotten.css";
+
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+
+import Button from "@mui/material/Button";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import Alert from "@mui/material/Alert";
+import TextField from "@mui/material/TextField";
 import AlertTitle from "@mui/material/AlertTitle";
 import Stack from "@mui/material/Stack";
 
-import "./Forgotten.css";
-
 function ForgottenPassword() {
-  const [email, setEmail] = useState();
   const [success, setSuccess] = useState();
-  const submitPressed = async () => {
-    console.log(email);
+  const navigate = useNavigate();
+  const submitPressed = async (values) => {
+    console.log({ ...values });
     const res = await Client.post("/requestResetPassword", {
-      email: email,
+      email: values.email,
     });
+    console.log(res.data);
     if (res.data.success) {
       setSuccess(true);
     } else {
       setSuccess(false);
     }
-    // console.log(res.data);
     console.log(res.data.success);
-    // if (res.data.success) {
-    //   console.log("success");
-    // }
   };
 
+  const backPressed = async () => {
+    navigate("/login");
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .trim()
+        .email("Must be a valid email")
+        .required("Email is required!"),
+    }),
+    onSubmit: (values) => {
+      submitPressed(values);
+    },
+  });
+
   return (
-    <div className="root" style={{ backgroundColor: "#fff" }}>
+    <div className="Forgotten">
       <div className="left">
+        <div className="logo">
+          <img src={logo} alt="logo" />
+        </div>
         <div className="forgot">
           <img src={forgot} alt="forgot" />
         </div>
       </div>
-      <div className="logo">
-        <img src={logo} alt="logo" />
-      </div>
 
       <div className=" right">
-        <Stack sx={{ width: "100%" }} spacing={2}>
-          {success && (
-            <Alert severity="info">
-              <AlertTitle>Success</AlertTitle>
-              Reset password link sent successfully —{" "}
-              <strong>check it out!</strong>
-            </Alert>
-          )}
-          {success === false && (
-            <Alert severity="error">
-              <AlertTitle>Error</AlertTitle>
-              <strong> Invalid E-mail !!! </strong>
-            </Alert>
-          )}
-        </Stack>
         <div className=" content">
+          <Stack sx={{ width: "100%" }} spacing={2}>
+            {success && (
+              <Alert severity="info">
+                <AlertTitle>Success</AlertTitle>
+                Reset password link sent successfully —{" "}
+                <strong>check it out!</strong>
+              </Alert>
+            )}
+            {success === false && (
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                <strong> Invalid E-mail !!! </strong>
+              </Alert>
+            )}
+          </Stack>
           <div className="heading">
             <div className="line1">Reset your</div>
             <div className="line2">
               <span Style="color: #75B6D9">Pass</span>word
             </div>
           </div>
+          <br />
+          <br />
           <p>
             Please enter your E-mail to receive the link to reset your password.
           </p>
-          <input
-            Style="box-sizing: border-box;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              align-items: flex-start;
-              padding: 15px;
-              margin:20px;
-              gap: 9.7px;
-              width: 85%;
-              background: #ffffff;
-              border: 1.33188px solid #f0f0f0;
-              border-radius: 10.655px;"
+          <TextField
+            error={Boolean(formik.touched.email && formik.errors.email)}
+            helperText={formik.touched.email && formik.errors.email}
+            label="E-mail"
+            margin="normal"
+            name="email"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            type="email"
+            value={formik.values.email}
+            variant="outlined"
+            sx={{ minWidth: "80%" }}
+          />
+          {/* <input
             type="text"
             placeholder="E-mail"
             value={email}
             onBlur={(event) => setEmail(event.target.value)}
-          />
+          /> */}
+          <br />
           <Button
             variant="contained"
-            onClick={submitPressed}
+            onClick={formik.handleSubmit}
             sx={{
               backgroundColor: "#001E3C",
-              margin: 3,
-              padding: 3,
-              gap: 9.7,
-              width: "85%",
-              height: 38.27,
-              borderRadius: 2,
+              minWidth: "80%",
+              alignItems: "center",
+              textAlign: "center",
+              flexDirection: "column",
+              justifyContent: "center",
+              height: 50,
             }}
           >
             Submit
           </Button>
+          <br />
+          <br />
           <div className="back">
             <Button
-              onClick={submitPressed}
+              onClick={backPressed}
               variant="text"
               sx={{
-                color: "#75B6D9",
-                fontSize: 16,
-                flexDirection: "flex-end",
-                textTransform: "none",
-                fontWeight: 600,
+                height: 50,
               }}
             >
-              <ArrowBackIosNewIcon /> &nbsp; Back to Sign-In
+              <ArrowBackIosNewIcon /> Back to Log-In
             </Button>
           </div>
         </div>

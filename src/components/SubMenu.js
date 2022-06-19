@@ -10,7 +10,7 @@ const SidebarLink = styled(Link)`
   padding: 20px;
   list-style: none;
   margin-top: 20px;
-  height: 45px;
+  height: 20px;
   text-decoration: none;
   font-size: 16px;
 

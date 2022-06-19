@@ -1,13 +1,13 @@
 import React from "react";
 import "./GetStarted.css";
 import Button from "@mui/material/Button";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const GetStarted = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="root">
+    <div className="GetStarted">
       <div className="titles">
         <div className="firstline">
           Everything you need to super power your delivery operation
@@ -18,6 +18,7 @@ const GetStarted = () => {
         </p>
         <Button
           variant="contained"
+          onClick={() => navigate("/login")}
           sx={{
             backgroundColor: "#112c48",
             margin: 6,
@@ -25,10 +26,10 @@ const GetStarted = () => {
             gap: 9.7,
             height: 38.27,
             borderRadius: 3,
-            textDecoration: "none",
+            // textDecoration: "none",
           }}
         >
-          <Link to="/login"> Get Started</Link>
+          Get Started
         </Button>
       </div>
     </div>

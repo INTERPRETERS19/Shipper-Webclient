@@ -23,99 +23,100 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 //import { visuallyHidden } from "@mui/utils";
 import SideBar from "../../../components/Sidebar";
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
+import Client from "../../../api/Client";
 
-function createData(
-  created_at,
-  id,
-  recipient_name,
-  mobile_phone_number,
-  description,
-  receipient_address_district,
-  receipient_address_city,
-  COD,
-  current_status
-) {
-  return {
-    created_at,
-    id,
-    recipient_name,
-    mobile_phone_number,
-    description,
-    receipient_address_district,
-    receipient_address_city,
-    COD,
-    current_status,
-  };
-}
+// function createData(
+//   created_at,
+//   id,
+//   recipient_name,
+//   mobile_phone_number,
+//   description,
+//   receipient_address_district,
+//   receipient_address_city,
+//   COD,
+//   current_status
+// ) {
+//   return {
+//     created_at,
+//     id,
+//     recipient_name,
+//     mobile_phone_number,
+//     description,
+//     receipient_address_district,
+//     receipient_address_city,
+//     COD,
+//     current_status,
+//   };
+// }
 
-let rows = [
-  createData(
-    "11/05/2022 11.42am",
-    34393535,
-    "Mikasa",
-    "0770543554",
-    "Product",
-    "Colombo",
-    "Colombo-Pettah",
-    233,
-    "Delivered"
-  ),
-  createData(
-    "03/09/2022 02:37 pm",
-    34390937,
-    "Thuhini",
-    "0988765432",
-    "Test",
-    "Matale",
-    "Matale",
-    0,
-    "Picked Up"
-  ),
-  createData(
-    "10/05/2022 11.42am",
-    34363535,
-    "Mikasa",
-    "0770543554",
-    "Product",
-    "Colombo",
-    "Colombo-Pettah",
-    233,
-    "Delivered"
-  ),
-  createData(
-    "01/09/2022 02:37 pm",
-    343930537,
-    "Thuhini",
-    "0988765432",
-    "Test",
-    "Matale",
-    "Matale",
-    0,
-    "Picked Up"
-  ),
-  createData(
-    "01/05/2022 11.42am",
-    34313535,
-    "Mikasa",
-    "0770543554",
-    "Product",
-    "Colombo",
-    "Colombo-Pettah",
-    233,
-    "Delivered"
-  ),
-  createData(
-    "01/03/2022 02:37 pm",
-    34393437,
-    "Thuhini",
-    "0988765432",
-    "Test",
-    "Matale",
-    "Matale",
-    0,
-    "Picked Up"
-  ),
-];
+// let rows = [
+//   createData(
+//     "11/05/2022 11.42am",
+//     34393535,
+//     "Mikasa",
+//     "0770543554",
+//     "Product",
+//     "Colombo",
+//     "Colombo-Pettah",
+//     233,
+//     "Delivered"
+//   ),
+//   createData(
+//     "03/09/2022 02:37 pm",
+//     34390937,
+//     "Thuhini",
+//     "0988765432",
+//     "Test",
+//     "Matale",
+//     "Matale",
+//     0,
+//     "Picked Up"
+//   ),
+//   createData(
+//     "10/05/2022 11.42am",
+//     34363535,
+//     "Mikasa",
+//     "0770543554",
+//     "Product",
+//     "Colombo",
+//     "Colombo-Pettah",
+//     233,
+//     "Delivered"
+//   ),
+//   createData(
+//     "01/09/2022 02:37 pm",
+//     343930537,
+//     "Thuhini",
+//     "0988765432",
+//     "Test",
+//     "Matale",
+//     "Matale",
+//     0,
+//     "Picked Up"
+//   ),
+//   createData(
+//     "01/05/2022 11.42am",
+//     34313535,
+//     "Mikasa",
+//     "0770543554",
+//     "Product",
+//     "Colombo",
+//     "Colombo-Pettah",
+//     233,
+//     "Delivered"
+//   ),
+//   createData(
+//     "01/03/2022 02:37 pm",
+//     34393437,
+//     "Thuhini",
+//     "0988765432",
+//     "Test",
+//     "Matale",
+//     "Matale",
+//     0,
+//     "Picked Up"
+//   ),
+// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -227,7 +228,7 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              "aria-label": "select all desserts",
+              "aria-label": "select all shipments",
             }}
           />
         </TableCell>
@@ -268,7 +269,22 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
+  const { numSelected, selectedShipments, getShipments, updateSelected } =
+    props;
+  const handleDelete = async () => {
+    selectedShipments.map(async (selectedShipment) => {
+      const res = await Client.post("/delete_shipment", {
+        id: selectedShipment,
+      });
+      if (res.data.success) {
+        console.log(res.data.message);
+        // updateSelected(numSelected - 1);
+        getShipments();
+      } else {
+        console.log("Delete not successful");
+      }
+    });
+  };
 
   return (
     <Toolbar
@@ -306,7 +322,13 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              window.confirm(
+                "Are you sure you want to delete these shipments?"
+              ) && handleDelete();
+            }}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -329,7 +351,7 @@ export default function AllShipment() {
   const { allShipments, getAllShipments } = useContext(ShipmentContext);
   useEffect(() => {
     getAllShipments();
-    console.log(allShipments);
+    // console.log(allShipments);
   }, []);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
@@ -373,6 +395,7 @@ export default function AllShipment() {
     }
 
     setSelected(newSelected);
+    // console.log(selected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -420,7 +443,12 @@ export default function AllShipment() {
               marginLeft: 45,
             }}
           >
-            <EnhancedTableToolbar numSelected={selected.length} />
+            <EnhancedTableToolbar
+              numSelected={selected.length}
+              selectedShipments={selected}
+              getShipments={getAllShipments}
+              updateSelected={setSelected}
+            />
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}

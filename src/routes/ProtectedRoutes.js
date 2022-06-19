@@ -1,0 +1,9 @@
+import { Outlet } from "react-router-dom";
+import { useLogin } from "../context/LoginProvider/LoginProvider";
+import Login from "../views/LogIn/LogIn";
+
+const ProtectedRoutes = () => {
+  const { isLoggedIn } = useLogin();
+  return isLoggedIn ? <Outlet /> : <Login />;
+};
+export default ProtectedRoutes;
