@@ -26,7 +26,7 @@ const MainRoute = () => {
         <Route path="*" element={<NotFound />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
-          <Route path="/changePassword" element={<ChangePassword />} />
+          <Route path="/passwordChange" element={<ChangePassword />} />
           <Route path="/shipments/allshipments" element={<AllShipments />} />
           <Route path="/returns/pendingreturns" element={<PendingReturns />} />
         </Route>

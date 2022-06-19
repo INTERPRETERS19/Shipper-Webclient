@@ -24,6 +24,7 @@ function Login() {
   const [values, setValues, handleInputChange] = useForms(initialValues);
   const [error, setError] = useState("");
   const { setIsLoggedIn, setProfile, profile } = useLogin();
+
   const navigate = useNavigate();
 
   const validate = () => {
@@ -50,6 +51,7 @@ function Login() {
         // console.log(responces.data.success);
         if (responces.data.success) {
           setProfile(responces.data.user);
+          localStorage.setItem("user", JSON.stringify(responces.data.user));
           console.log(profile);
           setIsLoggedIn(true);
           navigate("/home");

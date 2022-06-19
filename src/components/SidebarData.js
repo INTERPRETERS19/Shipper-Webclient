@@ -112,12 +112,12 @@ export const SidebarData = [
     subNav: [
       {
         title: "Edit Profile",
-        path: "/settings/prof",
+        path: "/settings/profile",
         icon: <IoIcons.IoIosPaper />,
       },
       {
-        title: "CHange Password",
-        path: "/settings/changepassword",
+        title: "Change Password",
+        path: "/passwordChange",
         icon: <IoIcons.IoIosPaper />,
       },
     ],
