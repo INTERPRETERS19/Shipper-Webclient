@@ -28,7 +28,7 @@ export const SidebarData = [
       },
       {
         title: "Add Shipments",
-        path: "/shipment/addshipments",
+        path: "/shipments/addshipments",
         icon: <IoIcons.IoIosPaper />,
         cName: "sub-nav",
       },
@@ -111,13 +111,18 @@ export const SidebarData = [
 
     subNav: [
       {
-        title: "Edit Profile",
-        path: "/settings/profile",
+        title: "Profile",
+        path: "/profile",
         icon: <IoIcons.IoIosPaper />,
       },
       {
         title: "Change Password",
         path: "/passwordChange",
+        icon: <IoIcons.IoIosPaper />,
+      },
+      {
+        title: "Add Bank details",
+        path: "/bankdetails",
         icon: <IoIcons.IoIosPaper />,
       },
     ],

@@ -5,9 +5,9 @@ export const ShipmentContext = createContext();
 
 export const ShipmentProvider = (props) => {
   const [allShipments, setAllShipments] = useState();
-
+  const currentUser = JSON.parse(localStorage.getItem("user"));
   const getAllShipments = async () => {
-    await Client.get("/allshipment")
+    await Client.get(`/allshipment/${currentUser.id}`)
       .then((response) => {
         setAllShipments(response.data);
       })

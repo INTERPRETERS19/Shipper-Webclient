@@ -55,16 +55,17 @@ class Home extends React.Component {
 
             <div className="right">
               <div className="widBig">
+                <h2>Shipment Summary</h2>
+                <br />
                 <PieChart
                   id="pie"
                   type="doughnut"
-                  title="Shipment Summary"
                   palette="Soft Pastel"
                   dataSource={returnsummary}
                 >
                   <Series argumentField="return"></Series>
                   <Legend
-                    margin={50}
+                    margin={45}
                     horizontalAlignment="right"
                     verticalAlignment="top"
                   />

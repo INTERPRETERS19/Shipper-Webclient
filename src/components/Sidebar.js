@@ -57,7 +57,8 @@ const Sidebar = () => {
   const { setIsLoggedIn } = useLogin();
   const showSidebar = () => setSidebar(!sidebar);
   const logOutPressed = () => {
-    setIsLoggedIn(false);
+    // setIsLoggedIn(false);
+    localStorage.removeItem("user");
   };
   return (
     <>
@@ -78,7 +79,7 @@ const Sidebar = () => {
                 alignItems: "center",
               }}
             >
-              <img src={logo} alt="logo" height="55" width="55" />
+              <img src={logo} alt="logo" height="50" width="50" />
             </div>
             <div
               style={{
