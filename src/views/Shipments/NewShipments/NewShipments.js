@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
@@ -9,110 +10,130 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import TableSortLabel from "@mui/material/TableSortLabel";
+//import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
+//import { visuallyHidden } from "@mui/utils";
 import SideBar from "../../../components/Sidebar";
+import Client from "../../../api/Client";
+import { Grid, Stack } from "@mui/material";
+import { Button } from "@mui/material";
+import Popup from "../../../components/Popup";
+import TextField from "@mui/material/TextField";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
+import { id } from "date-fns/locale";
 
-function createData(
-  CreatedDate,
-  ID,
-  RecipientName,
-  Phone,
-  Description,
-  District,
-  City,
-  COD,
-  Status
-) {
-  return {
-    CreatedDate,
-    ID,
-    RecipientName,
-    Phone,
-    Description,
-    District,
-    City,
-    COD,
-    Status,
-  };
-}
+// function createData(
+//   created_at,
+//   id,
+//   recipient_name,
+//   mobile_phone_number,
+//   description,
+//   receipient_address_district,
+//   receipient_address_city,
+//   COD
+// ) {
+//   return {
+//     created_at,
+//     id,
+//     recipient_name,
+//     mobile_phone_number,
+//     description,
+//     receipient_address_district,
+//     receipient_address_city,
+//     COD,
+//   };
+// }
 
-const rows = [
-  createData(
-    "11/05/2022 11.42am",
-    34393535,
-    "Mikasa",
-    "0770543554",
-    "Product",
-    "Colombo",
-    "Colombo-Pettah",
-    233,
-    "Delivered"
-  ),
-  createData(
-    "03/09/2022 02:37 pm",
-    34390937,
-    "Thuhini",
-    "0988765432",
-    "Test",
-    "Matale",
-    "Matale",
-    0,
-    "Picked Up"
-  ),
-  createData(
-    "10/05/2022 11.42am",
-    34363535,
-    "Mikasa",
-    "0770543554",
-    "Product",
-    "Colombo",
-    "Colombo-Pettah",
-    233,
-    "Delivered"
-  ),
-  createData(
-    "01/09/2022 02:37 pm",
-    343930537,
-    "Thuhini",
-    "0988765432",
-    "Test",
-    "Matale",
-    "Matale",
-    0,
-    "Picked Up"
-  ),
-  createData(
-    "01/05/2022 11.42am",
-    34313535,
-    "Mikasa",
-    "0770543554",
-    "Product",
-    "Colombo",
-    "Colombo-Pettah",
-    233,
-    "Delivered"
-  ),
-  createData(
-    "01/03/2022 02:37 pm",
-    34393437,
-    "Thuhini",
-    "0988765432",
-    "Test",
-    "Matale",
-    "Matale",
-    0,
-    "Picked Up"
-  ),
-];
+// const rows = [
+//   createData(
+//     "11/05/2022 11.42am",
+//     34393535,
+//     "gowtham",
+//     "0770543554",
+//     "Product",
+//     "mathala",
+//     "Mathala-Pettah",
+//     6000,
+//     "New "
+//   ),
+//   createData(
+//     "16/05/2022 10.02am",
+//     34390937,
+//     "Saman perera",
+//     "0988765432",
+//     "goods",
+//     "Matale",
+//     "Matale",
+//     0,
+//     "New "
+//   ),
+//   createData(
+//     "14/05/2022 09.42am",
+//     34378378,
+//     "perera",
+//     "098445432",
+//     "goods",
+//     "Matale",
+//     "Matale",
+//     0,
+//     "New "
+//   ),
+//   createData(
+//     "06/05/2022 05:30 pm",
+//     43239305,
+//     "Nipuni",
+//     "076993672",
+//     "buns",
+//     "Mannar",
+//     "Muthurr",
+//     8900,
+//     "New "
+//   ),
+//   createData(
+//     "07/03/2022 08.42am",
+//     87653535,
+//     "Saki sasu",
+//     "0760549854",
+//     "hair bands",
+//     "Kandy",
+//     "Kandy-Town",
+//     233,
+//     "New "
+//   ),
+//   createData(
+//     "04/06/2022 06.57am",
+//     87430937,
+//     "janith",
+//     "0776543234",
+//     "frock bulk",
+//     "Jaffna",
+//     "Jaffna-town",
+//     0,
+//     "New "
+//   ),
+//   createData(
+//     "12/03/2022 09.42am",
+//     33438937,
+//     "Lavan",
+//     "0785543289",
+//     "Tea packets",
+//     "Jaffna",
+//     "Kodikamam",
+//     5000
+//   ),
+// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -152,10 +173,10 @@ const headCells = [
     label: "Created date",
   },
   {
-    id: "ID",
+    id: "TRK",
     numeric: false,
-    disablePadding: false,
-    label: "ID",
+    disablePadding: true,
+    label: "TRK",
   },
   {
     id: "RecipientName",
@@ -193,12 +214,6 @@ const headCells = [
     disablePadding: true,
     label: "COD Amount",
   },
-  {
-    id: "Status",
-    numeric: false,
-    disablePadding: false,
-    label: "Status",
-  },
 ];
 
 function EnhancedTableHead(props) {
@@ -224,7 +239,7 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              "aria-label": "select all Shipments",
+              "aria-label": "select new request",
             }}
           />
         </TableCell>
@@ -235,14 +250,19 @@ function EnhancedTableHead(props) {
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            <TableSortLabel
-              hideSortIcon="false"
+            {headCell.label}
+            {/* <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
             >
               {headCell.label}
-            </TableSortLabel>
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
+                </Box>
+              ) : null}
+            </TableSortLabel> */}
           </TableCell>
         ))}
       </TableRow>
@@ -260,8 +280,21 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
-
+  const { numSelected, selectedShipments, getShipments } = props;
+  const handleDelete = async () => {
+    selectedShipments.map(async (selectedShipment) => {
+      const res = await Client.post("/delete_shipment", {
+        id: selectedShipment,
+      });
+      if (res.data.success) {
+        console.log(res.data.message);
+        // updateSelected(numSelected - 1);
+        getShipments();
+      } else {
+        console.log("Delete not successful");
+      }
+    });
+  };
   return (
     <Toolbar
       sx={{
@@ -288,18 +321,23 @@ const EnhancedTableToolbar = (props) => {
       ) : (
         <Typography
           sx={{ flex: "1 1 100%", padding: 3 }}
-          variant="h4"
-          TableSortLabel
+          variant="h6"
           id="tableTitle"
           component="div"
         >
-          All Shipments
+          New Shipments
         </Typography>
       )}
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton
+            onClick={() => {
+              window.confirm(
+                "Are you sure you want to delete these shipments?"
+              ) && handleDelete();
+            }}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -318,23 +356,36 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function AllShipments() {
-  const { allShipments, getAllShipments } = useContext(ShipmentContext);
-
+export default function NewShipments() {
+  const { allNewShipments, getAllNewShipments } = useContext(ShipmentContext);
   useEffect(() => {
-    getAllShipments();
-    console.log(allShipments);
+    getAllNewShipments();
+    // console.log(allShipments);
   }, []);
-  const [order, setOrder] = useState("asc");
-  const [selected, setSelected] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [order, setOrder] = React.useState("asc");
+  const [orderBy, setOrderBy] = React.useState("calories");
+  const [selected, setSelected] = React.useState([]);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [openPopup, setOpenPopup] = React.useState(false);
+  const [dense, setDense] = useState(false);
+  const [value, setValue] = React.useState(new Date());
+
+  const handleChange = (newValue) => {
+    setValue(newValue);
+  };
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = (
-        allShipments !== undefined ? allShipments.data : []
-      ).map((n) => n.id);
+        allNewShipments !== undefined ? allNewShipments.data : []
+      ).map((n) => n._id);
       setSelected(newSelecteds);
       return;
     }
@@ -359,6 +410,7 @@ export default function AllShipments() {
     }
 
     setSelected(newSelected);
+    // console.log(selected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -371,6 +423,18 @@ export default function AllShipments() {
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
+  const handleChangeDense = (event) => {
+    setDense(event.target.checked);
+  };
+  // Avoid a layout jump when reaching the last page with empty rows.
+  const emptyRows =
+    page > 0
+      ? Math.max(
+          0,
+          (1 + page) * rowsPerPage -
+            (allNewShipments !== undefined ? allNewShipments.count : 0)
+        )
+      : 0;
 
   return (
     <div
@@ -392,37 +456,47 @@ export default function AllShipments() {
               marginLeft: 45,
             }}
           >
-            <EnhancedTableToolbar numSelected={selected.length} />
+            <EnhancedTableToolbar
+              numSelected={selected.length}
+              selectedShipments={selected}
+              getShipments={getAllNewShipments}
+              updateSelected={setSelected}
+            />
             <TableContainer>
-              <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+              <Table
+                sx={{ minWidth: 750 }}
+                aria-labelledby="tableTitle"
+                // size={dense ? "small" : "medium"}
+              >
                 <EnhancedTableHead
                   numSelected={selected.length}
                   order={order}
+                  orderBy={orderBy}
                   onSelectAllClick={handleSelectAllClick}
-                  rowCount={allShipments !== undefined ? allShipments.count : 0}
+                  onRequestSort={handleRequestSort}
+                  rowCount={
+                    allNewShipments !== undefined ? allNewShipments.count : 0
+                  }
                 />
                 <TableBody>
-                  {/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.slice().sort(getComparator(order, orderBy)) */}
-
                   {stableSort(
-                    allShipments !== undefined ? allShipments.data : [],
-                    getComparator(order)
+                    allNewShipments !== undefined ? allNewShipments.data : [],
+                    getComparator(order, orderBy)
                   )
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const isItemSelected = isSelected(row.id);
+                      const isItemSelected = isSelected(row._id);
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
                         <TableRow
                           hover
                           align="Left"
-                          onClick={(event) => handleClick(event, row.id)}
+                          onClick={(event) => handleClick(event, row._id)}
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
-                          key={row.id}
+                          key={row._id}
                           selected={isItemSelected}
                         >
                           <TableCell padding="checkbox">
@@ -452,32 +526,99 @@ export default function AllShipments() {
                           </TableCell>
                           <TableCell align="left">{row.description}</TableCell>
                           <TableCell align="left">
-                            {row.receipient_address.district}
+                            {" "}
+                            {row.receipient_address !== undefined
+                              ? row.receipient_address.district
+                              : ""}
                           </TableCell>
                           <TableCell align="left">
-                            {row.receipient_address.city}
+                            {" "}
+                            {row.receipient_address !== undefined
+                              ? row.receipient_address.city
+                              : ""}
                           </TableCell>
                           <TableCell align="left">{row.COD}</TableCell>
-                          <TableCell align="left">
-                            {row.current_status}
-                          </TableCell>
                         </TableRow>
                       );
                     })}
+                  {emptyRows > 0 && (
+                    <TableRow
+                    // style={{
+                    //   height: (dense ? 33 : 53) * emptyRows,
+                    // }}
+                    >
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={allShipments !== undefined ? allShipments.count : 0}
+              count={allNewShipments !== undefined ? allNewShipments.count : 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            <Grid sx={{ padding: "15px", paddingLeft: "85%" }}>
+              <Button
+                sx={{ padding: "10px" }}
+                variant="contained"
+                onClick={() => setOpenPopup(true)}
+              >
+                Pickup Request
+              </Button>
+            </Grid>
+            <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
+              <Stack>
+                <div>
+                  <p>Please select your convenient Date and time to PickUp</p>
+                  <br></br>
+                </div>
+              </Stack>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Paper>
+                  <Stack spacing={8}>
+                    <DateTimePicker
+                      disableToolbar
+                      variant="inline"
+                      inputVariant="outlined"
+                      value={value}
+                      onChange={handleChange}
+                      // inputFormat="dd/mm/yyyy hh:mm"
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  </Stack>
+                </Paper>
+              </LocalizationProvider>
+              <Stack
+                sx={{
+                  padding: "15px",
+                  paddingLeft: "35%",
+                }}
+                spacing={2}
+                direction="row"
+              >
+                <Button
+                  sx={{ padding: "10px" }}
+                  variant="outlined"
+                  onClick={() => setOpenPopup(false)}
+                >
+                  Cancle
+                </Button>
+                <Button sx={{ padding: "10px" }} variant="contained">
+                  Pickup Request
+                </Button>
+              </Stack>
+            </Popup>
           </Paper>
         </div>
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Dense padding"
+        />
       </Box>
     </div>
   );

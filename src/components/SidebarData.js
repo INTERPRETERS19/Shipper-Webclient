@@ -39,7 +39,7 @@ export const SidebarData = [
       },
       {
         title: "New Shipments",
-        path: "/reports/reports3",
+        path: "/shipments/newshipments",
         icon: <IoIcons.IoIosPaper />,
       },
       {
