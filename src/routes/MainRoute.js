@@ -13,6 +13,7 @@ import NewShipments from "../views/Shipments/NewShipments/NewShipments";
 //import Summary from "../views/Returns/Summary/Summary";
 import NotFound from "../NotFound/NotFound";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
+import AddShipments from "../views/Shipments/AddShipments/AddShipments";
 
 const MainRoute = () => {
   return (
@@ -30,6 +31,7 @@ const MainRoute = () => {
           <Route path="shipments/newshipments" element={<NewShipments />} />
           <Route path="/shipments/allshipments" element={<AllShipments />} />
           <Route path="/returns/pendingreturns" element={<PendingReturns />} />
+          <Route path="/shipment/addshipments" element={<AddShipments/>}/>
         </Route>
       </Routes>
     </Router>
