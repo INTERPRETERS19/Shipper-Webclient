@@ -94,7 +94,7 @@ export const SidebarData = [
     iconOpened: <RiIcons.RiArrowUpSFill />,
     subNav: [
       {
-        title: "Summary",
+        title: "Pickup Request",
         path: "/pickups/pickuprequests",
         icon: <IoIcons.IoIosPaper />,
       },
