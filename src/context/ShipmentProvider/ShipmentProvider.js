@@ -2,7 +2,7 @@ import { useState, createContext } from "react";
 import Client from "../../api/Client";
 
 export const ShipmentContext = createContext();
-
+const currentUser = JSON.parse(localStorage.getItem("user"));
 export const ShipmentProvider = (props) => {
   const [allShipments, setAllShipments] = useState();
   const [allNewShipments, setAllNewShipments] = useState();
@@ -19,7 +19,7 @@ export const ShipmentProvider = (props) => {
   };
 
   const getAllNewShipments = async () => {
-    await Client.get("/allnewshipment")
+    await Client.get(`/allnewshipment/${currentUser.id}`)
       .then((response) => {
         setAllNewShipments(response.data);
       })
@@ -29,7 +29,7 @@ export const ShipmentProvider = (props) => {
   };
 
   const getAllReturnShipments = async () => {
-    await Client.get("/returns")
+    await Client.get(`/returns/${currentUser.id}`)
       .then((response) => {
         setAllReturnShipments(response.data);
       })
