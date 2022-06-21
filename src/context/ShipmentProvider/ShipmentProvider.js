@@ -6,6 +6,7 @@ export const ShipmentContext = createContext();
 export const ShipmentProvider = (props) => {
   const [allShipments, setAllShipments] = useState();
   const [allNewShipments, setAllNewShipments] = useState();
+  const [allReturnShipments, setAllReturnShipments] = useState();
 
   const getAllShipments = async () => {
     await Client.get("/allshipment")
@@ -26,6 +27,16 @@ export const ShipmentProvider = (props) => {
         console.log("Unable to get all New shipments");
       });
   };
+
+  const getAllReturnShipments = async () => {
+    await Client.get("/returns")
+      .then((response) => {
+        setAllReturnShipments(response.data);
+      })
+      .catch((err) => {
+        console.log("Unable to get all shipments");
+      });
+  };
   return (
     <ShipmentContext.Provider
       value={{
@@ -33,6 +44,8 @@ export const ShipmentProvider = (props) => {
         getAllShipments,
         allNewShipments,
         getAllNewShipments,
+        getAllReturnShipments,
+        allReturnShipments,
       }}
     >
       {props.children}

@@ -9,7 +9,7 @@ import AllShipments from "../views/Shipments/AllShipments/AllShipment";
 import ChangePassword from "../views/ChangePassword/ChangePassword";
 import SignUp from "../views/SignUp/SignUp";
 import ResetPassword from "../views/ResetPassword/ResetPassword";
-//import AllReturns from "../views/Returns/AllReturns/AllReturns";
+import AllReturns from "../views/Returns/AllReturns/AllReturns";
 import NewShipments from "../views/Shipments/NewShipments/NewShipments";
 //import Summary from "../views/Returns/Summary/Summary";
 import NotFound from "../NotFound/NotFound";
@@ -32,6 +32,7 @@ const MainRoute = () => {
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="shipments/newshipments" element={<NewShipments />} />
           <Route path="/shipments/allshipments" element={<AllShipments />} />
+          <Route path="/returns/allreturns" element={<AllReturns />} />
           {/* <Route path="/pickups/pickuprequest" element={<Pickup/>} /> */}
           <Route path="/returns/pendingreturns" element={<PendingReturns />} />
         </Route>
