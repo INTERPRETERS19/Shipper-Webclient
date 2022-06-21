@@ -34,7 +34,7 @@ export const ShipmentProvider = (props) => {
         setAllReturnShipments(response.data);
       })
       .catch((err) => {
-        console.log("Unable to get all shipments");
+        console.log("Unable to get all Return shipments");
       });
   };
   return (
