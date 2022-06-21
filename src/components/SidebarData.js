@@ -76,7 +76,7 @@ export const SidebarData = [
       },
       {
         title: "All Returns",
-        path: "/shipments/allshipments",
+        path: "/returns/allreturns",
         icon: <IoIcons.IoIosPaper />,
       },
       {

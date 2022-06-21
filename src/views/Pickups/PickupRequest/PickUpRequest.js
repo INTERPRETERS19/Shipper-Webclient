@@ -76,22 +76,22 @@ const headCells = [
     label: "Created date",
   },
   {
-    id: "Status",
+    id: "PickupDate",
     numeric: false,
-    disablePadding: false,
-    label: "Status",
-  },
-  {
-    id: "Phone",
-    numeric: true,
     disablePadding: true,
-    label: "Phone Number",
+    label: "Pickup date",
   },
   {
     id: "Description",
     numeric: false,
     disablePadding: false,
     label: "Description",
+  },
+  {
+    id: "Status",
+    numeric: false,
+    disablePadding: false,
+    label: "Status",
   },
 
 
@@ -114,7 +114,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-         
+
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -124,7 +124,7 @@ function EnhancedTableHead(props) {
             sortDirection={orderBy === headCell.id ? order : false}
           >
             {headCell.label}
-        
+
           </TableCell>
         ))}
       </TableRow>
@@ -189,20 +189,15 @@ export default function Pickups() {
   const { allPickups, getAllPickups } = useContext(ShipmentContext);
   useEffect(() => {
     getAllPickups();
-    // console.log(allShipments);
   }, []);
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [openPopup, setOpenPopup] = React.useState(false);
+  //const [openPopup, setOpenPopup] = React.useState(false);
   const [dense, setDense] = useState(false);
-  const [value, setValue] = React.useState(new Date());
-
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
+  // const [value, setValue] = React.useState(new Date());
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -227,10 +222,10 @@ export default function Pickups() {
   const emptyRows =
     page > 0
       ? Math.max(
-          0,
-          (1 + page) * rowsPerPage -
-            (allPickups !== undefined ? allPickups.count : 0)
-        )
+        0,
+        (1 + page) * rowsPerPage -
+        (allPickups !== undefined ? allPickups.count : 0)
+      )
       : 0;
 
   return (
@@ -263,13 +258,13 @@ export default function Pickups() {
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
-                // size={dense ? "small" : "medium"}
+              // size={dense ? "small" : "medium"}
               >
                 <EnhancedTableHead
                   numSelected={selected.length}
                   order={order}
                   orderBy={orderBy}
-                //   onSelectAllClick={handleSelectAllClick}
+                  //   onSelectAllClick={handleSelectAllClick}
                   onRequestSort={handleRequestSort}
                   rowCount={
                     allPickups !== undefined ? allPickups.count : 0
@@ -289,7 +284,7 @@ export default function Pickups() {
                         <TableRow
                           hover
                           align="Left"
-                        //   onClick={(event) => handleClick(event, row._id)}
+                          //   onClick={(event) => handleClick(event, row._id)}
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
@@ -297,10 +292,15 @@ export default function Pickups() {
                           selected={isItemSelected}
                         >
                           <TableCell padding="checkbox">
-                         
+
                           </TableCell>
-                          
-                          <TableCell align="left">{row.id}</TableCell>
+
+                          <TableCell align="left"
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none">
+                              {row.id}</TableCell>
                           <TableCell
                             align="left"
                             component="th"
@@ -308,21 +308,21 @@ export default function Pickups() {
                             scope="row"
                             padding="none"
                           >
-                            {/* //{row.pickup_date.substring(0, 10)} */}
                             {row.created_at.substring(0, 10)}
                           </TableCell>
-                          <TableCell align="left">
-                            {row.current_status}
-                          </TableCell>
-                          <TableCell align="left">
-                            {row.mobile_phone_number}
-                          </TableCell>
+                          <TableCell
+                            align="left"
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none">{row.pickup_date.substring(0, 10)}</TableCell>
                           <TableCell align="left">{row.description}</TableCell>
-                         
+                          <TableCell align="left">{row.current_status}</TableCell>
+
                         </TableRow>
                       );
                     })}
-                
+
                 </TableBody>
               </Table>
             </TableContainer>
@@ -335,7 +335,7 @@ export default function Pickups() {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
-           
+
           </Paper>
         </div>
         <FormControlLabel
