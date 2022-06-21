@@ -50,6 +50,7 @@ function Login() {
         // console.log(responces.data.success);
         if (responces.data.success) {
           setProfile(responces.data.user);
+          localStorage.setItem("user", JSON.stringify(responces.data.user));
           console.log(profile);
           setIsLoggedIn(true);
           navigate("/home");
