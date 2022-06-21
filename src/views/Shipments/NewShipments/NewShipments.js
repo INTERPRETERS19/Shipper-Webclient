@@ -459,7 +459,7 @@ export default function NewShipments() {
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
-                // size={dense ? "small" : "medium"}
+                size={dense ? "small" : "medium"}
               >
                 <EnhancedTableHead
                   numSelected={selected.length}
@@ -536,9 +536,9 @@ export default function NewShipments() {
                     })}
                   {emptyRows > 0 && (
                     <TableRow
-                    // style={{
-                    //   height: (dense ? 33 : 53) * emptyRows,
-                    // }}
+                    style={{
+                      height: (dense ? 33 : 53) * emptyRows,
+                    }}
                     >
                       <TableCell colSpan={6} />
                     </TableRow>

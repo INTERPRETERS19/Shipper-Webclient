@@ -6,6 +6,7 @@ const currentUser = JSON.parse(localStorage.getItem("user"));
 export const ShipmentProvider = (props) => {
   const [allShipments, setAllShipments] = useState();
   const [allNewShipments, setAllNewShipments] = useState();
+  const [allPickups, setAllPickups] = useState();
   const [allReturnShipments, setAllReturnShipments] = useState();
 
   const getAllShipments = async () => {
@@ -28,6 +29,16 @@ export const ShipmentProvider = (props) => {
       });
   };
 
+  const getAllPickups = async () => {
+    await Client.get(`/allpickup/${currentUser.id}`)
+      .then((response) => {
+        setAllPickups(response.data);
+      })
+      .catch((err) => {
+        console.log("Unable to get all Pickups");
+      });
+  };
+
   const getAllReturnShipments = async () => {
     await Client.get(`/returns/${currentUser.id}`)
       .then((response) => {
@@ -44,6 +55,8 @@ export const ShipmentProvider = (props) => {
         getAllShipments,
         allNewShipments,
         getAllNewShipments,
+        allPickups,
+        getAllPickups,
         getAllReturnShipments,
         allReturnShipments,
       }}
