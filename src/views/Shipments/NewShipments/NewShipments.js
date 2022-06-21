@@ -10,7 +10,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-//import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
@@ -21,7 +20,6 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
-//import { visuallyHidden } from "@mui/utils";
 import SideBar from "../../../components/Sidebar";
 import Client from "../../../api/Client";
 import { Grid, Stack } from "@mui/material";
@@ -32,7 +30,6 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
-import { id } from "date-fns/locale";
 
 // function createData(
 //   created_at,
@@ -151,8 +148,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -225,9 +220,6 @@ function EnhancedTableHead(props) {
     rowCount,
     onRequestSort,
   } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
 
   return (
     <TableHead>
@@ -251,18 +243,6 @@ function EnhancedTableHead(props) {
             sortDirection={orderBy === headCell.id ? order : false}
           >
             {headCell.label}
-            {/* <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel> */}
           </TableCell>
         ))}
       </TableRow>
@@ -362,14 +342,14 @@ export default function NewShipments() {
     getAllNewShipments();
     // console.log(allShipments);
   }, []);
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [openPopup, setOpenPopup] = React.useState(false);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("calories");
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [openPopup, setOpenPopup] = useState(false);
   const [dense, setDense] = useState(false);
-  const [value, setValue] = React.useState(new Date());
+  const [value, setValue] = useState(new Date());
 
   const handleChange = (newValue) => {
     setValue(newValue);
@@ -435,6 +415,23 @@ export default function NewShipments() {
             (allNewShipments !== undefined ? allNewShipments.count : 0)
         )
       : 0;
+
+  const upstatus = async () => {
+    selected.map(async (selectedShipment) => {
+      const res = await Client.post("/update_shipment", {
+        id: selectedShipment,
+        value,
+      });
+      if (res.data.success) {
+        console.log(res.data.message);
+
+        getAllNewShipments();
+        setOpenPopup(false);
+      } else {
+        console.log("Update not successful");
+      }
+    });
+  };
 
   return (
     <div
@@ -528,14 +525,14 @@ export default function NewShipments() {
                           <TableCell align="left">
                             {" "}
                             {row.receipient_address !== undefined
-                              ? row.receipient_address.district
-                              : ""}
+                              ? ""
+                              : row.r_district}
                           </TableCell>
                           <TableCell align="left">
                             {" "}
                             {row.receipient_address !== undefined
-                              ? row.receipient_address.city
-                              : ""}
+                              ? ""
+                              : row.r_city}
                           </TableCell>
                           <TableCell align="left">{row.COD}</TableCell>
                         </TableRow>
@@ -592,6 +589,7 @@ export default function NewShipments() {
                     />
                   </Stack>
                 </Paper>
+                console.log(value);
               </LocalizationProvider>
               <Stack
                 sx={{
@@ -608,7 +606,11 @@ export default function NewShipments() {
                 >
                   Cancle
                 </Button>
-                <Button sx={{ padding: "10px" }} variant="contained">
+                <Button
+                  sx={{ padding: "10px" }}
+                  variant="contained"
+                  onClick={upstatus}
+                >
                   Pickup Request
                 </Button>
               </Stack>
