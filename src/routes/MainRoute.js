@@ -11,7 +11,7 @@ import SignUp from "../views/SignUp/SignUp";
 import ResetPassword from "../views/ResetPassword/ResetPassword";
 //import AllReturns from "../views/Returns/AllReturns/AllReturns";
 import NewShipments from "../views/Shipments/NewShipments/NewShipments";
-//import Summary from "../views/Returns/Summary/Summary";
+import RSummary from "../views/Returns/Summary/Summary";
 import NotFound from "../NotFound/NotFound";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
 import AddShipments from "../views/Shipments/AddShipments/AddShipments";
@@ -36,6 +36,7 @@ const MainRoute = () => {
           {/* <Route path="/pickups/pickuprequest" element={<Pickup/>} /> */}
           <Route path="/returns/pendingreturns" element={<PendingReturns />} />
           <Route path="/shipment/addshipments" element={<AddShipments/>}/>
+          <Route path="/returns/summary" element={<RSummary/>}/>
         </Route>
       </Routes>
     </Router>

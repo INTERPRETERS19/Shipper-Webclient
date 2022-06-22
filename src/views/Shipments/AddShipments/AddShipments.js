@@ -1,16 +1,9 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {
-  Grid,
-  Typography,
-  Button,
-  TextField,
-  MenuItem,
-} from "@mui/material";
+import { Grid, Typography, Button, TextField, MenuItem } from "@mui/material";
 
 import Sidebar from "../../../components/Sidebar";
 import "./AddShipments.css";
-
 import Client from "../../../api/Client";
 import { useNavigate } from "react-router-dom";
 
@@ -22,6 +15,12 @@ const DISTRICTS = [
   "Katutara",
   "Gampaha",
   "Ampara",
+  "Batticaloa",
+  "Mannar",
+  "Matale",
+  "Trincomalee",
+  "Vavuniya",
+  "Anuradhapura",
 ];
 
 const AddShipments = () => {
@@ -100,16 +99,12 @@ const AddShipments = () => {
       <Sidebar />
       <div className="main">
         <div className="title">
-          <p>Add Shipments</p>
-          <Typography
-            variant="h4"
-            style={{ paddingLeft: "30px", paddingTop: "20px" }}
-          >
+          <Typography variant="h4" style={{ paddingTop: "20px" }}>
             Add Shipments
           </Typography>
           <div className="formBox">
             <form onSubmit={formik.handleSubmit}>
-              <Grid container spacing={3}>
+              <Grid container spacing={10}>
                 <Grid item xs={4}>
                   <TextField
                     error={Boolean(
@@ -128,7 +123,7 @@ const AddShipments = () => {
                     type="text"
                     value={formik.values.recipient_name}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                   />
 
                   <TextField
@@ -148,7 +143,7 @@ const AddShipments = () => {
                     type="text"
                     value={formik.values.mobile_phone_number}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                   />
 
                   <TextField
@@ -168,7 +163,7 @@ const AddShipments = () => {
                     type="text"
                     value={formik.values.secondary_phone_number}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                   />
 
                   <TextField
@@ -186,7 +181,7 @@ const AddShipments = () => {
                     type="text"
                     value={formik.values.description}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                   />
 
                   <TextField
@@ -202,7 +197,7 @@ const AddShipments = () => {
                     type="text"
                     value={formik.values.prepaid}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                     id="outlined-select-prepaid"
                     select
                   >
@@ -220,12 +215,10 @@ const AddShipments = () => {
                 <Grid item xs={4}>
                   <TextField
                     error={Boolean(
-                      formik.touched.r_no_street &&
-                        formik.errors.r_no_street
+                      formik.touched.r_no_street && formik.errors.r_no_street
                     )}
                     helperText={
-                      formik.touched.r_no_street &&
-                      formik.errors.r_no_street
+                      formik.touched.r_no_street && formik.errors.r_no_street
                     }
                     label="Recipient Address *"
                     margin="normal"
@@ -235,7 +228,7 @@ const AddShipments = () => {
                     type="text"
                     value={formik.values.r_no_street}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                   />
 
                   <TextField
@@ -253,7 +246,7 @@ const AddShipments = () => {
                     type="text"
                     value={formik.values.r_district}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                     id="outlined-select-r_district"
                     select
                   >
@@ -265,7 +258,9 @@ const AddShipments = () => {
                   </TextField>
 
                   <TextField
-                    error={Boolean(formik.touched.r_city && formik.errors.r_city)}
+                    error={Boolean(
+                      formik.touched.r_city && formik.errors.r_city
+                    )}
                     helperText={formik.touched.r_city && formik.errors.r_city}
                     label="City *"
                     margin="normal"
@@ -275,7 +270,7 @@ const AddShipments = () => {
                     type="text"
                     value={formik.values.r_city}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                   />
                   <TextField
                     error={Boolean(
@@ -292,7 +287,7 @@ const AddShipments = () => {
                     type="number"
                     value={formik.values.quantity}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                   />
 
                   <TextField
@@ -310,7 +305,7 @@ const AddShipments = () => {
                     type="text"
                     value={formik.values.handling}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                     id="outlined-select-handling"
                     select
                   >
@@ -340,7 +335,7 @@ const AddShipments = () => {
                     type="number"
                     value={formik.values.shipment_weight}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                   />
 
                   <TextField
@@ -354,15 +349,17 @@ const AddShipments = () => {
                     type="number"
                     value={formik.values.DV}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                   />
 
                   <TextField
                     error={Boolean(
-                      formik.touched.r_postal_code && formik.errors.r_postal_code
+                      formik.touched.r_postal_code &&
+                        formik.errors.r_postal_code
                     )}
                     helperText={
-                      formik.touched.r_postal_code && formik.errors.r_postal_code
+                      formik.touched.r_postal_code &&
+                      formik.errors.r_postal_code
                     }
                     label="Postal Code"
                     margin="normal"
@@ -372,7 +369,7 @@ const AddShipments = () => {
                     type="text"
                     value={formik.values.r_postal_code}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                   />
 
                   <TextField
@@ -386,7 +383,7 @@ const AddShipments = () => {
                     type="number"
                     value={formik.values.COD}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                   />
 
                   <TextField
@@ -406,7 +403,7 @@ const AddShipments = () => {
                     type="text"
                     value={formik.values.payment_method}
                     variant="outlined"
-                    sx={{ minWidth: "400px" }}
+                    sx={{ minWidth: "350px" }}
                     id="outlined-select-payment-method"
                     select
                   >
@@ -418,11 +415,11 @@ const AddShipments = () => {
                   </TextField>
                 </Grid>
               </Grid>
-              <div>
+              <div className="button_align">
                 {/* <Button
                   color="primary"
                   sx={{
-                    minWidth: "400px",
+                    minWidth: "350px",
                     textTransform: "none",
                     backgroundColor: "#495057",
                   }}
@@ -435,12 +432,16 @@ const AddShipments = () => {
                 </Button> */}
                 <Button
                   disabled={formik.isSubmitting}
-                  sx={{ minWidth: "400px", textTransform: "none" }}
+                  sx={{
+                    minWidth: "200px",
+                    textTransform: "none",
+                    display: "flex",
+                  }}
                   size="large"
                   type="submit"
                   variant="contained"
                 >
-                  Add shipment
+                  Add Shipment
                 </Button>
               </div>
             </form>

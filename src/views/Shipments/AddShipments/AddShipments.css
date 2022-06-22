@@ -2,14 +2,29 @@
     min-height: 100vh;
     max-height: 100%;
     background-color: #e5e9ef;
+    
   }
   .AddShipments .main {
-    margin-left: 260px;
+    margin-left: 280px;
     max-height: 100vh;
-    padding-top: 50px;
+    padding-top: 60px;
+    /* padding: 60px; */
   }
   
   .AddShipments .title {
-    padding: 30px;
+    padding: 20px;
   }
   
+  .button_align{
+    padding-top: 15px;
+    float: right;
+  }
+  
+  .AddShipments .formBox {
+    background-color: #ffffff;
+    padding: 20px;
+    padding-right: 80px;
+    padding-left: 30px;
+    border-radius: 5px;
+    padding-bottom: 70px;
+  }
