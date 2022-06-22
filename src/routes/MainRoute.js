@@ -4,15 +4,16 @@ import GetStarted from "../views/GetStarted/GetStarted";
 import Home from "../views/Home/Home";
 import Login from "../views/LogIn/LogIn";
 import PendingReturns from "../views/Returns/PendingReturns/PendingReturns";
-import AllShipments from "../views/Shipments/AllShipments/AllShipment";
 import Pickups from "../views/Pickups/PickupRequest/PickUpRequest";
 import ChangePassword from "../views/ChangePassword/ChangePassword";
 import SignUp from "../views/SignUp/SignUp";
 import ResetPassword from "../views/ResetPassword/ResetPassword";
 import AllReturns from "../views/Returns/AllReturns/AllReturns";
 import NewShipments from "../views/Shipments/NewShipments/NewShipments";
+import RSummary from "../views/Returns/Summary/Summary";
 import NotFound from "../NotFound/NotFound";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
+import AddShipments from "../views/Shipments/AddShipments/AddShipments";
 import EmailVerification from "../views/SignUp/emailVerification";
 
 const MainRoute = () => {
@@ -30,10 +31,11 @@ const MainRoute = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="shipments/newshipments" element={<NewShipments />} />
-          <Route path="/shipments/allshipments" element={<AllShipments />} />
           <Route path="/pickups/pickuprequests" element={<Pickups/>} />
           <Route path="/returns/allreturns" element={<AllReturns />} />
           <Route path="/returns/pendingreturns" element={<PendingReturns />} />
+          <Route path="/shipment/addshipments" element={<AddShipments/>}/>
+          <Route path="/returns/summary" element={<RSummary/>}/>
         </Route>
       </Routes>
     </Router>
