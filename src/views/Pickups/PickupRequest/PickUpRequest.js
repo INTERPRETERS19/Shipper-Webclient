@@ -14,25 +14,12 @@ import TableRow from "@mui/material/TableRow";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
+
 //import { visuallyHidden } from "@mui/utils";
 import SideBar from "../../../components/Sidebar";
-import Client from "../../../api/Client";
-import { Grid, Stack } from "@mui/material";
-import { Button } from "@mui/material";
-import Popup from "../../../components/Popup";
-import TextField from "@mui/material/TextField";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
-import { id } from "date-fns/locale";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -62,7 +49,6 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-
   {
     id: "TRK",
     numeric: false,
@@ -93,29 +79,15 @@ const headCells = [
     disablePadding: false,
     label: "Status",
   },
-
-
 ];
 
 function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+  const { order, orderBy } = props;
 
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-
-        </TableCell>
+        <TableCell padding="checkbox"></TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -124,7 +96,6 @@ function EnhancedTableHead(props) {
             sortDirection={orderBy === headCell.id ? order : false}
           >
             {headCell.label}
-
           </TableCell>
         ))}
       </TableRow>
@@ -142,7 +113,7 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected, selectedShipments, getShipments } = props;
+  const { numSelected } = props;
 
   return (
     <Toolbar
@@ -222,10 +193,10 @@ export default function Pickups() {
   const emptyRows =
     page > 0
       ? Math.max(
-        0,
-        (1 + page) * rowsPerPage -
-        (allPickups !== undefined ? allPickups.count : 0)
-      )
+          0,
+          (1 + page) * rowsPerPage -
+            (allPickups !== undefined ? allPickups.count : 0)
+        )
       : 0;
 
   return (
@@ -258,7 +229,7 @@ export default function Pickups() {
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
-              // size={dense ? "small" : "medium"}
+                // size={dense ? "small" : "medium"}
               >
                 <EnhancedTableHead
                   numSelected={selected.length}
@@ -266,9 +237,7 @@ export default function Pickups() {
                   orderBy={orderBy}
                   //   onSelectAllClick={handleSelectAllClick}
                   onRequestSort={handleRequestSort}
-                  rowCount={
-                    allPickups !== undefined ? allPickups.count : 0
-                  }
+                  rowCount={allPickups !== undefined ? allPickups.count : 0}
                 />
                 <TableBody>
                   {stableSort(
@@ -291,16 +260,17 @@ export default function Pickups() {
                           key={row._id}
                           selected={isItemSelected}
                         >
-                          <TableCell padding="checkbox">
+                          <TableCell padding="checkbox"></TableCell>
 
-                          </TableCell>
-
-                          <TableCell align="left"
+                          <TableCell
+                            align="left"
                             component="th"
                             id={labelId}
                             scope="row"
-                            padding="none">
-                              {row.id}</TableCell>
+                            padding="none"
+                          >
+                            {row.id}
+                          </TableCell>
                           <TableCell
                             align="left"
                             component="th"
@@ -315,14 +285,17 @@ export default function Pickups() {
                             component="th"
                             id={labelId}
                             scope="row"
-                            padding="none">{row.pickup_date.substring(0, 10)}</TableCell>
+                            padding="none"
+                          >
+                            {row.pickup_date.substring(0, 10)}
+                          </TableCell>
                           <TableCell align="left">{row.description}</TableCell>
-                          <TableCell align="left">{row.current_status}</TableCell>
-
+                          <TableCell align="left">
+                            {row.current_status}
+                          </TableCell>
                         </TableRow>
                       );
                     })}
-
                 </TableBody>
               </Table>
             </TableContainer>
@@ -335,7 +308,6 @@ export default function Pickups() {
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
-
           </Paper>
         </div>
         <FormControlLabel
