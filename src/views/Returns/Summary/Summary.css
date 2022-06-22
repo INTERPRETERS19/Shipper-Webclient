@@ -1,0 +1,20 @@
+.RSummary {
+    min-height: 100vh;
+    max-height: 100%;
+    background-color: #e5e9ef;
+  }
+  
+  .RSummary .mainH {
+    margin-left: 280px;
+    max-height: 100vh;
+    padding-top: 50px;
+  }
+  .Rcontainer {
+    display: flex;
+    flex-direction: row;
+    /* max-width: 200vh; */
+    align-self: center;
+    padding-top: 60px;
+    padding-left: 450px;
+  }
+ 

@@ -21,13 +21,30 @@ const DISTRICTS = [
   "Trincomalee",
   "Vavuniya",
   "Anuradhapura",
+  "Badulla",
+  "Hambantota",
+  "Kegalle",
+  "Kilinochchi",
+  "Kurunegala",
+  "Matara",
+  "Mullaitivu",
+  "Nuwara Eliya",
+  "Puttalam",
+  "Ratnapura",
+  "Monaragala",
+  "Polonnaruwa",
 ];
 
 const AddShipments = () => {
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  console.log(currentUser);
+  const shipperid = currentUser.id;
+  console.log(shipperid);
   const submitShipments = async (values, formikActions) => {
     try {
       await Client.post("/createsh", {
         ...values,
+        shipperid,
       });
 
       formikActions.resetForm();
@@ -102,6 +119,7 @@ const AddShipments = () => {
           <Typography variant="h4" style={{ paddingTop: "20px" }}>
             Add Shipments
           </Typography>
+          <br/>
           <div className="formBox">
             <form onSubmit={formik.handleSubmit}>
               <Grid container spacing={10}>
