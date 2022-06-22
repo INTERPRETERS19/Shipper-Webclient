@@ -3,12 +3,15 @@ import { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  Alert,
+} from "@mui/material";
 import TableRow from "@mui/material/TableRow";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -19,7 +22,6 @@ import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import SideBar from "../../../components/Sidebar";
 import Client from "../../../api/Client";
 import { Grid, Stack } from "@mui/material";
@@ -30,7 +32,6 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
-
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -314,17 +315,25 @@ export default function NewShipments() {
 
   const upstatus = async () => {
     selected.map(async (selectedShipment) => {
-      const res = await Client.post("/update_shipment", {
-        id: selectedShipment,
-        value,
-      });
-      if (res.data.success) {
-        console.log(res.data.message);
-
-        getAllNewShipments();
-        setOpenPopup(false);
+      const date = new Date().valueOf();
+      if (value > date) {
+        const res = await Client.post("/update_shipment", {
+          id: selectedShipment,
+          value,
+        });
+        if (res.data.success) {
+          console.log(res.data.message);
+          window.confirm("PickUp request is send to Service Provider.");
+          getAllNewShipments();
+          setOpenPopup(false);
+          setValue(new Date());
+        } else {
+          console.log("Update not successful");
+        }
       } else {
-        console.log("Update not successful");
+        window.confirm(
+          "We cannot take PickUp date as past date...Please Select appropriate date to pickup."
+        );
       }
     });
   };
@@ -436,9 +445,9 @@ export default function NewShipments() {
                     })}
                   {emptyRows > 0 && (
                     <TableRow
-                    style={{
-                      height: (dense ? 33 : 53) * emptyRows,
-                    }}
+                      style={{
+                        height: (dense ? 33 : 53) * emptyRows,
+                      }}
                     >
                       <TableCell colSpan={6} />
                     </TableRow>
@@ -485,7 +494,6 @@ export default function NewShipments() {
                     />
                   </Stack>
                 </Paper>
-                console.log(value);
               </LocalizationProvider>
               <Stack
                 sx={{

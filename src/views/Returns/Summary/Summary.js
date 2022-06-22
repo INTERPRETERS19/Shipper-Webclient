@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Summary.css";
 import SideBar from "../../../components/Sidebar";
-import CreditScoreIcon from "@mui/icons-material/CreditScore";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Client from "../../../api/Client";
 import PieChart, {
   Legend,
@@ -11,8 +8,6 @@ import PieChart, {
   Tooltip,
   Format,
 } from "devextreme-react/pie-chart";
-import { Typography } from "@mui/material";
-import { fontSize } from "@mui/system";
 
 const RSummary = () => {
   const [FailtoDeliver, setFailtoDeliver] = useState(0);
@@ -90,30 +85,11 @@ const RSummary = () => {
             }}
           />
         </div>
-        <div  style={{ paddingTop: "100px", paddingLeft:"320px"}}>
-          {/* <Typography> Returns </Typography> */}
-          <h3 style={{fontSize:"30px"}}>Returns Summary</h3>
+        <div style={{ paddingTop: "100px", paddingLeft: "320px" }}>
+          <h3 style={{ fontSize: "30px" }}>Returns Summary</h3>
         </div>
 
         <div className="Rcontainer">
-          {/* <div className="left">
-            <div className="wid">
-              <h3>Pending Shipments</h3>
-              <AccessTimeIcon sx={{ fontSize: "40px" }} />
-              <div className="value">{pending}</div>
-            </div>
-            <div className="wid">
-              <h3>Cash Payable</h3>
-              <MonetizationOnIcon sx={{ fontSize: "40px" }} />
-              <div className="value">LKR 364526</div>
-            </div>
-            <div className="wid">
-              <h3>Cash Receivables</h3>
-              <CreditScoreIcon sx={{ fontSize: "40px" }} />
-              <div className="value">LKR 366</div>
-            </div>
-          </div> */}
-
           <div className="Pie">
             <PieChart
               id="pie"
