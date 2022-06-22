@@ -20,6 +20,7 @@ export const ShipmentProvider = (props) => {
   };
 
   const getAllNewShipments = async () => {
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     await Client.get(`/allnewshipment/${currentUser.id}`)
       .then((response) => {
         setAllNewShipments(response.data);
@@ -30,6 +31,7 @@ export const ShipmentProvider = (props) => {
   };
 
   const getAllPickups = async () => {
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     await Client.get(`/allpickup/${currentUser.id}`)
       .then((response) => {
         setAllPickups(response.data);
@@ -40,6 +42,7 @@ export const ShipmentProvider = (props) => {
   };
 
   const getAllReturnShipments = async () => {
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     await Client.get(`/returns/${currentUser.id}`)
       .then((response) => {
         setAllReturnShipments(response.data);
