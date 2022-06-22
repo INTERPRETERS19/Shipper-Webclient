@@ -326,6 +326,7 @@ export default function NewShipments() {
           window.confirm("PickUp request is send to Service Provider.");
           getAllNewShipments();
           setOpenPopup(false);
+          setValue(new Date());
         } else {
           console.log("Update not successful");
         }
