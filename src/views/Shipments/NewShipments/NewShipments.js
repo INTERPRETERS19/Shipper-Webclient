@@ -10,7 +10,6 @@ import {
   TableContainer,
   TableHead,
   TablePagination,
-  Alert,
 } from "@mui/material";
 import TableRow from "@mui/material/TableRow";
 import Toolbar from "@mui/material/Toolbar";
@@ -113,14 +112,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount } = props;
 
   return (
     <TableHead>
