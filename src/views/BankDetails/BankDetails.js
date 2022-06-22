@@ -66,6 +66,7 @@ const BankDetails = () => {
               <div className="left">
                 <div className="BOXX">
                   <h2> Add Bank Details</h2>
+                  <br />
                   <div className="container1">
                     <div>
                       <TextField

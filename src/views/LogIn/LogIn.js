@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import logo from "../../assets/logo2.PNG";
 import login from "../../assets/login.jpg";
-//import { Grid } from "@mui/material";
 import useForms from "../../components/useForms";
 import client from "../../api/Client";
 import { useNavigate } from "react-router-dom";
@@ -24,7 +23,6 @@ function Login() {
   const [values, setValues, handleInputChange] = useForms(initialValues);
   const [error, setError] = useState("");
   const { setIsLoggedIn, setProfile, profile } = useLogin();
-
   const navigate = useNavigate();
 
   const validate = () => {
@@ -45,10 +43,7 @@ function Login() {
     e.preventDefault();
     if (validate()) {
       try {
-        // console.log(values.email);
         const responces = await client.post("/signin", { ...values });
-        // console.log(responces.data);
-        // console.log(responces.data.success);
         if (responces.data.success) {
           setProfile(responces.data.user);
           localStorage.setItem("user", JSON.stringify(responces.data.user));

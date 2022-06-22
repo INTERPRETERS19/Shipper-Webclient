@@ -178,16 +178,22 @@ const headCells = [
     label: "Description",
   },
   {
-    id: "District",
+    id: "Street No",
     numeric: false,
     disablePadding: false,
-    label: "District",
+    label: "Street No",
   },
   {
     id: "City",
     numeric: false,
     disablePadding: false,
     label: "City",
+  },
+  {
+    id: "District",
+    numeric: false,
+    disablePadding: false,
+    label: "District",
   },
   {
     id: "COD",
@@ -510,6 +516,7 @@ export default function AllShipment() {
                             {row.mobile_phone_number}
                           </TableCell>
                           <TableCell align="left">{row.description}</TableCell>
+                          <TableCell align="left">{row.r_no_street}</TableCell>
                           <TableCell align="left">{row.r_city}</TableCell>
                           <TableCell align="left">{row.r_district}</TableCell>
                           <TableCell align="left">{row.COD}</TableCell>

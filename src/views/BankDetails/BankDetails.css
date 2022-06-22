@@ -37,14 +37,19 @@
   padding: 25px;
   border-style: none;
   margin-bottom: 4%;
+  border-style: none;
+  box-shadow: 0 0 0 1px #969696, 0.1em 0.1em 0.4em rgba(27, 89, 180, 0.3);
 }
 
 .BankDetails .BOXX {
   padding: 5%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(65, 137, 185, 0.1);
   margin: 4%;
   align-items: center;
   text-align: center;
   width: 90%;
-  height: 70%;
+  height: auto;
+  border-style: none;
+  box-shadow: 0 0 0 1px rgba(38, 72, 116, 0.3),
+    0.1em 0.1em 0.6em rgba(31, 95, 168, 0.5);
 }
