@@ -125,6 +125,17 @@ const Sidebar = () => {
               />
             </div>
           </div>
+          {/* <div
+            style={{
+              color: "#000000",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-end",
+              bottom: "100px",
+            }}
+          >
+            <p>© 2022 - IndexCloud</p>
+          </div> */}
         </Nav>
         <SidebarNav sidebar={sidebar}>
           <SidebarWrap>

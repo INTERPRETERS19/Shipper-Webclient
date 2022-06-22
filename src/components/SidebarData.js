@@ -21,12 +21,6 @@ export const SidebarData = [
 
     subNav: [
       {
-        title: "Summary",
-        path: "/shipment/summary",
-        icon: <IoIcons.IoIosPaper />,
-        cName: "sub-nav",
-      },
-      {
         title: "Add Shipments",
         path: "/shipment/addshipments",
         icon: <IoIcons.IoIosPaper />,
@@ -39,7 +33,7 @@ export const SidebarData = [
       },
       {
         title: "New Shipments",
-        path: "/reports/reports3",
+        path: "/shipments/newshipments",
         icon: <IoIcons.IoIosPaper />,
       },
       {
@@ -68,15 +62,10 @@ export const SidebarData = [
         icon: <IoIcons.IoIosPaper />,
         cName: "sub-nav",
       },
-      {
-        title: "Pending Returns",
-        path: "/returns/pendingreturns",
-        icon: <IoIcons.IoIosPaper />,
-        cName: "sub-nav",
-      },
+
       {
         title: "All Returns",
-        path: "/shipments/allshipments",
+        path: "/returns/allreturns",
         icon: <IoIcons.IoIosPaper />,
       },
       {
@@ -94,7 +83,7 @@ export const SidebarData = [
     iconOpened: <RiIcons.RiArrowUpSFill />,
     subNav: [
       {
-        title: "Summary",
+        title: "Pickup Request",
         path: "/pickups/pickuprequests",
         icon: <IoIcons.IoIosPaper />,
       },
@@ -116,7 +105,7 @@ export const SidebarData = [
         icon: <IoIcons.IoIosPaper />,
       },
       {
-        title: "CHange Password",
+        title: "Change Password",
         path: "/settings/changepassword",
         icon: <IoIcons.IoIosPaper />,
       },
