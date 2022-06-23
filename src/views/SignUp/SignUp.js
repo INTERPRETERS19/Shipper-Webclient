@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import {
-  Typography,
-  Container,
-  Box,
-  Grid,
-  Avatar,
-  Button,
-} from "@mui/material";
+import { Typography, Container, Box, Grid, Button } from "@mui/material";
 import Input from "./input";
 import Client from "../../api/Client";
 import { useNavigate } from "react-router-dom";
@@ -31,7 +23,6 @@ const initialState = {
 
 const SignUp = () => {
   const [form, setForm] = useState(initialState);
-  //const [isSignup, setIsSignup] = useState(false);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -65,7 +56,6 @@ const SignUp = () => {
       try {
         const responces = await Client.post("/signup", { ...form });
         if (responces.data.success) {
-          //EMAIL VERIFICATION:SEND EMAIL TO USER
           const res = await Client.post("/requestEmailVerification", {
             email: responces.data.message.email,
           });
@@ -103,9 +93,7 @@ const SignUp = () => {
             </p>
           ) : null}
         </Grid>
-        {/* <Avatar sx={{ m: 1, backgroundColor: "#112c48", marginTop: "10px" }}>
-          <LockOutlinedIcon sx={{ color: "#87ceeb" }} />
-        </Avatar> */}
+
         <Typography component="h1" variant="h3">
           <div className="line2nd">
             <span
