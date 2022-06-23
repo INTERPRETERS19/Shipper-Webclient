@@ -14,6 +14,8 @@ import RSummary from "../views/Returns/Summary/Summary";
 import NotFound from "../NotFound/NotFound";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
 import AddShipments from "../views/Shipments/AddShipments/AddShipments";
+import Reports from "../views/Shipments/Reports/Reports";
+import Report from "../views/Returns/Reports/Reports";
 import EmailVerification from "../views/SignUp/emailVerification";
 
 const MainRoute = () => {
@@ -31,6 +33,8 @@ const MainRoute = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="shipments/newshipments" element={<NewShipments />} />
+          <Route path="shipments/reports" element={<Reports />} />
+          <Route path="returns/reports" element={<Report />} />
           <Route path="/pickups/pickuprequests" element={<Pickups/>} />
           <Route path="/returns/allreturns" element={<AllReturns />} />
           <Route path="/returns/pendingreturns" element={<PendingReturns />} />

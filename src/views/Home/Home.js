@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./Home.css";
 import SideBar from "../../components/Sidebar";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Client from "../../api/Client";
 import PieChart, {
@@ -33,7 +32,7 @@ const Home = () => {
     },
     {
       return: "Delivered",
-      val:Delivered,
+      val: Delivered,
     },
     {
       return: "Fail To Deliver",
@@ -60,7 +59,6 @@ const Home = () => {
         console.log(pending);
       } else {
         console.log("Failed");
-    
       }
     } catch (error) {
       console.log(error);
@@ -71,8 +69,8 @@ const Home = () => {
     try {
       const res = await Client.get(`getRecievable/${currentUser.id}`);
       if (res.data.success) {
-        setRecievable(res.data.total);
-        console.log(res.data.total);
+        setRecievable(res.data.SumDV);
+        console.log(res.data.SumDV);
         console.log("Success");
         console.log(pending);
       } else {
@@ -108,12 +106,9 @@ const Home = () => {
       if (res.data.success) {
         setPickUp(res.data.count);
         console.log(res.data.count);
-        // setCount(res.data.count);
         console.log("Success");
-       
       } else {
         console.log("Failed");
-      
       }
     } catch (error) {
       console.log(error);
@@ -126,11 +121,9 @@ const Home = () => {
       if (res.data.success) {
         setRescheduled(res.data.count);
         console.log(res.data.count);
-        // setCount(res.data.count);
         console.log("Success");
       } else {
         console.log("Failed");
-
       }
     } catch (error) {
       console.log(error);
@@ -143,12 +136,9 @@ const Home = () => {
       if (res.data.success) {
         setOutForDelivery(res.data.count);
         console.log(res.data.count);
-        // setCount(res.data.count);
         console.log("Success");
-       
       } else {
         console.log("Failed");
-     
       }
     } catch (error) {
       console.log(error);
@@ -161,12 +151,9 @@ const Home = () => {
       if (res.data.success) {
         setNew(res.data.count);
         console.log(res.data.count);
-        // setCount(res.data.count);
         console.log("Success");
-      
       } else {
         console.log("Failed");
-       
       }
     } catch (error) {
       console.log(error);
@@ -179,12 +166,9 @@ const Home = () => {
       if (res.data.success) {
         setDelivered(res.data.count);
         console.log(res.data.count);
-        // setCount(res.data.count);
         console.log("Success");
-       
       } else {
         console.log("Failed");
-      
       }
     } catch (error) {
       console.log(error);
@@ -254,11 +238,11 @@ const Home = () => {
               <AccessTimeIcon sx={{ fontSize: "40px" }} />
               <div className="value">{pending}</div>
             </div>
-            <div className="wid">
+            {/* <div className="wid">
               <h3>Cash Payable</h3>
               <MonetizationOnIcon sx={{ fontSize: "40px" }} />
               <div className="value">LKR 364526</div>
-            </div>
+            </div> */}
             <div className="wid">
               <h3>Cash Receivables</h3>
               <CreditScoreIcon sx={{ fontSize: "40px" }} />
