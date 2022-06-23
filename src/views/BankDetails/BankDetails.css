@@ -25,8 +25,8 @@
 .BankDetails .left {
   display: flex;
   flex-direction: column;
-  max-width: 600px;
-  width: 60%;
+  min-width: 600px;
+  width: 55%;
   height: 80vh;
   align-items: center;
   justify-content: center;
@@ -52,4 +52,15 @@
   border-style: none;
   box-shadow: 0 0 0 1px rgba(38, 72, 116, 0.3),
     0.1em 0.1em 0.6em rgba(31, 95, 168, 0.5);
+}
+
+.BankDetails .right {
+  flex-grow: 1;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  padding: 20px;
 }

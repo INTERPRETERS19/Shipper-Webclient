@@ -22,13 +22,13 @@ export const SidebarData = [
     subNav: [
       {
         title: "Add Shipments",
-        path: "/shipments/addshipments",
+        path: "/shipment/addshipments",
         icon: <IoIcons.IoIosPaper />,
         cName: "sub-nav",
       },
       {
         title: "All Shipments",
-        path: "/shipments/allshipments",
+        path: "/shipment/allshipments",
         icon: <IoIcons.IoIosPaper />,
       },
       {
@@ -65,7 +65,7 @@ export const SidebarData = [
 
       {
         title: "All Returns",
-        path: "/shipments/allshipments",
+        path: "/returns/allreturns",
         icon: <IoIcons.IoIosPaper />,
       },
       {

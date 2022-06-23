@@ -1,24 +1,123 @@
+import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "../../components/Sidebar";
 import "./BankDetails.css";
 import Client from "../../api/Client";
+import { BankDetailsContext } from "../../context/BankDetailsProvider/BankDetailsProvoder";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import Accordion from "@mui/material/Accordion";
+import ListItemText from "@mui/material/ListItemText";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ListItem from "@mui/material/ListItem";
+import ListItemAvatar from "@mui/material/ListItemAvatar";
+import ModeEditTwoToneIcon from "@mui/icons-material/ModeEditTwoTone";
+import Avatar from "@mui/material/Avatar";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Divider from "@mui/material/Divider";
+
+function generate(element) {
+  return [0].map((value) =>
+    React.cloneElement(element, {
+      key: value,
+    })
+  );
+}
+// allBankDetails,
+// getAllBankDetails,
+// deleteBankDetails,
+// getdeleteBankDetails,
+// updateBankDetails,
+// getupdateBankDetails,
+// import { useState, createContext } from "react";
+// import Client from "../../api/Client";
+
+// export const BankDetailsContext = createContext();
+
+// export const BankDetailsProvider = (props) => {
+//   const [allBankDetails, setAllBankDetails] = useState();
+
+//   const currentUser = JSON.parse(localStorage.getItem("user"));
+
+//   const getAllBankDetails = async () => {
+//     await Client.get(`/allbank/${currentUser.id}`)
+//       .then((response) => {
+//         setAllBankDetails(response.data);
+//       })
+//       .catch((err) => {
+//         console.log("Unable to get all BankDetails");
+//       });
+//   };
+
+//   const deleteBankDetails = async () => {
+//     await Client.post(`/deletebank/${currentUser.id}`)
+//       .then((response) => {})
+//       .catch((err) => {
+//         console.log("Unable to get all New BankDetails");
+//       });
+//   };
+
+//   const updateBankDetails = async () => {
+//     await Client.post(`/updatebank/${currentUser.id}`)
+//       .then((response) => {
+//         setUpdateBankDetails(response.data);
+//       })
+//       .catch((err) => {
+//         console.log("Unable to get all Pickups");
+//       });
+//   };
+
+//   return (
+//     <BankDetailsContext.Provider
+//       value={{
+//         allBankDetails,
+//         getAllBankDetails,
+//         deleteBankDetails,
+//         getdeleteBankDetails,
+//         updateBankDetails,
+//         getupdateBankDetails,
+//       }}
+//     >
+//       {props.children}
+//     </BankDetailsContext.Provider>
+//   );
+// };
 
 const BankDetails = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
-
+  console.log(currentUser);
+  const [expanded, setExpanded] = React.useState(false);
+  const { allBankDetails, getAllBankDetails } = useContext(BankDetailsContext);
+  useEffect(() => {
+    getAllBankDetails();
+  }, []);
+  const { deleteBankDetails, getdeleteBankDetails } =
+    useContext(BankDetailsContext);
+  useEffect(() => {
+    getdeleteBankDetails();
+  }, []);
+  const { updateBankDetails, getupdateBankDetails } =
+    useContext(BankDetailsContext);
+  useEffect(() => {
+    getupdateBankDetails();
+  }, []);
+  console.log(allBankDetails);
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
   const addDetails = async (values, formikActions) => {
-    console.log(currentUser);
     const res = await Client.post("/bank", {
       ...values,
       shipper_id: currentUser.id,
     });
     if (res.data.success) {
       console.log(res.data);
-      console.log(currentUser);
     } else {
       console.log(res.data);
     }
@@ -175,6 +274,69 @@ const BankDetails = () => {
                     Add Details
                   </Button>
                 </div>
+              </div>
+              <div className="right">
+                {generate(
+                  <Accordion
+                    expanded={expanded === "panel1"}
+                    onChange={handleChange("panel1")}
+                    sx={{ width: "100%" }}
+                  >
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon />}
+                      aria-controls="panel1bh-content"
+                      id="panel1bh-header"
+                    >
+                      <Typography
+                        sx={{
+                          width: "33%",
+                          flexShrink: 0,
+                        }}
+                      >
+                        Bank Name
+                      </Typography>
+                    </AccordionSummary>
+
+                    <ListItem
+                      sx={{
+                        width: "100%",
+                        backgroundColor: "rgba(65, 137, 185, 0.1)",
+                      }}
+                    >
+                      <ListItemText primary="Account Holder Name" />
+                    </ListItem>
+                    <Divider />
+                    <ListItem divider>
+                      <ListItemText primary="Branch Code" />
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText primary="Branch Name" />
+                    </ListItem>
+                    <Divider />
+                    <ListItem>
+                      <ListItemText primary="Account Number" />
+                    </ListItem>
+                    <Divider />
+
+                    <AccordionDetails>
+                      <Typography>
+                        <ListItem
+                          secondaryAction={
+                            <IconButton edge="end" aria-label="delete">
+                              <DeleteIcon />
+                            </IconButton>
+                          }
+                        >
+                          <ListItemAvatar>
+                            <Avatar>
+                              <ModeEditTwoToneIcon />
+                            </Avatar>
+                          </ListItemAvatar>
+                        </ListItem>
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                )}
               </div>
             </div>
           </Box>

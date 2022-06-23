@@ -30,108 +30,6 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
-import { id } from "date-fns/locale";
-
-// function createData(
-//   created_at,
-//   id,
-//   recipient_name,
-//   mobile_phone_number,
-//   description,
-//   receipient_address_district,
-//   receipient_address_city,
-//   COD
-// ) {
-//   return {
-//     created_at,
-//     id,
-//     recipient_name,
-//     mobile_phone_number,
-//     description,
-//     receipient_address_district,
-//     receipient_address_city,
-//     COD,
-//   };
-// }
-
-// const rows = [
-//   createData(
-//     "11/05/2022 11.42am",
-//     34393535,
-//     "gowtham",
-//     "0770543554",
-//     "Product",
-//     "mathala",
-//     "Mathala-Pettah",
-//     6000,
-//     "New "
-//   ),
-//   createData(
-//     "16/05/2022 10.02am",
-//     34390937,
-//     "Saman perera",
-//     "0988765432",
-//     "goods",
-//     "Matale",
-//     "Matale",
-//     0,
-//     "New "
-//   ),
-//   createData(
-//     "14/05/2022 09.42am",
-//     34378378,
-//     "perera",
-//     "098445432",
-//     "goods",
-//     "Matale",
-//     "Matale",
-//     0,
-//     "New "
-//   ),
-//   createData(
-//     "06/05/2022 05:30 pm",
-//     43239305,
-//     "Nipuni",
-//     "076993672",
-//     "buns",
-//     "Mannar",
-//     "Muthurr",
-//     8900,
-//     "New "
-//   ),
-//   createData(
-//     "07/03/2022 08.42am",
-//     87653535,
-//     "Saki sasu",
-//     "0760549854",
-//     "hair bands",
-//     "Kandy",
-//     "Kandy-Town",
-//     233,
-//     "New "
-//   ),
-//   createData(
-//     "04/06/2022 06.57am",
-//     87430937,
-//     "janith",
-//     "0776543234",
-//     "frock bulk",
-//     "Jaffna",
-//     "Jaffna-town",
-//     0,
-//     "New "
-//   ),
-//   createData(
-//     "12/03/2022 09.42am",
-//     33438937,
-//     "Lavan",
-//     "0785543289",
-//     "Tea packets",
-//     "Jaffna",
-//     "Kodikamam",
-//     5000
-//   ),
-// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -149,8 +47,6 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -223,9 +119,6 @@ function EnhancedTableHead(props) {
     rowCount,
     onRequestSort,
   } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
 
   return (
     <TableHead>
@@ -249,18 +142,6 @@ function EnhancedTableHead(props) {
             sortDirection={orderBy === headCell.id ? order : false}
           >
             {headCell.label}
-            {/* <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel> */}
           </TableCell>
         ))}
       </TableRow>
@@ -340,11 +221,7 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        ""
       )}
     </Toolbar>
   );
@@ -360,14 +237,14 @@ export default function NewShipments() {
     getAllNewShipments();
     // console.log(allShipments);
   }, []);
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const [openPopup, setOpenPopup] = React.useState(false);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("calories");
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [openPopup, setOpenPopup] = useState(false);
   const [dense, setDense] = useState(false);
-  const [value, setValue] = React.useState(new Date());
+  const [value, setValue] = useState(new Date());
 
   const handleChange = (newValue) => {
     setValue(newValue);
@@ -434,6 +311,23 @@ export default function NewShipments() {
         )
       : 0;
 
+  const upstatus = async () => {
+    selected.map(async (selectedShipment) => {
+      const res = await Client.post("/update_shipment", {
+        id: selectedShipment,
+        value,
+      });
+      if (res.data.success) {
+        console.log(res.data.message);
+
+        getAllNewShipments();
+        setOpenPopup(false);
+      } else {
+        console.log("Update not successful");
+      }
+    });
+  };
+
   return (
     <div
       style={{
@@ -464,7 +358,7 @@ export default function NewShipments() {
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
-                // size={dense ? "small" : "medium"}
+                size={dense ? "small" : "medium"}
               >
                 <EnhancedTableHead
                   numSelected={selected.length}
@@ -523,17 +417,27 @@ export default function NewShipments() {
                             {row.mobile_phone_number}
                           </TableCell>
                           <TableCell align="left">{row.description}</TableCell>
-                          <TableCell align="left">{row.r_city}</TableCell>
-                          <TableCell align="left">{row.r_district}</TableCell>
+                          <TableCell align="left">
+                            {" "}
+                            {row.receipient_address !== undefined
+                              ? ""
+                              : row.r_district}
+                          </TableCell>
+                          <TableCell align="left">
+                            {" "}
+                            {row.receipient_address !== undefined
+                              ? ""
+                              : row.r_city}
+                          </TableCell>
                           <TableCell align="left">{row.COD}</TableCell>
                         </TableRow>
                       );
                     })}
                   {emptyRows > 0 && (
                     <TableRow
-                    // style={{
-                    //   height: (dense ? 33 : 53) * emptyRows,
-                    // }}
+                      style={{
+                        height: (dense ? 33 : 53) * emptyRows,
+                      }}
                     >
                       <TableCell colSpan={6} />
                     </TableRow>
@@ -596,7 +500,11 @@ export default function NewShipments() {
                 >
                   Cancle
                 </Button>
-                <Button sx={{ padding: "10px" }} variant="contained">
+                <Button
+                  sx={{ padding: "10px" }}
+                  variant="contained"
+                  onClick={upstatus}
+                >
                   Pickup Request
                 </Button>
               </Stack>

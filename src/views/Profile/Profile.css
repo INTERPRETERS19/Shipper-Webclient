@@ -13,7 +13,8 @@
 }
 
 .Dashboard .title {
-  padding-top: 70px;
+  padding-top: 60px;
+  line-height: 80px;
   text-align: center;
   align-self: center;
   color: #000;
@@ -23,8 +24,9 @@
   flex-direction: column;
   max-width: 800px;
   width: 60%;
-  height: 80vh;
-  border-style: solid;
+  padding: 20px;
+  height: 75vh;
+  background-color: rgba(236, 236, 236, 0.5);
   align-items: center;
   justify-content: center;
 }
@@ -49,16 +51,20 @@
   justify-content: first baseline;
 }
 .Dashboard .box1 {
-  width: 50%;
-  background-color: rgb(151, 151, 151);
+  width: 65%;
+  border-radius: 4%;
+  border-style: none;
+  background-color: rgba(65, 137, 185, 0.1);
+  box-shadow: 0 0 0 1px rgba(38, 72, 116, 0.2),
+    0.1em 0.1em 0.6em rgba(31, 95, 168, 0.3);
   display: flex;
   flex-direction: column;
-  border-radius: 4%;
-  padding: 20px;
+  /* border-radius: 4%; */
+  padding: 40px;
 }
 .Dashboard .box2 {
   width: 80%;
-  height: 80%;
+  height: 70%;
   background-color: rgba(65, 137, 185, 0.1);
   display: flex;
   flex-direction: column;

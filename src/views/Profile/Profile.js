@@ -1,27 +1,58 @@
 import { useState, useEffect } from "react";
 import "./Profile.css";
+import {
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  Typography,
+  TableContainer,
+  TableCell,
+  TableRow,
+} from "@mui/material";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import SideBar from "../../components/Sidebar";
 import Client from "../../api/Client";
 import photo from "../../assets/photo.png";
-import Button from "@mui/material/Button";
-const SHIPPER_ID = "62aa2102e556536279786217";
 
 const Profile = () => {
-  const [user, setUser] = useState();
+  const [profile, setProfile] = useState();
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  console.log(currentUser.id);
+
+  const getUser = async () => {
+    const res = await Client.get(`profileShipper/${currentUser.id}`);
+    if (res.data.success) {
+      setProfile(res.data.data);
+      console.log(res.data);
+      console.log(res.data.data.email);
+      console.log(profile.email);
+      console.log("Success");
+    } else {
+      console.log("Failed");
+    }
+  };
   useEffect(() => {
-    getUser(SHIPPER_ID);
+    getUser();
   }, []);
 
-  const getUser = async (userId) => {
-    await Client.get("/profile", { _id: SHIPPER_ID })
-      .then((response) => {
-        setUser(response);
-        console.log(response);
-      })
-      .catch((err) => {
-        console.log("Unable to get profile");
-      });
+  const Info = ({ detail, value }) => {
+    if (value !== "") {
+      return (
+        <TableRow>
+          <TableCell component="th" scope="row">
+            <Typography sx={{ fontWeight: "bold" }}>{detail}</Typography>
+          </TableCell>
+          <TableCell>
+            <Typography>{value}</Typography>
+          </TableCell>
+        </TableRow>
+      );
+    } else {
+      return <></>;
+    }
   };
+
   return (
     <div className="Dashboard">
       <SideBar />
@@ -31,61 +62,64 @@ const Profile = () => {
           <h1>View Profile</h1>
         </div>
         <div className="container">
-          {user && (
-            <div className="left">
-              <div className="box1">
-                <div className="widgetssBig">
-                  <h3>First Name</h3>
-                  <div className="colon">:</div>
+          <div className="left">
+            <div className="box1">
+              <>
+                <TableContainer component={Paper} sx={{ minWidth: 450 }}>
+                  <Table
+                    sx={{
+                      minWidth: 450,
+                    }}
+                    aria-label="custom pagination table"
+                  >
+                    {profile && (
+                      <TableBody
+                        sx={{
+                          paddingLeft: "100px",
+                          margin: "30px",
+                        }}
+                      >
+                        {/* <TableRow>{profile.email} </TableRow>
+                        <TableRow>{profile.firstName} </TableRow>
+                        <TableRow>{profile.lastName} </TableRow>
+                        <TableRow>{profile.mobile_no} </TableRow>
+                        <TableRow>{profile.street} </TableRow>
+                        <TableRow>{profile.city} </TableRow>
+                        <TableRow>{profile.district} </TableRow> */}
+                        <Info detail="E-mail" value={profile.email} />
+                        <Info detail="First Name" value={profile.firstName} />
+                        <Info detail="Last Name" value={profile.lastName} />
+                        <Info
+                          detail="Mobile Number"
+                          value={profile.mobile_no}
+                        />
+                        <Info detail="Street" value={profile.street} />
+                        <Info detail="City" value={profile.city} />
+                        <Info detail="District" value={profile.district} />
+                      </TableBody>
+                    )}
+                  </Table>
+                </TableContainer>
 
-                  <div className="field">{user.data.firstName}</div>
-                </div>
-                <div className="widgetssBig">
-                  <tr>
-                    <h3>Last Name</h3>
-                  </tr>
-                  <tr>
-                    {" "}
-                    <div className="colon">:</div>
-                  </tr>
-
-                  <tr>
-                    {" "}
-                    <div className="field">{user.data.lastName}</div>
-                  </tr>
-                </div>
-                <div className="widgetssBig">
-                  <h3>Email</h3>
-                  <div className="colon">:</div>
-
-                  <div className="field">{user.data.email}</div>
-                </div>
-                <div className="widgetssBig">
-                  <h3>Street</h3>
-                  <div className="colon">:</div>
-
-                  <div className="field">{user.data.street}</div>
-                </div>
-                <div className="widgetssBig">
-                  <h3>District</h3>
-                  <div className="colon">:</div>
-
-                  <div className="field">{user.data.district}</div>
-                </div>
-                <div className="widgetssBig">
-                  <h3>City</h3>
-                  <div className="colon">:</div>
-                  <div className="field">{user.data.city} </div>
-                </div>
-                <div className="widgetssBig">
-                  <h3>MobileNumber</h3>
-                  <div className="colon">:</div>
-
-                  <div className="field">{user.data.mobile_no}</div>
-                </div>
-              </div>
+                <br />
+                <Button
+                  variant="contained"
+                  endIcon={<EditRoundedIcon />}
+                  sx={{
+                    backgroundColor: "rgba(65, 137, 185, 0.8)",
+                    width: "80%",
+                    textAlign: "center",
+                    justifyContent: "center",
+                    height: 50,
+                    alignSelf: "center",
+                  }}
+                >
+                  Update User
+                </Button>
+              </>
             </div>
-          )}
+          </div>
+
           <div className="right">
             <div className="box2">
               <div
