@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.PNG";
+import { useLogin } from "../context/LoginProvider/LoginProvider";
 import "./NotFound.css";
 
 const NotFound = () => {
@@ -17,10 +18,13 @@ const NotFound = () => {
     });
   });
   const navigate = useNavigate();
+  const { setIsLoggedIn } = useLogin();
   useEffect(() => {
     setTimeout(() => {
       navigate("/");
-    }, 1000000);
+      setIsLoggedIn(false);
+      localStorage.removeItem("user");
+    }, 10000);
   }, [navigate]);
   return (
     <div className="page_404">

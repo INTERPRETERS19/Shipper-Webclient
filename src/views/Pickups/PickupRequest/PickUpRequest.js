@@ -79,17 +79,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+  const { order, orderBy } = props;
 
   return (
     <TableHead>
@@ -120,7 +110,7 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected, selectedShipments, getShipments } = props;
+  const { numSelected } = props;
 
   return (
     <Toolbar

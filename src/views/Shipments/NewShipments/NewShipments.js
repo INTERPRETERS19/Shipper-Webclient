@@ -3,12 +3,14 @@ import { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+} from "@mui/material";
 import TableRow from "@mui/material/TableRow";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -110,14 +112,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const {
-    onSelectAllClick,
-    order,
-    orderBy,
-    numSelected,
-    rowCount,
-    onRequestSort,
-  } = props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount } = props;
 
   return (
     <TableHead>
@@ -312,17 +307,25 @@ export default function NewShipments() {
 
   const upstatus = async () => {
     selected.map(async (selectedShipment) => {
-      const res = await Client.post("/update_shipment", {
-        id: selectedShipment,
-        value,
-      });
-      if (res.data.success) {
-        console.log(res.data.message);
-
-        getAllNewShipments();
-        setOpenPopup(false);
+      const date = new Date().valueOf();
+      if (value > date) {
+        const res = await Client.post("/update_shipment", {
+          id: selectedShipment,
+          value,
+        });
+        if (res.data.success) {
+          console.log(res.data.message);
+          window.confirm("PickUp request is send to Service Provider.");
+          getAllNewShipments();
+          setOpenPopup(false);
+          setValue(new Date());
+        } else {
+          console.log("Update not successful");
+        }
       } else {
-        console.log("Update not successful");
+        window.confirm(
+          "We cannot take PickUp date as past date...Please Select appropriate date to pickup."
+        );
       }
     });
   };
