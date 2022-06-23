@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import Sidebar from "../../components/Sidebar";
 import "./BankDetails.css";
 import Client from "../../api/Client";
-import { BankDetailsContext } from "../../context/BankDetailsProvider/BankDetailsProvoder";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Box from "@mui/material/Box";
@@ -93,21 +92,23 @@ const BankDetails = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
   console.log(currentUser);
   const [expanded, setExpanded] = React.useState(false);
-  const { allBankDetails, getAllBankDetails } = useContext(BankDetailsContext);
-  useEffect(() => {
-    getAllBankDetails();
-  }, []);
-  const { deleteBankDetails, getdeleteBankDetails } =
-    useContext(BankDetailsContext);
-  useEffect(() => {
-    getdeleteBankDetails();
-  }, []);
-  const { updateBankDetails, getupdateBankDetails } =
-    useContext(BankDetailsContext);
-  useEffect(() => {
-    getupdateBankDetails();
-  }, []);
-  console.log(allBankDetails);
+
+  // const { allBankDetails, getAllBankDetails } = useContext(BankDetailsContext);
+  // useEffect(() => {
+  //   getAllBankDetails();
+  // }, []);
+  // const { deleteBankDetails, getdeleteBankDetails } =
+  //   useContext(BankDetailsContext);
+  // useEffect(() => {
+  //   getdeleteBankDetails();
+  // }, []);
+  // const { updateBankDetails, getupdateBankDetails } =
+  //   useContext(BankDetailsContext);
+  // useEffect(() => {
+  //   getupdateBankDetails();
+  // }, []);
+  // console.log(allBankDetails);
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };

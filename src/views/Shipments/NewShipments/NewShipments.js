@@ -19,7 +19,6 @@ import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import SideBar from "../../../components/Sidebar";
 import Client from "../../../api/Client";
 import { Grid, Stack } from "@mui/material";
