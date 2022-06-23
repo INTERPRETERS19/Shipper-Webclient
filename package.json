@@ -32,7 +32,7 @@
     "fsevents": "*"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts start -o",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
