@@ -12,10 +12,12 @@ import AllReturns from "../views/Returns/AllReturns/AllReturns";
 import NewShipments from "../views/Shipments/NewShipments/NewShipments";
 import RSummary from "../views/Returns/Summary/Summary";
 import NotFound from "../NotFound/NotFound";
+import BankDetails from "../views/BankDetails/BankDetails";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
-import AddShipments from "../views/Shipments/AddShipments/AddShipments";
+import Profile from "../views/Profile/Profile";
 import EmailVerification from "../views/SignUp/emailVerification";
-
+import AddShipments from "../views/Shipments/AddShipments/AddShipments";
+import AllShipments from "../views/Shipments/AllShipments/AllShipment";
 const MainRoute = () => {
   return (
     <Router>
@@ -29,13 +31,17 @@ const MainRoute = () => {
         <Route path="*" element={<NotFound />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/passwordChange" element={<ChangePassword />} />
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="shipments/newshipments" element={<NewShipments />} />
-          <Route path="/pickups/pickuprequests" element={<Pickups/>} />
+          <Route path="/pickups/pickuprequests" element={<Pickups />} />
           <Route path="/returns/allreturns" element={<AllReturns />} />
           <Route path="/returns/pendingreturns" element={<PendingReturns />} />
-          <Route path="/shipment/addshipments" element={<AddShipments/>}/>
-          <Route path="/returns/summary" element={<RSummary/>}/>
+          <Route path="/bankdetails" element={<BankDetails />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/shipment/addshipments" element={<AddShipments />} />
+          <Route path="/shipment/allshipments" element={<AllShipments />} />
+          <Route path="/returns/summary" element={<RSummary />} />
         </Route>
       </Routes>
     </Router>

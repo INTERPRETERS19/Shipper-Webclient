@@ -81,7 +81,7 @@ const Sidebar = () => {
                 alignItems: "center",
               }}
             >
-              <img src={logo} alt="logo" height="55" width="55" />
+              <img src={logo} alt="logo" height="50" width="50" />
             </div>
             <div
               style={{

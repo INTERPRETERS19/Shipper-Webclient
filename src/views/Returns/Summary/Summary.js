@@ -20,7 +20,6 @@ const RSummary = () => {
       return: "Rescheduled",
       val: Rescheduled,
     },
-
     {
       return: "Failed to Deliver",
       val: FailtoDeliver,
@@ -33,7 +32,6 @@ const RSummary = () => {
       if (res.data.success) {
         setFailtoDeliver(res.data.count);
         console.log(res.data.count);
-        // setCount(res.data.count);
         console.log("Success");
       } else {
         console.log("Failed");
@@ -49,7 +47,6 @@ const RSummary = () => {
       if (res.data.success) {
         setRescheduled(res.data.count);
         console.log(res.data.count);
-        // setCount(res.data.count);
         console.log("Success");
       } else {
         console.log("Failed");
@@ -77,16 +74,13 @@ const RSummary = () => {
     <div className="Summary">
       <SideBar />
       <div className="mainH">
-        <div>
-          <hr
-            style={{
-              backgroundColor: "#424547",
-              height: 0.5,
-            }}
-          />
-        </div>
-        <div style={{ paddingTop: "100px", paddingLeft: "320px" }}>
-          <h3 style={{ fontSize: "30px" }}>Returns Summary</h3>
+        <div
+          style={{
+            paddingTop: "100px",
+            paddingLeft: "320px",
+          }}
+        >
+          <h1>Returns Summary</h1>
         </div>
 
         <div className="Rcontainer">
@@ -94,15 +88,14 @@ const RSummary = () => {
             <PieChart
               id="pie"
               type="doughnut"
-              //title="Returns Summary"
               palette="Soft Pastel"
               dataSource={returnsummary}
             >
               <Series argumentField="return"></Series>
               <Legend
-                margin={50}
+                margin={1}
                 horizontalAlignment="right"
-                verticalAlignment="top"
+                verticalAlignment="center"
               />
               <Tooltip enabled={true} customizeTooltip={customizeTooltip}>
                 <Format />
