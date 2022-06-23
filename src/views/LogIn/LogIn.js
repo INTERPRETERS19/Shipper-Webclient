@@ -39,7 +39,6 @@ function Login() {
     if (validate()) {
       try {
         const responces = await client.post("/signin", { ...values });
-
         if (responces.data.success) {
           setProfile(responces.data.user);
           localStorage.setItem("user", JSON.stringify(responces.data.user));

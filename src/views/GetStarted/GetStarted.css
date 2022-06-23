@@ -1,6 +1,7 @@
 .GetStarted {
   margin: 0;
   background-color: #001e3c;
+  height: 100vh;
 }
 .GetStarted .titles {
   align-items: center;

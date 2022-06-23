@@ -54,10 +54,7 @@ const Home = () => {
       const res = await Client.get(`getpending/${currentUser.id}`);
       if (res.data.success) {
         setPending(res.data.count);
-        console.log(res.data.count);
-        // setCount(res.data.count);
         console.log("Success");
-        console.log(pending);
       } else {
         console.log("Failed");
     
