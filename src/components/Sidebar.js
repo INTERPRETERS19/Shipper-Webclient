@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import logo from "../../src/assets/logo.PNG";
 import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
@@ -55,12 +57,14 @@ const SidebarWrap = styled.div`
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(true);
+  const navigate = useNavigate();
   const { setIsLoggedIn } = useLogin();
   const showSidebar = () => setSidebar(!sidebar);
   const logOutPressed = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("user");
-    <Navigate to="/login" />;
+    navigate("/login");
+
   };
   return (
     <>
