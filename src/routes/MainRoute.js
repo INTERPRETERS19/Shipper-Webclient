@@ -13,7 +13,6 @@ import NewShipments from "../views/Shipments/NewShipments/NewShipments";
 import RSummary from "../views/Returns/Summary/Summary";
 import NotFound from "../NotFound/NotFound";
 import BankDetails from "../views/BankDetails/BankDetails";
-import ProtectedRoutes from "../routes/ProtectedRoutes";
 import Profile from "../views/Profile/Profile";
 import EmailVerification from "../views/SignUp/emailVerification";
 import AddShipments from "../views/Shipments/AddShipments/AddShipments";
@@ -29,7 +28,6 @@ const MainRoute = () => {
         <Route path="/fp" element={<ForgottenPassword />} />
         <Route path="/passwordReset" element={<ResetPassword />} />
         <Route path="*" element={<NotFound />} />
-        <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route path="/passwordChange" element={<ChangePassword />} />
           <Route path="/changePassword" element={<ChangePassword />} />
@@ -42,7 +40,6 @@ const MainRoute = () => {
           <Route path="/shipment/addshipments" element={<AddShipments />} />
           <Route path="/shipment/allshipments" element={<AllShipments />} />
           <Route path="/returns/summary" element={<RSummary />} />
-        </Route>
       </Routes>
     </Router>
   );
