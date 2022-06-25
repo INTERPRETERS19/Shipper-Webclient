@@ -169,6 +169,12 @@ export default function Pickups() {
   //const [openPopup, setOpenPopup] = React.useState(false);
   const [dense, setDense] = useState(false);
   // const [value, setValue] = React.useState(new Date());
+  
+  const handleDateFilter = (term, rowData) => {
+    return new Date(term).setHours(0, 0, 0, 0) <= new Date(rowData.due_date)
+      ? true
+      : false;
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -250,6 +256,8 @@ export default function Pickups() {
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
+                        
+                        
                         <TableRow
                           hover
                           align="Left"
@@ -296,6 +304,15 @@ export default function Pickups() {
                         </TableRow>
                       );
                     })}
+                     {emptyRows > 0 && (
+                    <TableRow
+                      style={{
+                        height: (dense ? 33 : 53) * emptyRows,
+                      }}
+                    >
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
             </TableContainer>

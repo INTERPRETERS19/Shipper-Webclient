@@ -31,7 +31,6 @@ const initialState = {
 
 const SignUp = () => {
   const [form, setForm] = useState(initialState);
-  //const [isSignup, setIsSignup] = useState(false);
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
