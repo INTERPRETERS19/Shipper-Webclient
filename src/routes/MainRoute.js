@@ -18,6 +18,7 @@ import Profile from "../views/Profile/Profile";
 import EmailVerification from "../views/SignUp/emailVerification";
 import AddShipments from "../views/Shipments/AddShipments/AddShipments";
 import AllShipments from "../views/Shipments/AllShipments/AllShipment";
+import DeliveredShip from "../views/Shipments/DeliveredShipments/DeliveredShipments";
 const MainRoute = () => {
   return (
     <Router>
@@ -42,6 +43,10 @@ const MainRoute = () => {
           <Route path="/shipment/addshipments" element={<AddShipments />} />
           <Route path="/shipment/allshipments" element={<AllShipments />} />
           <Route path="/returns/summary" element={<RSummary />} />
+          <Route
+            path="/shipment/deliveredshipments"
+            element={<DeliveredShip />}
+          />
         </Route>
       </Routes>
     </Router>
