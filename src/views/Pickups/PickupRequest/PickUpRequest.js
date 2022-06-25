@@ -170,11 +170,6 @@ export default function Pickups() {
   const [dense, setDense] = useState(false);
   // const [value, setValue] = React.useState(new Date());
   
-  const handleDateFilter = (term, rowData) => {
-    return new Date(term).setHours(0, 0, 0, 0) <= new Date(rowData.due_date)
-      ? true
-      : false;
-  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
