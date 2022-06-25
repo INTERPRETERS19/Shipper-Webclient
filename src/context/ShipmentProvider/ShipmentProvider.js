@@ -7,6 +7,7 @@ export const ShipmentProvider = (props) => {
   const [allNewShipments, setAllNewShipments] = useState();
   const [allPickups, setAllPickups] = useState();
   const [allReturnShipments, setAllReturnShipments] = useState();
+  const [alldeliveredShipments, setAlldeliveredShipments] = useState();
 
   const currentUser = JSON.parse(localStorage.getItem("user"));
 
@@ -40,6 +41,15 @@ export const ShipmentProvider = (props) => {
         console.log("Unable to get all Pickups");
       });
   };
+  const getAlldeliveredShipments = async () => {
+    await Client.get(`/delivered/${currentUser.id}`)
+      .then((response) => {
+        setAlldeliveredShipments(response.data);
+      })
+      .catch((err) => {
+        console.log("Unable to get all Delivered shipments");
+      });
+  };
 
   const getAllReturnShipments = async () => {
     const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -62,6 +72,8 @@ export const ShipmentProvider = (props) => {
         getAllPickups,
         getAllReturnShipments,
         allReturnShipments,
+        getAlldeliveredShipments,
+        alldeliveredShipments,
       }}
     >
       {props.children}
