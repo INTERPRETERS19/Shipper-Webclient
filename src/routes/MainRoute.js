@@ -46,7 +46,7 @@ const MainRoute = () => {
           <Route path="/shipment/allshipments" element={<AllShipments />} />
           <Route
             path="/shipment/deliveredshipments"
-            element={<DeliveredShip />}
+            element={<DeliveredShip />} />
 
         </Route>
       </Routes>
