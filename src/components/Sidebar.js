@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import logo from "../../src/assets/logo.PNG";
 import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
@@ -8,6 +8,7 @@ import { IconContext } from "react-icons/lib";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { useLogin } from "../context/LoginProvider/LoginProvider";
+import userEvent from "@testing-library/user-event";
 
 const Nav = styled.div`
   background: #071a2f;
@@ -58,6 +59,8 @@ const Sidebar = () => {
   const showSidebar = () => setSidebar(!sidebar);
   const logOutPressed = () => {
     setIsLoggedIn(false);
+    localStorage.removeItem("user");
+    <Navigate to="/login" />;
   };
   return (
     <>

@@ -15,6 +15,7 @@ import NotFound from "../NotFound/NotFound";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
 import AddShipments from "../views/Shipments/AddShipments/AddShipments";
 import EmailVerification from "../views/SignUp/emailVerification";
+import Track from "../views/Shipments/Track/Track";
 
 const MainRoute = () => {
   return (
@@ -36,6 +37,7 @@ const MainRoute = () => {
           <Route path="/returns/pendingreturns" element={<PendingReturns />} />
           <Route path="/shipment/addshipments" element={<AddShipments/>}/>
           <Route path="/returns/summary" element={<RSummary/>}/>
+          <Route path="/shipments/track" element={<Track/>}/>
         </Route>
       </Routes>
     </Router>
