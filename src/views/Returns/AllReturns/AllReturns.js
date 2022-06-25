@@ -226,7 +226,6 @@ export default function AllReturns() {
     useContext(ShipmentContext);
   useEffect(() => {
     getAllReturnShipments();
-    // console.log(allShipments);
   }, []);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");

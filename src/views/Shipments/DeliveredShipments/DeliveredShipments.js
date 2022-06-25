@@ -13,9 +13,14 @@ import TableRow from "@mui/material/TableRow";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import Checkbox from "@mui/material/Checkbox";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
+import DeleteIcon from "@mui/icons-material/Delete";
 import SideBar from "../../../components/Sidebar";
+import Client from "../../../api/Client";
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
 
 function descendingComparator(a, b, orderBy) {
@@ -33,6 +38,7 @@ function getComparator(order, orderBy) {
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
+
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -53,16 +59,16 @@ const headCells = [
     label: "TRK",
   },
   {
-    id: "CreatedDate",
+    id: "RecipientName",
     numeric: false,
-    disablePadding: true,
-    label: "Created date",
+    disablePadding: false,
+    label: "Recipient Name",
   },
   {
-    id: "PickupDate",
-    numeric: false,
+    id: "Phone",
+    numeric: true,
     disablePadding: true,
-    label: "Pickup date",
+    label: "Phone Number",
   },
   {
     id: "Description",
@@ -71,20 +77,48 @@ const headCells = [
     label: "Description",
   },
   {
-    id: "Status",
+    id: "District",
     numeric: false,
     disablePadding: false,
-    label: "Status",
+    label: "District",
+  },
+  {
+    id: "City",
+    numeric: false,
+    disablePadding: false,
+    label: "City",
+  },
+  {
+    id: "COD",
+    numeric: true,
+    disablePadding: true,
+    label: "COD Amount",
+  },
+  {
+    id: "Weight",
+    numeric: false,
+    disablePadding: true,
+    label: "Weight",
   },
 ];
 
 function EnhancedTableHead(props) {
-  const { order, orderBy } = props;
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount } = props;
 
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox"></TableCell>
+        <TableCell padding="checkbox">
+          <Checkbox
+            color="primary"
+            indeterminate={numSelected > 0 && numSelected < rowCount}
+            checked={rowCount > 0 && numSelected === rowCount}
+            onChange={onSelectAllClick}
+            inputProps={{
+              "aria-label": "select new delivered",
+            }}
+          />
+        </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -110,8 +144,21 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected } = props;
-
+  const { numSelected, selectedShipments, getShipments } = props;
+  const handleDelete = async () => {
+    selectedShipments.map(async (selectedShipment) => {
+      const res = await Client.post("/delete_shipment", {
+        id: selectedShipment,
+      });
+      if (res.data.success) {
+        console.log(res.data.message);
+        // updateSelected(numSelected - 1);
+        getShipments();
+      } else {
+        console.log("Delete not successful");
+      }
+    });
+  };
   return (
     <Toolbar
       sx={{
@@ -142,8 +189,23 @@ const EnhancedTableToolbar = (props) => {
           id="tableTitle"
           component="div"
         >
-          Pickup requests
+          All Delivered Shipments
         </Typography>
+      )}
+      {numSelected > 0 ? (
+        <Tooltip title="Delete">
+          <IconButton
+            onClick={() => {
+              window.confirm(
+                "Are you sure you want to delete these shipments?"
+              ) && handleDelete();
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        ""
       )}
     </Toolbar>
   );
@@ -153,25 +215,55 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function Pickups() {
-  const { allPickups, getAllPickups } = useContext(ShipmentContext);
+export default function Alldelivered() {
+  const { alldeliveredShipments, getAlldeliveredShipments } =
+    useContext(ShipmentContext);
   useEffect(() => {
-    getAllPickups();
+    getAlldeliveredShipments();
   }, []);
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  //const [openPopup, setOpenPopup] = React.useState(false);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("calories");
+  const [selected, setSelected] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [dense, setDense] = useState(false);
-  // const [value, setValue] = React.useState(new Date());
-  
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
+  };
+
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelecteds = (
+        alldeliveredShipments !== undefined ? alldeliveredShipments.data : []
+      ).map((n) => n._id);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
+
+  const handleClick = (event, id) => {
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1)
+      );
+    }
+
+    setSelected(newSelected);
+    // console.log(selected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -193,7 +285,9 @@ export default function Pickups() {
       ? Math.max(
           0,
           (1 + page) * rowsPerPage -
-            (allPickups !== undefined ? allPickups.count : 0)
+            (alldeliveredShipments !== undefined
+              ? alldeliveredShipments.count
+              : 0)
         )
       : 0;
 
@@ -220,7 +314,7 @@ export default function Pickups() {
             <EnhancedTableToolbar
               numSelected={selected.length}
               selectedShipments={selected}
-              getShipments={getAllPickups}
+              getShipments={getAlldeliveredShipments}
               updateSelected={setSelected}
             />
             <TableContainer>
@@ -233,13 +327,19 @@ export default function Pickups() {
                   numSelected={selected.length}
                   order={order}
                   orderBy={orderBy}
-                  //   onSelectAllClick={handleSelectAllClick}
+                  onSelectAllClick={handleSelectAllClick}
                   onRequestSort={handleRequestSort}
-                  rowCount={allPickups !== undefined ? allPickups.count : 0}
+                  rowCount={
+                    alldeliveredShipments !== undefined
+                      ? alldeliveredShipments.count
+                      : 0
+                  }
                 />
                 <TableBody>
                   {stableSort(
-                    allPickups !== undefined ? allPickups.data : [],
+                    alldeliveredShipments !== undefined
+                      ? alldeliveredShipments.data
+                      : [],
                     getComparator(order, orderBy)
                   )
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -248,28 +348,24 @@ export default function Pickups() {
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
-                        
-                        
                         <TableRow
                           hover
                           align="Left"
-                          //   onClick={(event) => handleClick(event, row._id)}
+                          onClick={(event) => handleClick(event, row._id)}
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
                           key={row._id}
                           selected={isItemSelected}
                         >
-                          <TableCell padding="checkbox"></TableCell>
-
-                          <TableCell
-                            align="left"
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            padding="none"
-                          >
-                            {row.id}
+                          <TableCell padding="checkbox">
+                            <Checkbox
+                              color="primary"
+                              checked={isItemSelected}
+                              inputProps={{
+                                "aria-labelledby": labelId,
+                              }}
+                            />
                           </TableCell>
                           <TableCell
                             align="left"
@@ -280,27 +376,35 @@ export default function Pickups() {
                           >
                             {row.created_at.substring(0, 10)}
                           </TableCell>
-                          <TableCell
-                            align="left"
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            padding="none"
-                          >
-                            {row.pickup_date.substring(0, 10)}
+                          <TableCell align="left">{row.id}</TableCell>
+                          <TableCell align="left">
+                            {row.recipient_name}
+                          </TableCell>
+                          <TableCell align="left">
+                            {row.mobile_phone_number}
                           </TableCell>
                           <TableCell align="left">{row.description}</TableCell>
                           <TableCell align="left">
-                            {row.current_status}
+                            {" "}
+                            {row.receipient_address !== undefined
+                              ? ""
+                              : row.r_district}
                           </TableCell>
+                          <TableCell align="left">
+                            {" "}
+                            {row.receipient_address !== undefined
+                              ? ""
+                              : row.r_city}
+                          </TableCell>
+                          <TableCell align="left">{row.COD}</TableCell>
                         </TableRow>
                       );
                     })}
-                     {emptyRows > 0 && (
+                  {emptyRows > 0 && (
                     <TableRow
-                      style={{
-                        height: (dense ? 33 : 53) * emptyRows,
-                      }}
+                    // style={{
+                    //   height: (dense ? 33 : 53) * emptyRows,
+                    // }}
                     >
                       <TableCell colSpan={6} />
                     </TableRow>
@@ -311,7 +415,11 @@ export default function Pickups() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={allPickups !== undefined ? allPickups.count : 0}
+              count={
+                alldeliveredShipments !== undefined
+                  ? alldeliveredShipments.count
+                  : 0
+              }
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

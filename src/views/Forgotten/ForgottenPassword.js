@@ -24,8 +24,10 @@ function ForgottenPassword() {
       email: values.email,
     });
     console.log(res.data);
+
     if (res.data.success) {
       setSuccess(true);
+      console.log(res.data.link);
     } else {
       setSuccess(false);
     }
