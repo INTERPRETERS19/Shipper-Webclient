@@ -28,12 +28,17 @@ export const SidebarData = [
       },
       {
         title: "All Shipments",
-        path: "/shipments/allshipments",
+        path: "/shipment/allshipments",
         icon: <IoIcons.IoIosPaper />,
       },
       {
         title: "New Shipments",
         path: "/shipments/newshipments",
+        icon: <IoIcons.IoIosPaper />,
+      },
+      {
+        title: "Delivered Shipments",
+        path: "/shipment/deliveredshipments",
         icon: <IoIcons.IoIosPaper />,
       },
       {
@@ -100,13 +105,18 @@ export const SidebarData = [
 
     subNav: [
       {
-        title: "Edit Profile",
-        path: "/settings/prof",
+        title: "Profile",
+        path: "/profile",
         icon: <IoIcons.IoIosPaper />,
       },
       {
         title: "Change Password",
-        path: "/settings/changepassword",
+        path: "/passwordChange",
+        icon: <IoIcons.IoIosPaper />,
+      },
+      {
+        title: "Add Bank details",
+        path: "/bankdetails",
         icon: <IoIcons.IoIosPaper />,
       },
     ],

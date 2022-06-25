@@ -2,15 +2,17 @@ import { useState, createContext } from "react";
 import Client from "../../api/Client";
 
 export const ShipmentContext = createContext();
-const currentUser = JSON.parse(localStorage.getItem("user"));
 export const ShipmentProvider = (props) => {
   const [allShipments, setAllShipments] = useState();
   const [allNewShipments, setAllNewShipments] = useState();
   const [allPickups, setAllPickups] = useState();
   const [allReturnShipments, setAllReturnShipments] = useState();
+  const [alldeliveredShipments, setAlldeliveredShipments] = useState();
+
+  const currentUser = JSON.parse(localStorage.getItem("user"));
 
   const getAllShipments = async () => {
-    await Client.get("/allshipment")
+    await Client.get(`/allshipment/${currentUser.id}`)
       .then((response) => {
         setAllShipments(response.data);
       })
@@ -20,7 +22,7 @@ export const ShipmentProvider = (props) => {
   };
 
   const getAllNewShipments = async () => {
-    await Client.get(`/allnewshipment/${currentUser.id}`)
+    await Client.get(`/allNewshipment/${currentUser.id}`)
       .then((response) => {
         setAllNewShipments(response.data);
       })
@@ -30,6 +32,7 @@ export const ShipmentProvider = (props) => {
   };
 
   const getAllPickups = async () => {
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     await Client.get(`/allpickup/${currentUser.id}`)
       .then((response) => {
         setAllPickups(response.data);
@@ -38,8 +41,18 @@ export const ShipmentProvider = (props) => {
         console.log("Unable to get all Pickups");
       });
   };
+  const getAlldeliveredShipments = async () => {
+    await Client.get(`/delivered/${currentUser.id}`)
+      .then((response) => {
+        setAlldeliveredShipments(response.data);
+      })
+      .catch((err) => {
+        console.log("Unable to get all Delivered shipments");
+      });
+  };
 
   const getAllReturnShipments = async () => {
+    const currentUser = JSON.parse(localStorage.getItem("user"));
     await Client.get(`/returns/${currentUser.id}`)
       .then((response) => {
         setAllReturnShipments(response.data);
@@ -59,6 +72,8 @@ export const ShipmentProvider = (props) => {
         getAllPickups,
         getAllReturnShipments,
         allReturnShipments,
+        getAlldeliveredShipments,
+        alldeliveredShipments,
       }}
     >
       {props.children}

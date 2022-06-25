@@ -1,16 +1,13 @@
-import React from "react";
 import { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-} from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -21,16 +18,10 @@ import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import SideBar from "../../../components/Sidebar";
-import Client from "../../../api/Client";
-import { Grid, Stack } from "@mui/material";
-import { Button } from "@mui/material";
-import Popup from "../../../components/Popup";
-import TextField from "@mui/material/TextField";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
+import Client from "../../../api/Client";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -48,6 +39,8 @@ function getComparator(order, orderBy) {
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
+// This method is created for cross-browser compatibility, if you don't
+// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -68,10 +61,10 @@ const headCells = [
     label: "Created date",
   },
   {
-    id: "TRK",
+    id: "ID",
     numeric: false,
-    disablePadding: true,
-    label: "TRK",
+    disablePadding: false,
+    label: "ID",
   },
   {
     id: "RecipientName",
@@ -92,10 +85,10 @@ const headCells = [
     label: "Description",
   },
   {
-    id: "District",
+    id: "Street No",
     numeric: false,
     disablePadding: false,
-    label: "District",
+    label: "Street No",
   },
   {
     id: "City",
@@ -104,15 +97,37 @@ const headCells = [
     label: "City",
   },
   {
+    id: "District",
+    numeric: false,
+    disablePadding: false,
+    label: "District",
+  },
+  {
     id: "COD",
     numeric: true,
     disablePadding: true,
     label: "COD Amount",
   },
+  {
+    id: "Status",
+    numeric: false,
+    disablePadding: false,
+    label: "Status",
+  },
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount } = props;
+  const {
+    onSelectAllClick,
+    order,
+    orderBy,
+    numSelected,
+    rowCount,
+    onRequestSort,
+  } = props;
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
 
   return (
     <TableHead>
@@ -124,18 +139,30 @@ function EnhancedTableHead(props) {
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{
-              "aria-label": "select new request",
+              "aria-label": "select all shipments",
             }}
           />
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align="Left"
+            align={"left"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             {headCell.label}
+            {/* <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : "asc"}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {headCell.label}
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === "desc" ? "sorted descending" : "sorted ascending"}
+                </Box>
+              ) : null}
+            </TableSortLabel> */}
           </TableCell>
         ))}
       </TableRow>
@@ -153,7 +180,8 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected, selectedShipments, getShipments } = props;
+  const { numSelected, selectedShipments, getShipments, updateSelected } =
+    props;
   const handleDelete = async () => {
     selectedShipments.map(async (selectedShipment) => {
       const res = await Client.post("/delete_shipment", {
@@ -168,6 +196,7 @@ const EnhancedTableToolbar = (props) => {
       }
     });
   };
+
   return (
     <Toolbar
       sx={{
@@ -193,12 +222,12 @@ const EnhancedTableToolbar = (props) => {
         </Typography>
       ) : (
         <Typography
-          sx={{ flex: "1 1 100%", padding: 3 }}
+          sx={{ flex: "1 1 100%" }}
           variant="h6"
           id="tableTitle"
           component="div"
         >
-          New Shipments
+          All Shipments
         </Typography>
       )}
 
@@ -215,7 +244,11 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : (
-        ""
+        <Tooltip title="Filter list">
+          <IconButton>
+            <FilterListIcon />
+          </IconButton>
+        </Tooltip>
       )}
     </Toolbar>
   );
@@ -225,24 +258,18 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function NewShipments() {
-  const { allNewShipments, getAllNewShipments } = useContext(ShipmentContext);
+export default function AllShipment() {
+  const { allShipments, getAllShipments } = useContext(ShipmentContext);
   useEffect(() => {
-    getAllNewShipments();
+    getAllShipments();
     // console.log(allShipments);
   }, []);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
   const [selected, setSelected] = useState([]);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [openPopup, setOpenPopup] = useState(false);
   const [dense, setDense] = useState(false);
-  const [value, setValue] = useState(new Date());
-
-  const handleChange = (newValue) => {
-    setValue(newValue);
-  };
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -253,7 +280,7 @@ export default function NewShipments() {
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = (
-        allNewShipments !== undefined ? allNewShipments.data : []
+        allShipments !== undefined ? allShipments.data : []
       ).map((n) => n._id);
       setSelected(newSelecteds);
       return;
@@ -291,44 +318,21 @@ export default function NewShipments() {
     setPage(0);
   };
 
-  const isSelected = (id) => selected.indexOf(id) !== -1;
   const handleChangeDense = (event) => {
     setDense(event.target.checked);
   };
+
+  const isSelected = (id) => selected.indexOf(id) !== -1;
+
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
     page > 0
       ? Math.max(
           0,
           (1 + page) * rowsPerPage -
-            (allNewShipments !== undefined ? allNewShipments.count : 0)
+            (allShipments !== undefined ? allShipments.count : 0)
         )
       : 0;
-
-  const upstatus = async () => {
-    selected.map(async (selectedShipment) => {
-      const date = new Date().valueOf();
-      if (value > date) {
-        const res = await Client.post("/update_shipment", {
-          id: selectedShipment,
-          value,
-        });
-        if (res.data.success) {
-          console.log(res.data.message);
-          window.confirm("PickUp request is send to Service Provider.");
-          getAllNewShipments();
-          setOpenPopup(false);
-          setValue(new Date());
-        } else {
-          console.log("Update not successful");
-        }
-      } else {
-        window.confirm(
-          "We cannot take PickUp date as past date...Please Select appropriate date to pickup."
-        );
-      }
-    });
-  };
 
   return (
     <div
@@ -353,7 +357,7 @@ export default function NewShipments() {
             <EnhancedTableToolbar
               numSelected={selected.length}
               selectedShipments={selected}
-              getShipments={getAllNewShipments}
+              getShipments={getAllShipments}
               updateSelected={setSelected}
             />
             <TableContainer>
@@ -368,13 +372,13 @@ export default function NewShipments() {
                   orderBy={orderBy}
                   onSelectAllClick={handleSelectAllClick}
                   onRequestSort={handleRequestSort}
-                  rowCount={
-                    allNewShipments !== undefined ? allNewShipments.count : 0
-                  }
+                  rowCount={allShipments !== undefined ? allShipments.count : 0}
                 />
                 <TableBody>
+                  {/* if you don't need to support IE11, you can replace the `stableSort` call with:
+                 rows.slice().sort(getComparator(order, orderBy)) */}
                   {stableSort(
-                    allNewShipments !== undefined ? allNewShipments.data : [],
+                    allShipments !== undefined ? allShipments.data : [],
                     getComparator(order, orderBy)
                   )
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -419,19 +423,13 @@ export default function NewShipments() {
                             {row.mobile_phone_number}
                           </TableCell>
                           <TableCell align="left">{row.description}</TableCell>
-                          <TableCell align="left">
-                            {" "}
-                            {row.receipient_address !== undefined
-                              ? ""
-                              : row.r_district}
-                          </TableCell>
-                          <TableCell align="left">
-                            {" "}
-                            {row.receipient_address !== undefined
-                              ? ""
-                              : row.r_city}
-                          </TableCell>
+                          <TableCell align="left">{row.r_no_street}</TableCell>
+                          <TableCell align="left">{row.r_city}</TableCell>
+                          <TableCell align="left">{row.r_district}</TableCell>
                           <TableCell align="left">{row.COD}</TableCell>
+                          <TableCell align="left">
+                            {row.current_status}
+                          </TableCell>
                         </TableRow>
                       );
                     })}
@@ -450,67 +448,12 @@ export default function NewShipments() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={allNewShipments !== undefined ? allNewShipments.count : 0}
+              count={allShipments !== undefined ? allShipments.count : 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
-            <Grid sx={{ padding: "15px", paddingLeft: "85%" }}>
-              <Button
-                sx={{ padding: "10px" }}
-                variant="contained"
-                onClick={() => setOpenPopup(true)}
-              >
-                Pickup Request
-              </Button>
-            </Grid>
-            <Popup openPopup={openPopup} setOpenPopup={setOpenPopup}>
-              <Stack>
-                <div>
-                  <p>Please select your convenient Date and time to PickUp</p>
-                  <br></br>
-                </div>
-              </Stack>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Paper>
-                  <Stack spacing={8}>
-                    <DateTimePicker
-                      disableToolbar
-                      variant="inline"
-                      inputVariant="outlined"
-                      value={value}
-                      onChange={handleChange}
-                      // inputFormat="dd/mm/yyyy hh:mm"
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </Stack>
-                </Paper>
-              </LocalizationProvider>
-              <Stack
-                sx={{
-                  padding: "15px",
-                  paddingLeft: "35%",
-                }}
-                spacing={2}
-                direction="row"
-              >
-                <Button
-                  sx={{ padding: "10px" }}
-                  variant="outlined"
-                  onClick={() => setOpenPopup(false)}
-                >
-                  Cancle
-                </Button>
-                <Button
-                  sx={{ padding: "10px" }}
-                  variant="contained"
-                  onClick={upstatus}
-                >
-                  Pickup Request
-                </Button>
-              </Stack>
-            </Popup>
           </Paper>
         </div>
         <FormControlLabel

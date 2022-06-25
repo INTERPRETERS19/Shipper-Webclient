@@ -5,10 +5,11 @@ import { useLocation, Navigate } from "react-router-dom";
 const ProtectedRoutes = () => {
   const { isLoggedIn } = useLogin();
   const location = useLocation();
-  return isLoggedIn ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/login" replace state={{ from: location }} />
-  );
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  if (!currentUser) {
+    return <Navigate to="/login" replace state={{ from: location }} />;
+  }
+  return <Outlet />;
 };
+
 export default ProtectedRoutes;

@@ -20,6 +20,7 @@ const Home = () => {
   const [OutForDelivery, setOutForDelivery] = useState(0);
   const [New, setNew] = useState(0);
   const [Delivered, setDelivered] = useState(0);
+  const [Recievable, setRecievable] = useState(0);
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const returnsummary = [
     {
@@ -35,7 +36,7 @@ const Home = () => {
       val:Delivered,
     },
     {
-      return: "Return",
+      return: "Fail To Deliver",
       val: FailtoDeliver,
     },
     {
@@ -53,8 +54,22 @@ const Home = () => {
       const res = await Client.get(`getpending/${currentUser.id}`);
       if (res.data.success) {
         setPending(res.data.count);
-        console.log(res.data.count);
-        // setCount(res.data.count);
+        console.log("Success");
+      } else {
+        console.log("Failed");
+    
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getrecievable = async () => {
+    try {
+      const res = await Client.get(`getRecievable/${currentUser.id}`);
+      if (res.data.success) {
+        setRecievable(res.data.total);
+        console.log(res.data.total);
         console.log("Success");
         console.log(pending);
       } else {
@@ -92,10 +107,10 @@ const Home = () => {
         console.log(res.data.count);
         // setCount(res.data.count);
         console.log("Success");
-        console.log(pending);
+       
       } else {
         console.log("Failed");
-        console.log(pending);
+      
       }
     } catch (error) {
       console.log(error);
@@ -110,10 +125,9 @@ const Home = () => {
         console.log(res.data.count);
         // setCount(res.data.count);
         console.log("Success");
-        console.log(pending);
       } else {
         console.log("Failed");
-        console.log(pending);
+
       }
     } catch (error) {
       console.log(error);
@@ -128,10 +142,10 @@ const Home = () => {
         console.log(res.data.count);
         // setCount(res.data.count);
         console.log("Success");
-        console.log(pending);
+       
       } else {
         console.log("Failed");
-        console.log(pending);
+     
       }
     } catch (error) {
       console.log(error);
@@ -146,10 +160,10 @@ const Home = () => {
         console.log(res.data.count);
         // setCount(res.data.count);
         console.log("Success");
-        console.log(pending);
+      
       } else {
         console.log("Failed");
-        console.log(pending);
+       
       }
     } catch (error) {
       console.log(error);
@@ -164,10 +178,10 @@ const Home = () => {
         console.log(res.data.count);
         // setCount(res.data.count);
         console.log("Success");
-        console.log(pending);
+       
       } else {
         console.log("Failed");
-        console.log(pending);
+      
       }
     } catch (error) {
       console.log(error);
@@ -181,6 +195,10 @@ const Home = () => {
 
   useEffect(() => {
     getpendings();
+  }, []);
+
+  useEffect(() => {
+    getrecievable();
   }, []);
 
   useEffect(() => {
@@ -241,7 +259,7 @@ const Home = () => {
             <div className="wid">
               <h3>Cash Receivables</h3>
               <CreditScoreIcon sx={{ fontSize: "40px" }} />
-              <div className="value">LKR 366</div>
+              <div className="value">LKR {Recievable}</div>
             </div>
           </div>
 
