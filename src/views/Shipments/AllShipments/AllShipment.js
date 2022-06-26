@@ -149,6 +149,7 @@ function EnhancedTableHead(props) {
             align={"left"}
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
+            sx={{ fontWeight: 900 }}
           >
             {headCell.label}
             {/* <TableSortLabel
@@ -189,7 +190,6 @@ const EnhancedTableToolbar = (props) => {
       });
       if (res.data.success) {
         console.log(res.data.message);
-        // updateSelected(numSelected - 1);
         getShipments();
       } else {
         console.log("Delete not successful");
@@ -223,11 +223,11 @@ const EnhancedTableToolbar = (props) => {
       ) : (
         <Typography
           sx={{ flex: "1 1 100%" }}
-          variant="h6"
+          variant="h4"
           id="tableTitle"
           component="div"
         >
-          All Shipments
+          <b>All Shipments</b>
         </Typography>
       )}
 
@@ -262,7 +262,6 @@ export default function AllShipment() {
   const { allShipments, getAllShipments } = useContext(ShipmentContext);
   useEffect(() => {
     getAllShipments();
-    // console.log(allShipments);
   }, []);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
@@ -348,7 +347,7 @@ export default function AllShipment() {
         <div style={{ paddingTop: 140 }}>
           <Paper
             sx={{
-              width: "70%",
+              width: "72%",
               display: "flex",
               flexDirection: "column",
               marginLeft: 45,
