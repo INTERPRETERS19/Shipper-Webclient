@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "./ChangePassword.css";
 import Client from "../../api/Client";
-import login from "../../assets/login.jpg";
+import login from "../../assets/1.png";
 import logo from "../../assets/logo2.PNG";
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";

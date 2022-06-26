@@ -19,7 +19,10 @@ import Report from "../views/Returns/Reports/Reports";
 import Profile from "../views/Profile/Profile";
 import UpdateProfile from "../views/Profile/UpdateProfile";
 import EmailVerification from "../views/SignUp/emailVerification";
+import Track from "../views/Shipments/Track/Track";
 import AllShipments from "../views/Shipments/AllShipments/AllShipment";
+import DeliveredShip from "../views/Shipments/DeliveredShipments/DeliveredShipments";
+
 const MainRoute = () => {
   return (
     <Router>
@@ -40,12 +43,19 @@ const MainRoute = () => {
           <Route path="returns/reports" element={<Report />} />
           <Route path="/pickups/pickuprequests" element={<Pickups />} />
           <Route path="/returns/allreturns" element={<AllReturns />} />
+
           <Route path="/bankdetails" element={<BankDetails />} />
           <Route path="/profile/profile" element={<Profile />} />
           <Route path="/profile/updateprofile" element={<UpdateProfile />} />
           <Route path="/shipment/addshipments" element={<AddShipments />} />
+          <Route path="/shipments/track" element={<Track />} />
           <Route path="/shipment/allshipments" element={<AllShipments />} />
           <Route path="/returns/summary" element={<RSummary />} />
+          <Route path="/shipments/track" element={<Track />} />
+          <Route
+            path="/shipment/deliveredshipments"
+            element={<DeliveredShip />}
+          />
         </Route>
       </Routes>
     </Router>

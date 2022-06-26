@@ -1,28 +1,79 @@
 .GetStarted {
-  margin: 0;
-  background-color: #001e3c;
   height: 100vh;
+  display: flex;
+  flex-direction: row;
 }
-.GetStarted .titles {
-  align-items: center;
+
+.GetStarted .l {
   display: flex;
   flex-direction: column;
-  padding: 30px;
-  height: 80vh;
-  justify-content: center;
+  max-width: 800px;
+  width: 70%;
+  height: 100vh;
+  align-items: center;
+  background-color: rgb(250, 250, 250);
+}
+.GetStarted .r {
+  flex-grow: 1;
+  height: 100vh;
 }
 .GetStarted .firstline {
   font-size: 40px;
+  display: flex;
+  flex-direction: column;
   font-weight: 700;
-  width: 800px;
-  text-align: center;
+  justify-content: center;
+  width: 700px;
+  height: 100vh;
+  text-align: left;
   padding: 20px;
-  color: rgb(161, 161, 161);
+  color: rgb(6, 14, 48);
 }
-.GetStarted .titles p {
-  font-size: 22px;
-  font-weight: 100;
-  width: 900px;
+.GetStarted .first p {
+  line-height: 40px;
+}
+.GetStarted .para p {
+  font-size: 21px;
+  width: 700px;
+  font-weight: 400;
+  margin-top: 2%;
+  line-height: 30px;
+  text-align: left;
+  color: #808080;
+}
+.GetStarted .get {
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-delay: 2s;
+}
+
+@keyframes example {
+  0% {
+    background-color: rgb(206, 206, 206);
+  }
+  25% {
+    background-color: rgb(158, 158, 158);
+  }
+  50% {
+    background-color: rgb(95, 95, 95);
+  }
+  75% {
+    background-color: rgb(54, 54, 54);
+  }
+  100% {
+    background-color: rgb(32, 32, 32);
+  }
+}
+
+.GetStarted .get img {
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-items: center;
   text-align: center;
-  color: #fff;
+  align-content: center;
+  padding-left: 10%;
 }
