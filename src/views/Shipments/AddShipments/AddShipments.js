@@ -119,7 +119,7 @@ const AddShipments = () => {
           <Typography variant="h4" style={{ paddingTop: "20px" }}>
             Add Shipments
           </Typography>
-          <br/>
+          <br />
           <div className="formBox">
             <form onSubmit={formik.handleSubmit}>
               <Grid container spacing={10}>
@@ -433,6 +433,7 @@ const AddShipments = () => {
                   </TextField>
                 </Grid>
               </Grid>
+              <br/>
               <div className="button_align">
                 {/* <Button
                   color="primary"
@@ -452,8 +453,7 @@ const AddShipments = () => {
                   disabled={formik.isSubmitting}
                   sx={{
                     minWidth: "200px",
-                    textTransform: "none",
-                    display: "flex",
+                    textTransform: "none"
                   }}
                   size="large"
                   type="submit"

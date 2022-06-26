@@ -37,13 +37,18 @@ export const SidebarData = [
         icon: <IoIcons.IoIosPaper />,
       },
       {
-        title: "Track",
-        path: "/reports/reports3",
+        title: "Delivered Shipments",
+        path: "/shipment/deliveredshipments",
+        icon: <IoIcons.IoIosPaper />,
+      },
+      {
+        title: "Track Bulk",
+        path: "/shipments/track",
         icon: <IoIcons.IoIosPaper />,
       },
       {
         title: "Reports",
-        path: "/reports/reports3",
+        path: "/shipments/reports",
         icon: <IoIcons.IoIosPaper />,
       },
     ],
@@ -100,8 +105,8 @@ export const SidebarData = [
 
     subNav: [
       {
-        title: "Profile",
-        path: "/profile",
+        title: "Update Profile",
+        path: "/profile/updateprofile",
         icon: <IoIcons.IoIosPaper />,
       },
       {
