@@ -1,5 +1,10 @@
+.GetStartedinside {
+  height: 250vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .GetStarted {
-  height: 100vh;
   display: flex;
   flex-direction: row;
 }
@@ -16,7 +21,29 @@
 .GetStarted .r {
   flex-grow: 1;
   height: 100vh;
+  display: flex;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-delay: 2s;
 }
+@keyframes example {
+  0% {
+    background-color: rgb(206, 206, 206);
+  }
+  25% {
+    background-color: rgb(158, 158, 158);
+  }
+  50% {
+    background-color: rgb(95, 95, 95);
+  }
+  75% {
+    background-color: rgb(54, 54, 54);
+  }
+  100% {
+    background-color: rgb(32, 32, 32);
+  }
+}
+
 .GetStarted .firstline {
   font-size: 40px;
   display: flex;
@@ -45,27 +72,6 @@
   height: 100vh;
   display: flex;
   flex-direction: row;
-  animation-name: example;
-  animation-duration: 4s;
-  animation-delay: 2s;
-}
-
-@keyframes example {
-  0% {
-    background-color: rgb(206, 206, 206);
-  }
-  25% {
-    background-color: rgb(158, 158, 158);
-  }
-  50% {
-    background-color: rgb(95, 95, 95);
-  }
-  75% {
-    background-color: rgb(54, 54, 54);
-  }
-  100% {
-    background-color: rgb(32, 32, 32);
-  }
 }
 
 .GetStarted .get img {
@@ -76,4 +82,44 @@
   text-align: center;
   align-content: center;
   padding-left: 10%;
+}
+.GetStartedinside .reviewheader h1 {
+  color: rgb(0, 0, 0);
+  text-align: center;
+  width: "60%";
+  padding: 20px;
+}
+.review {
+  background-color: rgba(65, 137, 185, 0.2);
+  box-shadow: 0 0 0 1px rgba(38, 72, 116, 0.2),
+    0.1em 0.1em 0.6em rgba(31, 95, 168, 0.3);
+}
+.reviewheader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+}
+
+.GetStartedinside .para2 {
+  font-size: 24px;
+  color: rgb(0, 0, 0);
+  padding: 10px;
+  text-align: center;
+  justify-content: center;
+  width: 60%;
+  align-self: center;
+}
+.footerX {
+  background-color: #000;
+  color: rgb(223, 223, 223);
+  text-align: center;
+  margin-bottom: 0;
+  padding: 20px;
+  margin-top: 1rem;
+  padding: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
