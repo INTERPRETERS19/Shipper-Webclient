@@ -53,6 +53,12 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
+    id: "Created at",
+    numeric: false,
+    disablePadding: true,
+    label: "Created at",
+  },
+  {
     id: "TRK",
     numeric: false,
     disablePadding: true,
@@ -93,12 +99,6 @@ const headCells = [
     numeric: true,
     disablePadding: true,
     label: "COD Amount",
-  },
-  {
-    id: "Weight",
-    numeric: false,
-    disablePadding: true,
-    label: "Weight",
   },
 ];
 
