@@ -38,16 +38,18 @@ const MainRoute = () => {
           <Route path="shipments/newshipments" element={<NewShipments />} />
           <Route path="/pickups/pickuprequests" element={<Pickups />} />
           <Route path="/returns/allreturns" element={<AllReturns />} />
-          <Route path="/shipment/addshipments" element={<AddShipments/>}/>
-          <Route path="/returns/summary" element={<RSummary/>}/>
-          <Route path="/shipments/track" element={<Track/>}/>
+          <Route path="/shipment/addshipments" element={<AddShipments />} />
+          <Route path="/returns/summary" element={<RSummary />} />
+          <Route path="/shipments/track" element={<Track />} />
           <Route path="/bankdetails" element={<BankDetails />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/shipment/allshipments" element={<AllShipments />} />
+          <Route path="/returns/summary" element={<RSummary />} />
+          <Route path="/shipments/track" element={<Track />} />
           <Route
             path="/shipment/deliveredshipments"
-            element={<DeliveredShip />} />
-
+            element={<DeliveredShip />}
+          />
         </Route>
       </Routes>
     </Router>
