@@ -257,7 +257,7 @@ const Home = () => {
                 id="pie"
                 type="doughnut"
                 title="Shipment Summary"
-                palette="Soft Pastel"
+                palette="Ocean"
                 dataSource={returnsummary}
               >
                 <Series argumentField="return"></Series>
