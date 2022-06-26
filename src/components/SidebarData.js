@@ -48,7 +48,7 @@ export const SidebarData = [
       },
       {
         title: "Reports",
-        path: "/reports/reports3",
+        path: "/shipments/reports",
         icon: <IoIcons.IoIosPaper />,
       },
     ],
@@ -96,6 +96,26 @@ export const SidebarData = [
   },
 
   {
+    title: "Profile",
+    path: "sh",
+    icon: <IoIcons.IoMdPeople />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: "Profile",
+        path: "/profile/profile",
+        icon: <IoIcons.IoIosPaper />,
+        cName: "sub-nav",
+      },
+      {
+        title: "Update Profile",
+        path: "/profile/updateprofile",
+        icon: <IoIcons.IoIosPaper />,
+      },
+    ],
+  },
+  {
     title: "Account Settings",
     path: "sh",
     icon: <FaIcons.FaEnvelopeOpenText />,
@@ -104,11 +124,12 @@ export const SidebarData = [
     iconOpened: <RiIcons.RiArrowUpSFill />,
 
     subNav: [
-      {
-        title: "Profile",
-        path: "/profile",
-        icon: <IoIcons.IoIosPaper />,
-      },
+      // {
+      //   title: "Profile",
+      //   path: "/profile",
+      //   icon: <IoIcons.IoIosPaper />,
+      // },
+      
       {
         title: "Change Password",
         path: "/passwordChange",
@@ -120,5 +141,7 @@ export const SidebarData = [
         icon: <IoIcons.IoIosPaper />,
       },
     ],
+
+    
   },
 ];

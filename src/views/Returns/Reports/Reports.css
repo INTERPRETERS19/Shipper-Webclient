@@ -1,0 +1,14 @@
+.ReportS {
+    min-height: 100vh;
+    max-height: 100%;
+    background-color: #e5e9ef;
+  }
+  
+  .ReportS .mainS {
+    margin-left: 280px;
+    max-height: 100vh;
+    padding-top: 50px;
+  }
+  .ReportS .title {
+    padding: 30px;
+  }

@@ -25,8 +25,6 @@ const Profile = () => {
     if (res.data.success) {
       setProfile(res.data.data);
       console.log(res.data);
-      console.log(res.data.data.email);
-      console.log(profile.email);
       console.log("Success");
     } else {
       console.log("Failed");
@@ -86,7 +84,7 @@ const Profile = () => {
                         <TableRow>{profile.street} </TableRow>
                         <TableRow>{profile.city} </TableRow>
                         <TableRow>{profile.district} </TableRow> */}
-                        <Info detail="E-mail" value={profile.email} />
+
                         <Info detail="First Name" value={profile.firstName} />
                         <Info detail="Last Name" value={profile.lastName} />
                         <Info
@@ -104,16 +102,11 @@ const Profile = () => {
                 <br />
                 <Button
                   variant="contained"
+                  href={`/profile/updateprofile`}
                   endIcon={<EditRoundedIcon />}
-                  sx={{
-                    backgroundColor: "rgba(65, 137, 185, 0.8)",
-                    width: "80%",
-                    textAlign: "center",
-                    justifyContent: "center",
-                    height: 50,
-                    alignSelf: "center",
-                  }}
+                  sx={{ backgroundColor: "#0466c8" }}
                 >
+                  {" "}
                   Update User
                 </Button>
               </>
