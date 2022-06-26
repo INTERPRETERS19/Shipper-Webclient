@@ -22,6 +22,7 @@ import Track from "../views/Shipments/Track/Track";
 import AllShipments from "../views/Shipments/AllShipments/AllShipment";
 import DeliveredShip from "../views/Shipments/DeliveredShipments/DeliveredShipments";
 import Review from "../views/GetStarted/Review";
+import AddShipments from "../views/Shipments/AddShipments/AddShipments"
 
 const MainRoute = () => {
   return (
@@ -44,7 +45,6 @@ const MainRoute = () => {
           <Route path="returns/reports" element={<Report />} />
           <Route path="/pickups/pickuprequests" element={<Pickups />} />
           <Route path="/returns/allreturns" element={<AllReturns />} />
-
           <Route path="/bankdetails" element={<BankDetails />} />
           <Route path="/profile/profile" element={<Profile />} />
           <Route path="/profile/updateprofile" element={<UpdateProfile />} />
@@ -57,7 +57,6 @@ const MainRoute = () => {
           <Route path="/returns/summary" element={<RSummary />} />
           <Route path="/shipments/track" element={<Track />} />
           <Route path="/bankdetails" element={<BankDetails />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/shipment/allshipments" element={<AllShipments />} />
           <Route
             path="/shipment/deliveredshipments"

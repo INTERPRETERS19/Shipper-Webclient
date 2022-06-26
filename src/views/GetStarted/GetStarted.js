@@ -2,7 +2,7 @@ import React from "react";
 import "./GetStarted.css";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 
 import Getstarted from "../../assets/3.png";
 
@@ -44,32 +44,10 @@ const GetStarted = () => {
       </div>
       <div className="r">
         <div className="get">
-          <img src={Getstarted} alt="logo" height={650} />
-        </div>
-          Everything you need to super power your delivery operation
-        </div>
-        <p>
-          Powerful and tested on the field features for your customers, and all
-          your teams including admins, delivery hub staff, and delivery drivers
-        </p>
+          <div>
+          <img src={Getstarted} alt="logo" height={650} /></div>
+          <div>
         <Button
-          variant="contained"
-          onClick={() => navigate("/login")}
-          sx={{
-            backgroundColor: "#112c48",
-            margin: 6,
-            padding: 3,
-            gap: 9.7,
-            height: 38.27,
-            borderRadius: 3,
-            // textDecoration: "none",
-          }}
-        >
-          Get Started
-        </Button>
-      </div>
-      <div>
-      <Button
           variant="contained"
           onClick={() => navigate("/review")}
           sx={{
@@ -78,14 +56,20 @@ const GetStarted = () => {
             padding: 3,
             gap: 1,
             height: 30,
-            borderRadius: 3,
-            float: "right"
-            // textDecoration: "none",
+            borderRadius: 1,
+            float: "right",
+            marginTop: 5
           }}
           endIcon={<DoubleArrowIcon />}
         >
-          Add Review</Button>
+          Add Review
+        </Button>
       </div>
+        </div>
+        
+      </div>
+      
+   
     </div>
   );
 };
