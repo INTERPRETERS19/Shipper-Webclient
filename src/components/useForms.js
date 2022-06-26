@@ -8,7 +8,7 @@ export default function useForms(initialValues) {
     const { name, value } = e.target;
     setValues({
       ...values,
-      [name]: value,
+      [name]: value.toLowerCase(),
     });
   };
 
