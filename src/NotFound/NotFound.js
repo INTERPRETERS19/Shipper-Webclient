@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.PNG";
 import { useLogin } from "../context/LoginProvider/LoginProvider";
 import "./NotFound.css";
 
@@ -29,7 +28,6 @@ const NotFound = () => {
   return (
     <div className="page_404">
       <div className="logo">
-        <img src={logo} alt="logo" height={80} />
         <div className="container">
           <div className="row">
             <div className="col-sm-12 ">

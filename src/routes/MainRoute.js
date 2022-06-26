@@ -11,6 +11,7 @@ import ResetPassword from "../views/ResetPassword/ResetPassword";
 import AllReturns from "../views/Returns/AllReturns/AllReturns";
 import NewShipments from "../views/Shipments/NewShipments/NewShipments";
 import RSummary from "../views/Returns/Summary/Summary";
+import Track from "../views/Shipments/Track/Track";
 import NotFound from "../NotFound/NotFound";
 import BankDetails from "../views/BankDetails/BankDetails";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
@@ -42,6 +43,7 @@ const MainRoute = () => {
           <Route path="/shipment/addshipments" element={<AddShipments />} />
           <Route path="/shipment/allshipments" element={<AllShipments />} />
           <Route path="/returns/summary" element={<RSummary />} />
+          <Route path="/shipments/track" element={<Track />} />
         </Route>
       </Routes>
     </Router>
