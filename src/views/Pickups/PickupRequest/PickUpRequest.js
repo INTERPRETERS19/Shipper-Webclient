@@ -17,6 +17,8 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import SideBar from "../../../components/Sidebar";
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -126,6 +128,7 @@ const EnhancedTableToolbar = (props) => {
         }),
       }}
     >
+
       {numSelected > 0 ? (
         <Typography
           sx={{ flex: "1 1 100%" }}
@@ -145,6 +148,7 @@ const EnhancedTableToolbar = (props) => {
           Pickup requests
         </Typography>
       )}
+
     </Toolbar>
   );
 };
@@ -165,8 +169,43 @@ export default function Pickups() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   //const [openPopup, setOpenPopup] = React.useState(false);
   const [dense, setDense] = useState(false);
+  const [searchInput, setSearchInput] = useState();
+  const [isSearched, setIsSearched] = useState(false);
+  const [filteredValue, setFilteredValue] = useState();
   // const [value, setValue] = React.useState(new Date());
-  
+  const searchItems = (searchValue) => {
+    //console.log(searchValue);
+    setFilteredValue(allPickups.data);
+    setSearchInput(searchValue);    
+    switchMode();
+  };
+  const switchMode = () => {
+    setIsSearched((previsSearched) => !previsSearched);
+  };
+  const DonePressed = () => {
+    if (searchInput !== "") {
+       
+      console.log(isSearched);
+      console.log(allPickups.data);
+      console.log();
+
+      const filtered = allPickups.data.filter(obj => {
+        return obj.pickup_date.substring(0, 10) === searchInput;
+      });
+      setFilteredValue(filtered);
+      switchMode();
+      console.log(filteredValue.length);
+      console.log(filteredValue);
+
+
+    } else {
+      switchMode();
+      console.log(allPickups.data);
+      console.log(isSearched);
+    }
+  };
+
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -191,10 +230,12 @@ export default function Pickups() {
   const emptyRows =
     page > 0
       ? Math.max(
-          0,
-          (1 + page) * rowsPerPage -
-            (allPickups !== undefined ? allPickups.count : 0)
-        )
+        0,
+        (1 + page) * rowsPerPage -// (allPickups !== undefined ? allPickups.count : 0)
+         (isSearched?(filteredValue !== undefined ? filteredValue.length : 0):
+         (allPickups !== undefined ? allPickups.count : 0))
+
+      )
       : 0;
 
   return (
@@ -223,23 +264,43 @@ export default function Pickups() {
               getShipments={getAllPickups}
               updateSelected={setSelected}
             />
+            <div className="Search">
+              <TextField
+                id="outlined-search"
+                //label="Search..."
+                type="date"
+                sx={{
+                  alignSelf: "flex-end",
+                  float: "right",
+                  width: "300px",
+                  marginRight: "50px",
+                }}
+                onChange={(e) => searchItems(e.target.value)}
+              />
+              <Button onClick={DonePressed}>search</Button>
+            </div>
             <TableContainer>
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
-                // size={dense ? "small" : "medium"}
+              // size={dense ? "small" : "medium"}
               >
+
                 <EnhancedTableHead
                   numSelected={selected.length}
                   order={order}
                   orderBy={orderBy}
                   //   onSelectAllClick={handleSelectAllClick}
                   onRequestSort={handleRequestSort}
-                  rowCount={allPickups !== undefined ? allPickups.count : 0}
+                  rowCount=//{allPickups !== undefined ? allPickups.count : 0}
+                  {(isSearched?(filteredValue !== undefined ? filteredValue.length : 0):
+                  (allPickups !== undefined ? allPickups.count : 0))}
                 />
+
                 <TableBody>
                   {stableSort(
-                    allPickups !== undefined ? allPickups.data : [],
+                   (isSearched? (filteredValue !== undefined ? filteredValue : []):
+                   (allPickups !== undefined ? allPickups.data : [])),
                     getComparator(order, orderBy)
                   )
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -248,8 +309,8 @@ export default function Pickups() {
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
-                        
-                        
+
+
                         <TableRow
                           hover
                           align="Left"
@@ -296,7 +357,7 @@ export default function Pickups() {
                         </TableRow>
                       );
                     })}
-                     {emptyRows > 0 && (
+                  {emptyRows > 0 && (
                     <TableRow
                       style={{
                         height: (dense ? 33 : 53) * emptyRows,
@@ -311,7 +372,8 @@ export default function Pickups() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={allPickups !== undefined ? allPickups.count : 0}
+              count={(isSearched?(filteredValue !== undefined ? filteredValue.length : 0):
+                (allPickups !== undefined ? allPickups.count : 0))}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

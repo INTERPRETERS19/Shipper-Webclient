@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import {
   Typography,
   Container,
@@ -12,10 +11,13 @@ import Input from "./input";
 import Client from "../../api/Client";
 import { useNavigate } from "react-router-dom";
 import {
+  isPassword,
   isValidEmail,
   isValidObjField,
   updateError,
 } from "../../components/Models/validation";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 const initialState = {
   firstName: "",
@@ -43,14 +45,16 @@ const SignUp = () => {
       return updateError("Required all fields!", setError);
 
     if (!isValidEmail(form.email))
-      return updateError("Invalid email!", setError);
+      return updateError("Please enter a valid email!", setError);
 
-    if (!form.password.trim() || form.password.length < 8) {
-      return updateError("Password is too short!", setError);
-    }
+    // if (!form.password.trim() || form.password.length < 8) {
+    //   return updateError("Password must contain minimum of 8 characters!", setError);
+    // }
     if (form.password !== form.confirmPassword) {
-      return updateError("Passwords are mismatch!", setError);
+      return updateError("Passwords does not match!", setError);
     }
+    if (!isPassword(form.password))
+      return updateError("Password must contain Minimum eight characters, at least one letter, one number and one special character!", setError);
 
     return true;
   };
@@ -68,6 +72,15 @@ const SignUp = () => {
           const res = await Client.post("/requestEmailVerification", {
             email: responces.data.message.email,
           });
+          {
+            res.success && (
+              <Alert severity="info">
+                <AlertTitle>Success</AlertTitle>
+                verifcation email sent successfully —{" "}
+                <strong>check it out!</strong>
+              </Alert>
+            )
+          }
           return res;
         } else {
           return updateError("User already exist", setError);

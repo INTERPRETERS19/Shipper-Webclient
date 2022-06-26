@@ -16,7 +16,7 @@ const GetStarted = () => {
       token: searchParams.get("token"),
     });
     if (res.data) {
-      navigate("/home");
+      navigate("/login");
     } else {
       setError(true);
     }
