@@ -17,7 +17,7 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 
 const images = [
   {
-    url: 'https://images.app.goo.gl/qU1EZiPVMFHCvyDr9',
+    url: "./delivery.jpg",
     title: "Review Here",
     width: "100%",
   },
@@ -39,7 +39,7 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
       opacity: 0,
     },
     "& .MuiTypography-root": {
-      border: "4px solid currentColor",
+      border: "5px solid currentColor",
     },
   },
 }));
@@ -125,7 +125,7 @@ export default function Review() {
     <Box sx={{ display: "flex", flexWrap: "wrap", width: "100%" }}>
       {images.map((image) => (
         <Popup
-          contentStyle={{ width: "300px", height: "450px" }}
+          contentStyle={{ width: "400px", height: "450px" }}
           trigger={
             <ImageButton
               focusRipple
@@ -134,7 +134,11 @@ export default function Review() {
                 width: image.width,
               }}
             >
-              <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
+              <ImageSrc
+                style={{
+                  backgroundImage: `url("https://img.freepik.com/free-photo/blurred-view-corridor-with-plants_1203-1080.jpg?t=st=1656269987~exp=1656270587~hmac=9ef9a1ec38323453602ae5855e1ffb6128c29845cd89cfbf2dcdba10e0f1e489&w=996")`,
+                }}
+              />
               <ImageBackdrop className="MuiImageBackdrop-root" />
               <Image>
                 <Typography
@@ -143,6 +147,9 @@ export default function Review() {
                   color="inherit"
                   sx={{
                     position: "relative",
+                    fontSize: "20px",
+                    // backgroundColor: 'rgb(0, 0, 255);opacity:0.3;',
+                    // color: 'rgb(0, 0, 0);opacity:0;',
                     p: 4,
                     pt: 2,
                     pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
@@ -158,7 +165,7 @@ export default function Review() {
         >
           <form onSubmit={formik.handleSubmit}>
             <center>
-              <div>
+              <div style={{ paddingTop: "20px" }}>
                 {" "}
                 <br />
                 <TextField
@@ -170,9 +177,10 @@ export default function Review() {
                   label="Your Name Here"
                   variant="filled"
                   onChange={formik.handleChange}
+                  sx={{ width: "300px" }}
                 />
               </div>
-              <br/>
+              <br />
               <div>
                 <TextField
                   error={Boolean(formik.touched.email && formik.errors.email)}
@@ -183,15 +191,17 @@ export default function Review() {
                   label="Your Email address"
                   variant="filled"
                   onChange={formik.handleChange}
+                  sx={{ width: "300px" }}
                 />
               </div>
-              <br/>
+              <br />
               <div>
                 <TextField
                   id="filled-multiline-static"
                   label="Write your review here"
                   value={formik.values.comment}
                   onChange={formik.handleChange}
+                  sx={{ width: "300px" }}
                   name="comment"
                   multiline
                   rows={2}
@@ -209,9 +219,9 @@ export default function Review() {
                 helperText={formik.touched.rating && formik.errors.rating}
                 value={formik.values.rating}
                 onChange={formik.handleChange}
-                sx={{ padding: "15px" }}
+                sx={{ padding: "20px" }}
               />
-            </div><br />
+            </div>
             <center>
               <Button
                 type="submit"
@@ -229,7 +239,7 @@ export default function Review() {
         <br />
         <br />
         <br />
-        <br />
+
         <Button
           variant="contained"
           onClick={() => navigate("/")}
@@ -245,6 +255,21 @@ export default function Review() {
         >
           Go Back
         </Button>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            float: "right",
+            paddingLeft: "300px",
+            flexDirection: "row",
+          }}
+        >
+          <Typography sx={{ fontSize: "30px", fontStyle: "italic" }}>
+            {" "}
+            "We all need people who will give us feedback. That's how we
+            improve."
+          </Typography>
+        </div>
       </div>
     </Box>
   );
