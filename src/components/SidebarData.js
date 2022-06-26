@@ -42,7 +42,7 @@ export const SidebarData = [
         icon: <IoIcons.IoIosPaper />,
       },
       {
-        title: "Track",
+        title: "Track Bulk",
         path: "/shipments/track",
         icon: <IoIcons.IoIosPaper />,
       },

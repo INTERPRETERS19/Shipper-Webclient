@@ -2,6 +2,8 @@ import React from "react";
 import "./GetStarted.css";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+
 
 const GetStarted = () => {
   const navigate = useNavigate();
@@ -31,6 +33,24 @@ const GetStarted = () => {
         >
           Get Started
         </Button>
+      </div>
+      <div>
+      <Button
+          variant="contained"
+          onClick={() => navigate("/review")}
+          sx={{
+            backgroundColor: "#112c48",
+            marginRight: 7,
+            padding: 3,
+            gap: 1,
+            height: 30,
+            borderRadius: 3,
+            float: "right"
+            // textDecoration: "none",
+          }}
+          endIcon={<DoubleArrowIcon />}
+        >
+          Add Review</Button>
       </div>
     </div>
   );
