@@ -31,11 +31,6 @@ function Login() {
 
     if (!isValidEmail(values.email))
       return updateError("Invalid email!", setError);
-
-    if (!values.password.trim() || values.password.length < 8) {
-      return updateError("Password is too short!", setError);
-    }
-
     return true;
   };
 
@@ -47,14 +42,10 @@ function Login() {
         if (responces.data.success) {
           setProfile(responces.data.user);
           localStorage.setItem("user", JSON.stringify(responces.data.user));
-          console.log(profile);
           setIsLoggedIn(true);
           navigate("/home");
         } else {
-          return updateError(
-            "Your User name Or Password is incorrect",
-            setError
-          );
+          return updateError(responces.data.message, setError);
         }
       } catch (error) {
         console.log(error);

@@ -45,10 +45,30 @@
   height: 100vh;
   display: flex;
   flex-direction: row;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-delay: 2s;
 }
+
+@keyframes example {
+  0% {
+    background-color: rgb(206, 206, 206);
+  }
+  25% {
+    background-color: rgb(158, 158, 158);
+  }
+  50% {
+    background-color: rgb(95, 95, 95);
+  }
+  75% {
+    background-color: rgb(54, 54, 54);
+  }
+  100% {
+    background-color: rgb(32, 32, 32);
+  }
+}
+
 .GetStarted .get img {
-  /* width: 50vw;
-  height: 80vh; */
   align-items: center;
   justify-content: center;
   align-self: center;

@@ -79,7 +79,6 @@ const BankDetails = () => {
   const [expanded, setExpanded] = React.useState(false);
   const [allBankDetails, setAllBankDetails] = useState();
   const [open, setOpen] = React.useState(false);
-  0;
   const handleClickOpen = (bank) => {
     setOpen(true);
     formikUpdate.setFieldValue("account_no", bank.account_no);
