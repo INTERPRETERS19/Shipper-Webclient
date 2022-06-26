@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import logo from "../../src/assets/logo.PNG";
 import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
@@ -9,7 +11,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { useLogin } from "../context/LoginProvider/LoginProvider";
 import userEvent from "@testing-library/user-event";
-import { useNavigate } from "react-router-dom";
 
 const Nav = styled.div`
   background: #071a2f;
