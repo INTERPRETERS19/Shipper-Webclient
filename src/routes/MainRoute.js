@@ -3,7 +3,6 @@ import ForgottenPassword from "../views/Forgotten/ForgottenPassword";
 import GetStarted from "../views/GetStarted/GetStarted";
 import Home from "../views/Home/Home";
 import Login from "../views/LogIn/LogIn";
-import PendingReturns from "../views/Returns/PendingReturns/PendingReturns";
 import Pickups from "../views/Pickups/PickupRequest/PickUpRequest";
 import ChangePassword from "../views/ChangePassword/ChangePassword";
 import SignUp from "../views/SignUp/SignUp";
@@ -12,12 +11,15 @@ import AllReturns from "../views/Returns/AllReturns/AllReturns";
 import NewShipments from "../views/Shipments/NewShipments/NewShipments";
 import RSummary from "../views/Returns/Summary/Summary";
 import NotFound from "../NotFound/NotFound";
+import BankDetails from "../views/BankDetails/BankDetails";
 import ProtectedRoutes from "../routes/ProtectedRoutes";
 import AddShipments from "../views/Shipments/AddShipments/AddShipments";
 import Reports from "../views/Shipments/Reports/Reports";
 import Report from "../views/Returns/Reports/Reports";
+import Profile from "../views/Profile/Profile";
+import UpdateProfile from "../views/Profile/UpdateProfile";
 import EmailVerification from "../views/SignUp/emailVerification";
-
+import AllShipments from "../views/Shipments/AllShipments/AllShipment";
 const MainRoute = () => {
   return (
     <Router>
@@ -31,15 +33,19 @@ const MainRoute = () => {
         <Route path="*" element={<NotFound />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/passwordChange" element={<ChangePassword />} />
           <Route path="/changePassword" element={<ChangePassword />} />
           <Route path="shipments/newshipments" element={<NewShipments />} />
           <Route path="shipments/reports" element={<Reports />} />
           <Route path="returns/reports" element={<Report />} />
-          <Route path="/pickups/pickuprequests" element={<Pickups/>} />
+          <Route path="/pickups/pickuprequests" element={<Pickups />} />
           <Route path="/returns/allreturns" element={<AllReturns />} />
-          <Route path="/returns/pendingreturns" element={<PendingReturns />} />
-          <Route path="/shipment/addshipments" element={<AddShipments/>}/>
-          <Route path="/returns/summary" element={<RSummary/>}/>
+          <Route path="/bankdetails" element={<BankDetails />} />
+          <Route path="/profile/profile" element={<Profile />} />
+          <Route path="/profile/updateprofile" element={<UpdateProfile />} />
+          <Route path="/shipment/addshipments" element={<AddShipments />} />
+          <Route path="/shipment/allshipments" element={<AllShipments />} />
+          <Route path="/returns/summary" element={<RSummary />} />
         </Route>
       </Routes>
     </Router>

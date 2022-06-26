@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import logo from "../../assets/logo2.PNG";
 import login from "../../assets/login.jpg";
-//import { Grid } from "@mui/material";
 import useForms from "../../components/useForms";
 import client from "../../api/Client";
 import { useNavigate } from "react-router-dom";
@@ -32,11 +31,6 @@ function Login() {
 
     if (!isValidEmail(values.email))
       return updateError("Invalid email!", setError);
-
-    if (!values.password.trim() || values.password.length < 8) {
-      return updateError("Password is too short!", setError);
-    }
-
     return true;
   };
 
@@ -44,21 +38,14 @@ function Login() {
     e.preventDefault();
     if (validate()) {
       try {
-        // console.log(values.email);
         const responces = await client.post("/signin", { ...values });
-        // console.log(responces.data);
-        // console.log(responces.data.success);
         if (responces.data.success) {
           setProfile(responces.data.user);
           localStorage.setItem("user", JSON.stringify(responces.data.user));
-          console.log(profile);
           setIsLoggedIn(true);
           navigate("/home");
         } else {
-          return updateError(
-            "Your User name Or Password is incorrect",
-            setError
-          );
+          return updateError(responces.data.message, setError);
         }
       } catch (error) {
         console.log(error);

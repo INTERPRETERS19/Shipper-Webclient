@@ -23,7 +23,6 @@ function ChangePassword() {
   // console.log(currentUser);
 
   const newPressed = async (values) => {
-    console.log(currentUser);
     const res = await Client.post("/changePassword", {
       oldPassword: values.oldPassword,
       password: values.password,
@@ -31,10 +30,8 @@ function ChangePassword() {
     });
     if (res.data.success) {
       console.log(res.data);
-      console.log(currentUser);
       navigate("/home");
     } else {
-      console.log(res.data);
       setError({ value: true, message: res.data.message });
     }
   };

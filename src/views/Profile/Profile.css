@@ -1,0 +1,81 @@
+.Dashboard {
+  background-color: #f5f5f5;
+  height: 100vh;
+}
+.Dashboard .main {
+  margin-left: 280px;
+  align-items: center;
+  padding: 5px;
+}
+.Dashboard .container {
+  height: 80vh;
+  display: flex;
+}
+
+.Dashboard .title {
+  padding-top: 60px;
+  line-height: 80px;
+  text-align: center;
+  align-self: center;
+  color: #000;
+}
+.Dashboard .left {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  width: 60%;
+  padding: 20px;
+  height: 75vh;
+  background-color: rgba(236, 236, 236, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+.Dashboard .right {
+  flex-grow: 1;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.Dashboard .widgetssBig {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.field {
+  font-size: 16px;
+}
+.Dashboard .widgetssBig {
+  justify-content: first baseline;
+}
+.Dashboard .box1 {
+  width: 65%;
+  border-radius: 4%;
+  border-style: none;
+  background-color: rgba(65, 137, 185, 0.1);
+  box-shadow: 0 0 0 1px rgba(38, 72, 116, 0.2),
+    0.1em 0.1em 0.6em rgba(31, 95, 168, 0.3);
+  display: flex;
+  flex-direction: column;
+  /* border-radius: 4%; */
+  padding: 30px;
+}
+.Dashboard .box2 {
+  width: 80%;
+  height: 70%;
+  background-color: rgba(65, 137, 185, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  border-radius: 4%;
+  border-style: none;
+  box-shadow: 0 0 0 1px rgba(38, 72, 116, 0.3),
+    0.1em 0.1em 0.6em rgba(31, 95, 168, 0.5);
+}
+.Dashboard .head p {
+  font-size: 22px;
+  text-align: center;
+}

@@ -28,7 +28,7 @@ export const SidebarData = [
       },
       {
         title: "All Shipments",
-        path: "/shipments/allshipments",
+        path: "/shipment/allshipments",
         icon: <IoIcons.IoIosPaper />,
       },
       {
@@ -91,6 +91,26 @@ export const SidebarData = [
   },
 
   {
+    title: "Profile",
+    path: "sh",
+    icon: <IoIcons.IoMdPeople />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      {
+        title: "Profile",
+        path: "/profile/profile",
+        icon: <IoIcons.IoIosPaper />,
+        cName: "sub-nav",
+      },
+      {
+        title: "Update Profile",
+        path: "/profile/updateprofile",
+        icon: <IoIcons.IoIosPaper />,
+      },
+    ],
+  },
+  {
     title: "Account Settings",
     path: "sh",
     icon: <FaIcons.FaEnvelopeOpenText />,
@@ -99,16 +119,24 @@ export const SidebarData = [
     iconOpened: <RiIcons.RiArrowUpSFill />,
 
     subNav: [
+      // {
+      //   title: "Profile",
+      //   path: "/profile",
+      //   icon: <IoIcons.IoIosPaper />,
+      // },
+      
       {
-        title: "Edit Profile",
-        path: "/settings/prof",
+        title: "Change Password",
+        path: "/passwordChange",
         icon: <IoIcons.IoIosPaper />,
       },
       {
-        title: "Change Password",
-        path: "/settings/changepassword",
+        title: "Add Bank details",
+        path: "/bankdetails",
         icon: <IoIcons.IoIosPaper />,
       },
     ],
+
+    
   },
 ];
