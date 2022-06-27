@@ -31,6 +31,7 @@ const NavIcon = styled(Link)`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  overflow: auto;
 `;
 
 const SidebarNav = styled.nav`
