@@ -13,14 +13,9 @@ import TableRow from "@mui/material/TableRow";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
-import IconButton from "@mui/material/IconButton";
-import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
-import DeleteIcon from "@mui/icons-material/Delete";
 import SideBar from "../../../components/Sidebar";
-import Client from "../../../api/Client";
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
 
 function descendingComparator(a, b, orderBy) {
@@ -92,13 +87,13 @@ const headCells = [
     id: "COD",
     numeric: true,
     disablePadding: true,
-    label: "COD Amount",
+    label: "COD(LKR)",
   },
   {
     id: "Weight",
     numeric: false,
     disablePadding: true,
-    label: "Weight",
+    label: "Weight(Kg)",
   },
   {
     id: "Status",
@@ -114,17 +109,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select new returns",
-            }}
-          />
-        </TableCell>
+        <TableCell padding="checkbox"></TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -151,20 +136,6 @@ EnhancedTableHead.propTypes = {
 
 const EnhancedTableToolbar = (props) => {
   const { numSelected, selectedShipments, getShipments } = props;
-  const handleDelete = async () => {
-    selectedShipments.map(async (selectedShipment) => {
-      const res = await Client.post("/delete_shipment", {
-        id: selectedShipment,
-      });
-      if (res.data.success) {
-        console.log(res.data.message);
-        // updateSelected(numSelected - 1);
-        getShipments();
-      } else {
-        console.log("Delete not successful");
-      }
-    });
-  };
   return (
     <Toolbar
       sx={{
@@ -198,21 +169,6 @@ const EnhancedTableToolbar = (props) => {
           All Returned Shipments
         </Typography>
       )}
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton
-            onClick={() => {
-              window.confirm(
-                "Are you sure you want to delete these shipments?"
-              ) && handleDelete();
-            }}
-          >
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        ""
-      )}
     </Toolbar>
   );
 };
@@ -238,17 +194,6 @@ export default function AllReturns() {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
-  };
-
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = (
-        allReturnShipments !== undefined ? allReturnShipments.data : []
-      ).map((n) => n._id);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
   };
 
   const handleClick = (event, id) => {
@@ -325,14 +270,14 @@ export default function AllReturns() {
               <Table
                 sx={{ minWidth: 750 }}
                 aria-labelledby="tableTitle"
-                // size={dense ? "small" : "medium"}
+                size={dense ? "small" : "medium"}
               >
                 <EnhancedTableHead
                   numSelected={selected.length}
                   order={order}
                   orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
-                  onRequestSort={handleRequestSort}
+                  // onSelectAllClick={handleSelectAllClick}
+                  // onRequestSort={handleRequestSort}
                   rowCount={
                     allReturnShipments !== undefined
                       ? allReturnShipments.count
@@ -362,24 +307,7 @@ export default function AllReturns() {
                           key={row._id}
                           selected={isItemSelected}
                         >
-                          <TableCell padding="checkbox">
-                            <Checkbox
-                              color="primary"
-                              checked={isItemSelected}
-                              inputProps={{
-                                "aria-labelledby": labelId,
-                              }}
-                            />
-                          </TableCell>
-                          <TableCell
-                            align="left"
-                            component="th"
-                            id={labelId}
-                            scope="row"
-                            padding="none"
-                          >
-                            {row.created_at.substring(0, 10)}
-                          </TableCell>
+                          <TableCell padding="checkbox"></TableCell>
                           <TableCell align="left">{row.id}</TableCell>
                           <TableCell align="left">
                             {row.recipient_name}
@@ -401,6 +329,9 @@ export default function AllReturns() {
                               : row.r_city}
                           </TableCell>
                           <TableCell align="left">{row.COD}</TableCell>
+                          <TableCell align="left">
+                            {row.shipment_weight}
+                          </TableCell>
                           <TableCell align="left">
                             {row.current_status}
                           </TableCell>

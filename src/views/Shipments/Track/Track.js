@@ -33,9 +33,10 @@ export default function Track() {
     if (searchInput !== "") {
       const filteredData = APIData.filter((item) => {
         return Object.values(item)
-          .join("")
+          .join('')
           .toLowerCase()
           .includes(searchInput.toLowerCase());
+          
       });
       setFilteredResults(filteredData);
     } else {
@@ -82,7 +83,7 @@ export default function Track() {
             justifyContent: "center",
           }}
         >
-          {searchInput.length > 0
+          {searchInput.length > 1
             ? filteredResults.map((item) => {
                 return (
                   <div
@@ -117,9 +118,9 @@ export default function Track() {
                     <Card.Header>{item.id}</Card.Header>
                     <Card.Description>{item.recipient_name}</Card.Description>
                     <Card.Description>{item.current_status}</Card.Description>
-                    <Card.Description>
+                    {/* <Card.Description>
                       {item.created_at.substring(0, 10)}
-                    </Card.Description>
+                    </Card.Description> */}
                   </Card.Content>
                 </Card>;
               })}
