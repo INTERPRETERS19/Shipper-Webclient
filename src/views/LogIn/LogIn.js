@@ -68,7 +68,7 @@ function Login() {
     const res = await client.post("/requestEmailVerification", {
       email: values.email,
     });
-    updateError("Check your email", setError);
+    return updateError("Check your email", setError);
   };
   return (
     <div className="SignUp" style={{ backgroundColor: "#fff" }}>
