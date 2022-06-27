@@ -17,6 +17,10 @@ import photo from "../../assets/photo.png";
 
 const Profile = () => {
   const [profile, setProfile] = useState();
+  const [newUser,SetNewAuthor]=useState(
+    {
+      photo:'',    }
+  )
   const currentUser = JSON.parse(localStorage.getItem("user"));
   console.log(currentUser.id);
 
@@ -126,6 +130,18 @@ const Profile = () => {
                 <img src={photo} alt="logo" height="100" width="100" />
               </div>
               <br />
+              {/* <form onSubmit={handleSubmit} encType='multipart/form-data'>
+                <input
+                type="file"
+                accept=".png,.jpg,.jpeg"
+                name="photo"
+                onChange={handleChange}
+
+                />
+                <input
+                  type=""
+                />
+              </form> */}
               <div className="head">
                 <p> Click here to upload your profile photo from your media.</p>
               </div>
