@@ -62,9 +62,13 @@
   justify-content: center;
   width: 100%;
 }
-.SignUp .back {
+/* .SignUp .backL {
   justify-content: flex-end;
-  padding-left: 50%;
+  margin-left: 90px; 
+} */
+.SignUp .back {
+  justify-content: flex-start;
+  padding-left: 45%;
 }
 .SignUp .right {
   flex-grow: 1;
