@@ -9,6 +9,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { useLogin } from "../context/LoginProvider/LoginProvider";
 import userEvent from "@testing-library/user-event";
+import { useNavigate } from "react-router-dom";
 
 const Nav = styled.div`
   background: #071a2f;
@@ -30,6 +31,7 @@ const NavIcon = styled(Link)`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  overflow: auto;
 `;
 
 const SidebarNav = styled.nav`
@@ -55,12 +57,13 @@ const SidebarWrap = styled.div`
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(true);
+  const navigate = useNavigate();
   const { setIsLoggedIn } = useLogin();
   const showSidebar = () => setSidebar(!sidebar);
   const logOutPressed = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("user");
-    <Navigate to="/login" />;
+    navigate("/login");
   };
   return (
     <>
