@@ -17,10 +17,8 @@ import photo from "../../assets/photo.png";
 
 const Profile = () => {
   const [profile, setProfile] = useState();
-  const [newUser,SetNewAuthor]=useState(
-    {
-      photo:'',    }
-  )
+  const [error, setError] = useState();
+  const [image, setImage] = useState();
   const currentUser = JSON.parse(localStorage.getItem("user"));
   console.log(currentUser.id);
 
@@ -54,6 +52,28 @@ const Profile = () => {
       return <></>;
     }
   };
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      let imageUrl = "";
+      if (image) {
+        const formData = new FormData();
+        formData.append("file", image);
+        formData.append("upload_preset", "interpreters");
+        const dataRes = await Client.post("https://res.cloudinary.com/interpreters/image/upload/v1656340034/uploads/lady_pmsnlo.jpg", formData);
+        imageUrl = dataRes.data.url;
+      }
+
+      const submitPost = {
+        image: imageUrl,
+      };
+      //console.log(selectedCommunity);
+      await Client.post("http://localhost:8080/store-image", submitPost);
+    } catch (err) {
+      err.response.data.msg && setError(err.response.data.msg);
+    }
+  }
 
   return (
     <div className="Dashboard">
@@ -142,6 +162,15 @@ const Profile = () => {
                   type=""
                 />
               </form> */}
+              <form onSubmit={handleSubmit}>
+                <input
+                  name="file"
+                  accept="image/*"
+                  onChange={(e) => setImage(e.target.files[0])}
+                  id="validationFormik107"
+                  feedbackTooltip
+                />
+              </form>
               <div className="head">
                 <p> Click here to upload your profile photo from your media.</p>
               </div>

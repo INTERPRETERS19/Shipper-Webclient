@@ -113,6 +113,11 @@ export const SidebarData = [
         path: "/profile/updateprofile",
         icon: <IoIcons.IoIosPaper />,
       },
+      {
+        title: "Add Image",
+        path: "/profile/addimage",
+        icon: <IoIcons.IoIosPaper />,
+      },
     ],
   },
   {
@@ -129,7 +134,7 @@ export const SidebarData = [
       //   path: "/profile",
       //   icon: <IoIcons.IoIosPaper />,
       // },
-      
+
       {
         title: "Change Password",
         path: "/passwordChange",
@@ -141,7 +146,5 @@ export const SidebarData = [
         icon: <IoIcons.IoIosPaper />,
       },
     ],
-
-    
   },
 ];
