@@ -14,41 +14,42 @@ const UpdateProfile = () => {
     try {
       const res = await Client.get(`/profileShipper/${currentUser.id}`);
       if (res.data.success) {
-        formik.setFieldValue("firstName", res.data.data.profile.firstName);
-        formik.setFieldValue("lastName", res.data.lastName);
-        formik.setFieldValue("email", res.data.mobile_no);
-        formik.setFieldValue("street", res.data.street);
-        formik.setFieldValue("city", res.data.city);
-        formik.setFieldValue("district", res.data.district);
+        console.log(res.data);
+        formik.setFieldValue("firstName", res.data.data.firstName);
+        formik.setFieldValue("lastName", res.data.data.lastName);
+        formik.setFieldValue("street", res.data.data.street);
+        formik.setFieldValue("city", res.data.data.city);
+        formik.setFieldValue("district", res.data.data.district);
       }
     } catch (err) {
       console.log("Unable to get profile");
     }
   };
   useEffect(() => {
-    updateUser();
+    getProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateUser = async (values, formikActions) => {
-    const res = await Client.post("/updateProfile", {
+    const res = await Client.post(`/updateProfile/${currentUser.id}`, {
       ...values,
     });
 
     if (res.data.success) {
       console.log("Profile updated successfully");
+    } else {
+      console.log("Profile update failed");
     }
 
     formikActions.resetForm();
     formikActions.setSubmitting(false);
-    navigate(`/updateProfile/${currentUser.id}`);
+    navigate(`/viewprofile`);
   };
 
   const formik = useFormik({
     initialValues: {
       firstName: "",
       lastName: "",
-      mobile_no: "",
       street: "",
       city: "",
       district: "",
@@ -56,9 +57,6 @@ const UpdateProfile = () => {
     validationSchema: Yup.object({
       firstName: Yup.string(),
       lastName: Yup.string(),
-      mobile_no: Yup.string()
-        .min(10, "Mobile no should contain at least 10 characters")
-        .max(10, "Mobile no should contain maximum 10 characters"),
       street: Yup.string(),
       city: Yup.string(),
       district: Yup.string(),
@@ -100,20 +98,7 @@ const UpdateProfile = () => {
           sx={{ minWidth: "400px" }}
         />
         <br />
-        <TextField
-          error={Boolean(formik.touched.mobile_no && formik.errors.mobile_no)}
-          helperText={formik.touched.mobile_no && formik.errors.mobile_no}
-          label="Mobile No "
-          margin="normal"
-          name="mobile_no"
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          type="text"
-          value={formik.values.mobile_no}
-          variant="outlined"
-          sx={{ minWidth: "400px" }}
-        />
-        <br />
+
         <TextField
           error={Boolean(formik.touched.street && formik.errors.street)}
           helperText={formik.touched.street && formik.errors.street}
@@ -161,7 +146,6 @@ const UpdateProfile = () => {
         <Button
           color="primary"
           disabled={formik.isSubmitting}
-          href={`/profile/profile`}
           sx={{ minWidth: "400px", textTransform: "none" }}
           size="large"
           type="submit"
@@ -175,11 +159,3 @@ const UpdateProfile = () => {
 };
 
 export default UpdateProfile;
-
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PowerSettingsNewIcon from "@mui/icons-material/PowerSettingsNew";
 import { useLogin } from "../context/LoginProvider/LoginProvider";
 import userEvent from "@testing-library/user-event";
+
+import Client from "../api/Client";
 
 const Nav = styled.div`
   background: #071a2f;
@@ -57,10 +59,27 @@ const SidebarWrap = styled.div`
 `;
 
 const Sidebar = () => {
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const [profile, setProfile] = useState();
   const [sidebar, setSidebar] = useState(true);
   const navigate = useNavigate();
   const { setIsLoggedIn } = useLogin();
   const showSidebar = () => setSidebar(!sidebar);
+
+  const getUser = async () => {
+    const res = await Client.get(`profileShipper/${currentUser.id}`);
+    if (res.data.success) {
+      setProfile(res.data.data);
+      console.log(res.data);
+      console.log("Success");
+    } else {
+      console.log("Failed");
+    }
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
+
   const logOutPressed = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("user");
@@ -110,14 +129,26 @@ const Sidebar = () => {
                 padding: "10px",
               }}
             >
-              <AccountCircleIcon
-                onClick={profilePressed}
-                sx={{
-                  width: "35px",
-                  height: "35px",
-                  color: "#fff",
-                }}
-              />
+              {profile !== undefined && profile.photo !== undefined ? (
+                <img
+                  src={profile.photo}
+                  onClick={profilePressed}
+                  alt="logo"
+                  height="35"
+                  width="35"
+                  style={{ borderRadius: "50%", cursor: "pointer" }}
+                />
+              ) : (
+                <AccountCircleIcon
+                  onClick={profilePressed}
+                  sx={{
+                    width: "35px",
+                    height: "35px",
+                    color: "#fff",
+                    cursor: "pointer",
+                  }}
+                />
+              )}
             </div>
             <div
               style={{
@@ -132,6 +163,7 @@ const Sidebar = () => {
                   width: "35px",
                   height: "35px",
                   color: "#fff",
+                  cursor: "pointer",
                 }}
               />
             </div>
