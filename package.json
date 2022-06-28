@@ -22,6 +22,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",
     "material-ui-form": "^1.0.0-alpha.26",
+    "qrcode": "^1.5.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-icons": "^4.4.0",

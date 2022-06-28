@@ -23,6 +23,7 @@ import AllShipments from "../views/Shipments/AllShipments/AllShipment";
 import DeliveredShip from "../views/Shipments/DeliveredShipments/DeliveredShipments";
 import Review from "../views/GetStarted/Review";
 import AddShipments from "../views/Shipments/AddShipments/AddShipments";
+import QrCode from "../views/QrCode/QrCode";
 
 const MainRoute = () => {
   return (
@@ -40,7 +41,8 @@ const MainRoute = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/passwordChange" element={<ChangePassword />} />
           <Route path="/changePassword" element={<ChangePassword />} />
-          <Route path="shipments/newshipments" element={<NewShipments />} />
+          <Route path="/shipments/newshipments" element={<NewShipments />} />
+          <Route path="/shipment/qrcode" element={<QrCode />} />
           <Route path="shipments/reports" element={<Reports />} />
           <Route path="returns/reports" element={<Report />} />
           <Route path="/pickups/pickuprequests" element={<Pickups />} />
