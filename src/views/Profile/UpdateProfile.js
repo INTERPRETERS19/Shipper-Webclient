@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField } from "@mui/material";
 import Client from "../../api/Client";
+import AddImage from "./AddImage";
 
 const UpdateProfile = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -175,49 +176,10 @@ const UpdateProfile = () => {
 
 export default UpdateProfile;
 
-// import axios from "axios";
-// import react, { useState, formData } from "react";
-// import Client from "../../api/Client";
 
-// const UploadProfile = () => {
-//   const [newUser, setNewAuthor] = useState({
-//     name: "",
-//     photo: "",
-//   });
-//   const handleChange = (e) => {
-//     setNewAuthor({ ...newUser, [e.target.name]: e.target.value });
-//   };
-//   const handlePhoto = (e) => {
-//     setNewAuthor({ ...newUser, photo: e.target.files[0] });
-//     console.log(newUser.photo);
-//   };
-//   const handleSubmit = (e) => {
-//     e.preventdefault();
-//     const formDta = new FormData();
-//     formData.append("photo", newUser.photo);
-//     formData.append("name", newUser.name);
 
-//     console.log(newUser.photo);
-//     axios
-//       .post("http://localhost:8080/users/add/", formData)
-//       .then((res) => {
-//         console.log(res);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   };
-//   return (
-//     <form onSubmit={handleSubmit} encType="multipart/form-data">
-//       <input
-//         type="file"
-//         accept=".png, .jpg,.jpeg"
-//         name="photo"
-//         onChange={handlePhoto}
-//       />
-//       <div class="bg"></div>
-//       <input type="submit" />
-//     </form>
-//   );
-// };
-// export default UploadProfile;
+
+
+
+
+
