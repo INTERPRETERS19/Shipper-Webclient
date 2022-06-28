@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -31,6 +32,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
+import QrCodeIcon from "@mui/icons-material/QrCode";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -154,6 +156,7 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
+  const navigate = useNavigate();
   const { numSelected, selectedShipments, getShipments, setSelected } = props;
   const handleDelete = async () => {
     selectedShipments.map(async (selectedShipment) => {
@@ -169,6 +172,14 @@ const EnhancedTableToolbar = (props) => {
       }
     });
   };
+  // let data = [
+  //   { id: 1, name: "Ford", color: "Red" },
+  //   { id: 2, name: "Hyundai", color: "Blue" },
+  // ];
+  const componentA = () => {
+    navigate("/shipment/qrcode", { state: { id: selectedShipments } });
+  };
+
   return (
     <Toolbar
       sx={{
@@ -213,6 +224,20 @@ const EnhancedTableToolbar = (props) => {
             }}
           >
             <DeleteIcon />
+          </IconButton>
+        </Tooltip>
+      ) : (
+        //QrCodeIcon
+        ""
+      )}
+      {numSelected > 0 ? (
+        <Tooltip title="">
+          <IconButton
+            onClick={() => {
+              componentA();
+            }}
+          >
+            <QrCodeIcon />
           </IconButton>
         </Tooltip>
       ) : (

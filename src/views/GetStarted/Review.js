@@ -148,6 +148,7 @@ export default function Review() {
                   sx={{
                     position: "relative",
                     fontSize: "20px",
+                    fontWeight: "900",
                     // backgroundColor: 'rgb(0, 0, 255);opacity:0.3;',
                     // color: 'rgb(0, 0, 0);opacity:0;',
                     p: 4,

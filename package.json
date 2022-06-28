@@ -22,6 +22,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.25",
     "material-ui-form": "^1.0.0-alpha.26",
+    "qrcode": "^1.5.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-icons": "^4.4.0",
@@ -38,7 +39,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -51,7 +52,8 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "not ie < 11"
     ],
     "development": [
       "last 1 chrome version",
