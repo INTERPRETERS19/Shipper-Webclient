@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -157,7 +157,7 @@ EnhancedTableHead.propTypes = {
 
 const EnhancedTableToolbar = (props) => {
   const navigate = useNavigate();
-  const { numSelected, selectedShipments, getShipments } = props;
+  const { numSelected, selectedShipments, getShipments, setSelected } = props;
   const handleDelete = async () => {
     selectedShipments.map(async (selectedShipment) => {
       const res = await Client.post("/delete_shipment", {
@@ -165,8 +165,8 @@ const EnhancedTableToolbar = (props) => {
       });
       if (res.data.success) {
         console.log(res.data.message);
-        // updateSelected(numSelected - 1);
         getShipments();
+        // numSelected = 0;
       } else {
         console.log("Delete not successful");
       }
@@ -201,7 +201,7 @@ const EnhancedTableToolbar = (props) => {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selected
+          {/* {numSelected} selected */}
         </Typography>
       ) : (
         <Typography
@@ -437,11 +437,25 @@ export default function NewShipments() {
                           >
                             {row.created_at.substring(0, 10)}
                           </TableCell>
-                          <TableCell align="left">{row.id}</TableCell>
+                          <TableCell
+                            align="left"
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          >
+                            {row.id}
+                          </TableCell>
                           <TableCell align="left">
                             {row.recipient_name}
                           </TableCell>
-                          <TableCell align="left">
+                          <TableCell
+                            align="left"
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          >
                             {row.mobile_phone_number}
                           </TableCell>
                           <TableCell align="left">{row.description}</TableCell>

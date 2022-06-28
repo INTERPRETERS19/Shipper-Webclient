@@ -9,6 +9,7 @@ import {
   isValidEmail,
   isValidObjField,
   updateError,
+  updateWarning,
 } from "../../components/Models/validation";
 import { useLogin } from "../../context/LoginProvider/LoginProvider";
 
@@ -22,6 +23,7 @@ const initialValues = {
 function Login() {
   const [values, setValues, handleInputChange] = useForms(initialValues);
   const [error, setError] = useState("");
+  const [warning, setWarning] = useState("");
   const { setIsLoggedIn, setProfile, profile } = useLogin();
   const navigate = useNavigate();
 
@@ -44,6 +46,8 @@ function Login() {
           localStorage.setItem("user", JSON.stringify(responces.data.user));
           setIsLoggedIn(true);
           navigate("/home");
+        } else if (responces.data.error) {
+          return updateWarning(responces.data.message, setWarning);
         } else {
           return updateError(responces.data.message, setError);
         }
@@ -58,6 +62,13 @@ function Login() {
   };
   const forgetPressed = () => {
     navigate("/fp");
+  };
+  const emailVerificationPressed = async () => {
+    console.log(values.email);
+    const res = await client.post("/requestEmailVerification", {
+      email: values.email,
+    });
+    return updateError("Check your email", setError);
   };
   return (
     <div className="SignUp" style={{ backgroundColor: "#fff" }}>
@@ -86,6 +97,32 @@ function Login() {
                   {error}
                 </p>
               ) : null}
+              {warning ? (
+                <p
+                  style={{
+                    color: "orange",
+                    fontSize: 18,
+                    textAlign: "center",
+                  }}
+                >
+                  {warning}
+                  {
+                    <Button
+                      className="backR"
+                      variant="text"
+                      sx={{
+                        color: "#75B6D9",
+                        fontSize: 16,
+                        textTransform: "none",
+                        fontWeight: 600,
+                      }}
+                      onClick={emailVerificationPressed}
+                    >
+                      Verify email.
+                    </Button>
+                  }
+                </p>
+              ) : null}
             </div>
             <div className="contents">
               <input
@@ -109,7 +146,21 @@ function Login() {
               />
               <br />
               <div className="back">
+                {/* <Button
+                  className="backR"
+                  variant="text"
+                  sx={{
+                    color: "#75B6D9",
+                    fontSize: 16,
+                    textTransform: "none",
+                    fontWeight: 600,
+                  }}
+                  onClick={emailVerificationPressed}
+                >
+                  Verify email.
+                </Button> */}
                 <Button
+                  className="backL"
                   variant="text"
                   sx={{
                     color: "#75B6D9",
