@@ -72,12 +72,6 @@ const headCells = [
     label: "Description",
   },
   {
-    id: "District",
-    numeric: false,
-    disablePadding: false,
-    label: "District",
-  },
-  {
     id: "City",
     numeric: false,
     disablePadding: false,
@@ -101,10 +95,16 @@ const headCells = [
     disablePadding: false,
     label: "Status",
   },
+  {
+    id: "Reason",
+    numeric: false,
+    disablePadding: false,
+    label: "Reason",
+  },
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount } = props;
+  const { order, orderBy } = props;
 
   return (
     <TableHead>
@@ -135,7 +135,7 @@ EnhancedTableHead.propTypes = {
 };
 
 const EnhancedTableToolbar = (props) => {
-  const { numSelected, selectedShipments, getShipments } = props;
+  const { numSelected } = props;
   return (
     <Toolbar
       sx={{
@@ -194,27 +194,6 @@ export default function AllReturns() {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
-  };
-
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-    // console.log(selected);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -300,7 +279,6 @@ export default function AllReturns() {
                         <TableRow
                           hover
                           align="Left"
-                          onClick={(event) => handleClick(event, row._id)}
                           role="checkbox"
                           aria-checked={isItemSelected}
                           tabIndex={-1}
@@ -308,20 +286,34 @@ export default function AllReturns() {
                           selected={isItemSelected}
                         >
                           <TableCell padding="checkbox"></TableCell>
-                          <TableCell align="left">{row.id}</TableCell>
+                          <TableCell
+                            align="left"
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          >
+                            {row.id}
+                          </TableCell>
                           <TableCell align="left">
                             {row.recipient_name}
                           </TableCell>
-                          <TableCell align="left">
+                          <TableCell
+                            align="left"
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          >
                             {row.mobile_phone_number}
                           </TableCell>
                           <TableCell align="left">{row.description}</TableCell>
-                          <TableCell align="left">
+                          {/* <TableCell align="left">
                             {" "}
                             {row.receipient_address !== undefined
                               ? ""
                               : row.r_district}
-                          </TableCell>
+                          </TableCell> */}
                           <TableCell align="left">
                             {" "}
                             {row.receipient_address !== undefined
@@ -335,6 +327,7 @@ export default function AllReturns() {
                           <TableCell align="left">
                             {row.current_status}
                           </TableCell>
+                          <TableCell align="left">{row.reason}</TableCell>
                         </TableRow>
                       );
                     })}
