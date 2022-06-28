@@ -14,7 +14,7 @@ import userEvent from "@testing-library/user-event";
 
 const Nav = styled.div`
   background: #071a2f;
-  height: 60px;
+  height: 50px;
   position: fixed;
   z-index: 100;
   width: 100vw;
@@ -34,7 +34,7 @@ const NavIcon = styled(Link)`
   align-items: center;
   overflow: auto;
 `;
-
+const BottomNav = styled.div``;
 const SidebarNav = styled.nav`
   background: #001e3c;
   width: 280px;
@@ -42,7 +42,7 @@ const SidebarNav = styled.nav`
   display: flex;
   justify-content: center;
   position: fixed;
-  top: 65px;
+  top: 50px;
 
   ${"" /* left: ${({ sidebar }) => (sidebar ? "0" : "-100%")}; */}
   transition: 350ms;
@@ -88,7 +88,7 @@ const Sidebar = () => {
                 alignItems: "center",
               }}
             >
-              <img src={logo} alt="logo" height="50" width="50" />
+              <img src={logo} alt="logo" height="40" width="40" />
             </div>
             <div
               style={{
@@ -136,18 +136,37 @@ const Sidebar = () => {
               />
             </div>
           </div>
-          {/* <div
+        </Nav>
+
+        <BottomNav>
+          <div
             style={{
-              color: "#000000",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              bottom: "100px",
+              backgroundColor: "#000",
+              color: "rgb(223, 223, 223)",
+              textAlign: "center",
+              marginBottom: 0,
+              marginTop: "0.7rem",
+              padding: "0.6rem",
+              position: "fixed",
+              bottom: 0,
+              left: 0,
+              width: "100%",
             }}
           >
-            <p>© 2022 - IndexCloud</p>
-          </div> */}
-        </Nav>
+            <div
+              style={{
+                color: "#fff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                bottom: "100px",
+              }}
+            >
+              <p>© 2022 - IndexCloud</p>
+            </div>
+          </div>
+        </BottomNav>
+
         <SidebarNav sidebar={sidebar}>
           <SidebarWrap>
             {SidebarData.map((item, index) => {

@@ -99,7 +99,7 @@ export const Reports = () => {
       <SideBar />
       <div className="mainS">
         <div className="title">
-          <h2 style={{ padding: "25px" }}>Shipment Report</h2>
+          <h1 style={{ padding: "20px" }}>Shipment Report</h1>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <form onSubmit={formik.handleSubmit}>
               <br />

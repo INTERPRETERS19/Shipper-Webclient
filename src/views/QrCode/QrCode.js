@@ -3,45 +3,51 @@ import { Card, CardContent, Grid, Button } from "@mui/material";
 import { TableBody, Typography, TableCell, TableRow } from "@mui/material";
 import QRCode from "qrcode";
 import SideBar from "../../components/Sidebar";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 import { useLocation } from "react-router-dom";
 import Client from "../../api/Client";
 function QrCode() {
   const location = useLocation();
-  const [text, setText] = useState(1);
+  const [text, setText] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
-  const [ShipmentInfo, setShipmentInfo] = useState();
+  const [ShipmentInfo, setShipmentInfo] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   console.log(location.state.id);
 
   const getShipmentInfo = async () => {
     const res = await Client.get(`shipmentInfo/${location.state.id}`);
+    setIsLoading(true);
     if (res.data.success) {
       setShipmentInfo(res.data.data);
       console.log(res.data);
 
       console.log("Success");
+      setIsLoading(false);
     } else {
       console.log("Failed");
     }
   };
   console.log(location.state.id);
   console.log(ShipmentInfo);
-
   useEffect(() => {
     getShipmentInfo();
   }, []);
 
   function clickHandler() {
+    setIsLoading(true);
     setText(
       `Shipment ID: ${ShipmentInfo.id},
-       \nRecipient name:${ShipmentInfo.recipient_name},
-       \nMobile Number:${ShipmentInfo.mobile_phone_number},
-      \nStreet:${ShipmentInfo.r_no_street},
-       \nCity:${ShipmentInfo.r_city},
-       \nDistrict:${ShipmentInfo.r_district},
-      \nCOD:${ShipmentInfo.COD},
-      `
+     \nRecipient name:${ShipmentInfo.recipient_name},
+     \nMobile Number:${ShipmentInfo.mobile_phone_number},
+    \nStreet:${ShipmentInfo.r_no_street},
+     \nCity:${ShipmentInfo.r_city},
+     \nDistrict:${ShipmentInfo.r_district},
+    \nCOD:${ShipmentInfo.COD},
+    `
     );
+    // setIsLoading(false);
     console.log(text);
     generateQrCode();
   }
@@ -53,7 +59,6 @@ function QrCode() {
 
   const generateQrCode = async () => {
     try {
-      console.log(ShipmentInfo.COD);
       const response = await QRCode.toDataURL(text);
       setImageUrl(response);
     } catch (error) {
@@ -89,12 +94,20 @@ function QrCode() {
       <Card
         sx={{
           paddingLeft: "320px",
-          paddingTop: "100px",
+          paddingTop: "65px",
         }}
       >
-        <h2 className="title">Generate Shipment QR code</h2>
+        <h1 className="title">Generate Shipment QR code</h1>
         <br />
-
+        <h3 className="title">Shipment Info</h3>
+        <br />
+        {isLoading == "true" ? (
+          <Box sx={{ width: "100%" }}>
+            <LinearProgress />
+          </Box>
+        ) : (
+          ""
+        )}
         <CardContent>
           <Grid container spacing={1}>
             <TableBody sx={{ width: "40%", backgroundColor: "#f5f5f5" }}>
@@ -110,10 +123,7 @@ function QrCode() {
               <Info detail="Street" value={ShipmentInfo.r_no_street} />
               <Info detail="City" value={ShipmentInfo.r_city} />
               <Info detail="District" value={ShipmentInfo.r_district} />
-              <Info detail="COD" value={ShipmentInfo.COD} />
-              <br />
-              <br />
-              <br />
+              <Info detail="COD" value={ShipmentInfo.COD} /> <br />
             </TableBody>
 
             <Grid
@@ -150,6 +160,7 @@ function QrCode() {
               >
                 Generate
               </Button>
+              <br />
             </Grid>
           </Grid>
         </CardContent>

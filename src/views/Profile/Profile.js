@@ -17,10 +17,9 @@ import photo from "../../assets/photo.png";
 
 const Profile = () => {
   const [profile, setProfile] = useState();
-  const [newUser,SetNewAuthor]=useState(
-    {
-      photo:'',    }
-  )
+  const [newUser, SetNewAuthor] = useState({
+    photo: "",
+  });
   const currentUser = JSON.parse(localStorage.getItem("user"));
   console.log(currentUser.id);
 
@@ -70,7 +69,7 @@ const Profile = () => {
                 <TableContainer component={Paper} sx={{ minWidth: 450 }}>
                   <Table
                     sx={{
-                      minWidth: 450,
+                      minWidth: 420,
                     }}
                     aria-label="custom pagination table"
                   >
@@ -78,7 +77,7 @@ const Profile = () => {
                       <TableBody
                         sx={{
                           paddingLeft: "100px",
-                          margin: "30px",
+                          margin: "20px",
                         }}
                       >
                         {/* <TableRow>{profile.email} </TableRow>

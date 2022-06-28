@@ -116,9 +116,8 @@ const AddShipments = () => {
       <Sidebar />
       <div className="main">
         <div className="title">
-          <Typography variant="h4" style={{ paddingTop: "20px" }}>
-            Add Shipments
-          </Typography>
+          <h1> Add Shipments</h1>
+
           <br />
           <div className="formBox">
             <form onSubmit={formik.handleSubmit}>
@@ -433,7 +432,7 @@ const AddShipments = () => {
                   </TextField>
                 </Grid>
               </Grid>
-              <br/>
+              <br />
               <div className="button_align">
                 {/* <Button
                   color="primary"
@@ -453,7 +452,7 @@ const AddShipments = () => {
                   disabled={formik.isSubmitting}
                   sx={{
                     minWidth: "200px",
-                    textTransform: "none"
+                    textTransform: "none",
                   }}
                   size="large"
                   type="submit"
