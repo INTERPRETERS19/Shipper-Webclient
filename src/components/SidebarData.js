@@ -96,18 +96,14 @@ export const SidebarData = [
   },
 
   {
-    title: "Profile",
+    title: "Account Settings",
     path: "sh",
-    icon: <IoIcons.IoMdPeople />,
+    icon: <FaIcons.FaEnvelopeOpenText />,
+
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
+
     subNav: [
-      {
-        title: "Profile",
-        path: "/profile/profile",
-        icon: <IoIcons.IoIosPaper />,
-        cName: "sub-nav",
-      },
       {
         title: "Update Profile",
         path: "/profile/updateprofile",

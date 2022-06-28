@@ -83,12 +83,6 @@ const headCells = [
     label: "Description",
   },
   {
-    id: "District",
-    numeric: false,
-    disablePadding: false,
-    label: "District",
-  },
-  {
     id: "City",
     numeric: false,
     disablePadding: false,
@@ -99,6 +93,12 @@ const headCells = [
     numeric: true,
     disablePadding: true,
     label: "COD Amount",
+  },
+  {
+    id: "Delivered date",
+    numeric: false,
+    disablePadding: false,
+    label: "Delivered date",
   },
 ];
 
@@ -384,12 +384,12 @@ export default function Alldelivered() {
                             {row.mobile_phone_number}
                           </TableCell>
                           <TableCell align="left">{row.description}</TableCell>
-                          <TableCell align="left">
+                          {/* <TableCell align="left">
                             {" "}
                             {row.receipient_address !== undefined
                               ? ""
                               : row.r_district}
-                          </TableCell>
+                          </TableCell> */}
                           <TableCell align="left">
                             {" "}
                             {row.receipient_address !== undefined
@@ -397,6 +397,9 @@ export default function Alldelivered() {
                               : row.r_city}
                           </TableCell>
                           <TableCell align="left">{row.COD}</TableCell>
+                          <TableCell align="left">
+                            {row.delivered_date.substring(0, 10)}
+                          </TableCell>
                         </TableRow>
                       );
                     })}
