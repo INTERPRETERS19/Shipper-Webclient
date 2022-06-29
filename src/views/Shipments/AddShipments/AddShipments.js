@@ -1,6 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Grid, Typography, Button, TextField, MenuItem } from "@mui/material";
+import DeliveryFeePlan from "./DeliveryFeePlan";
 
 import Sidebar from "../../../components/Sidebar";
 import "./AddShipments.css";
@@ -68,7 +69,6 @@ const AddShipments = () => {
       description: "",
       quantity: "",
       COD: "",
-      prepaid: "",
       handling: "",
       payment_method: "",
     },
@@ -98,7 +98,6 @@ const AddShipments = () => {
       COD: Yup.number()
         .min(0, "Cannot be less than 0")
         .required("COD is required"),
-      prepaid: Yup.boolean().required("Prepaid is required"),
       handling: Yup.string().required("Handling is required"),
       payment_method: Yup.string().required("Payment method is required"),
     }),
@@ -116,10 +115,17 @@ const AddShipments = () => {
       <Sidebar />
       <div className="main">
         <div className="title">
-          <Typography variant="h4" style={{ paddingTop: "20px" }}>
-            Add Shipments
-          </Typography>
-          <br />
+          <div>
+            <center>
+            <Button variant="text" onClick={() => navigate("/DeliveryFeePlan")}>
+              Click Here to View the Delivery Fee Plan Before Adding your
+              Shipment !!!
+            </Button> </center>
+            <Typography variant="h4" style={{ paddingTop: "20px"}}>
+              Add Shipments
+            </Typography>
+          </div>
+          </div>
           <div className="formBox">
             <form onSubmit={formik.handleSubmit}>
               <Grid container spacing={10}>
@@ -204,35 +210,6 @@ const AddShipments = () => {
 
                   <TextField
                     error={Boolean(
-                      formik.touched.prepaid && formik.errors.prepaid
-                    )}
-                    helperText={formik.touched.prepaid && formik.errors.prepaid}
-                    label="Prepaid *"
-                    margin="normal"
-                    name="prepaid"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.prepaid}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                    id="outlined-select-prepaid"
-                    select
-                  >
-                    {[
-                      ["Yes", true],
-                      ["No", false],
-                    ].map((option) => (
-                      <MenuItem key={option[0]} value={option[1]}>
-                        {option[0]}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-
-                <Grid item xs={4}>
-                  <TextField
-                    error={Boolean(
                       formik.touched.r_no_street && formik.errors.r_no_street
                     )}
                     helperText={
@@ -248,7 +225,9 @@ const AddShipments = () => {
                     variant="outlined"
                     sx={{ minWidth: "350px" }}
                   />
+                </Grid>
 
+                <Grid item xs={4}>
                   <TextField
                     error={Boolean(
                       formik.touched.r_district && formik.errors.r_district
@@ -333,9 +312,7 @@ const AddShipments = () => {
                       </MenuItem>
                     ))}
                   </TextField>
-                </Grid>
 
-                <Grid item xs={4}>
                   <TextField
                     error={Boolean(
                       formik.touched.shipment_weight &&
@@ -355,7 +332,9 @@ const AddShipments = () => {
                     variant="outlined"
                     sx={{ minWidth: "350px" }}
                   />
+                </Grid>
 
+                <Grid item xs={4}>
                   <TextField
                     error={Boolean(formik.touched.DV && formik.errors.DV)}
                     helperText={formik.touched.DV && formik.errors.DV}
@@ -433,14 +412,15 @@ const AddShipments = () => {
                   </TextField>
                 </Grid>
               </Grid>
-              <br/>
+              <br />
               <div className="button_align">
-                {/* <Button
+                <Button
                   color="primary"
                   sx={{
-                    minWidth: "350px",
+                    minWidth: "180px",
                     textTransform: "none",
                     backgroundColor: "#495057",
+                    marginRight: 2,
                   }}
                   size="large"
                   //   type="reset"
@@ -448,12 +428,12 @@ const AddShipments = () => {
                   onClick={() => window.location.reload(false)}
                 >
                   Clear
-                </Button> */}
+                </Button>
                 <Button
                   disabled={formik.isSubmitting}
                   sx={{
-                    minWidth: "200px",
-                    textTransform: "none"
+                    minWidth: "180px",
+                    textTransform: "none",
                   }}
                   size="large"
                   type="submit"
@@ -464,7 +444,7 @@ const AddShipments = () => {
               </div>
             </form>
           </div>
-        </div>
+        
       </div>
     </div>
   );

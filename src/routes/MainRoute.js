@@ -24,6 +24,7 @@ import DeliveredShip from "../views/Shipments/DeliveredShipments/DeliveredShipme
 import Review from "../views/GetStarted/Review";
 import AddShipments from "../views/Shipments/AddShipments/AddShipments";
 import QrCode from "../views/QrCode/QrCode";
+import DeliveryFeePlan from "../views/Shipments/AddShipments/DeliveryFeePlan";
 
 const MainRoute = () => {
   return (
@@ -59,6 +60,7 @@ const MainRoute = () => {
           <Route path="/returns/summary" element={<RSummary />} />
           <Route path="/shipments/track" element={<Track />} />
           <Route path="/bankdetails" element={<BankDetails />} />
+          <Route path="/DeliveryFeePlan" element={<DeliveryFeePlan />} />
           <Route path="/shipment/allshipments" element={<AllShipments />} />
           <Route
             path="/shipment/deliveredshipments"

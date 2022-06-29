@@ -104,9 +104,9 @@ import Rating from "@mui/material/Rating";
 const App = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    fetchProducts();
+    fetchReview();
   }, []);
-  const fetchProducts = () => {
+  const fetchReview = () => {
     axios
       .get("/review")
       .then((res) => {
