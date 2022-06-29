@@ -3,9 +3,8 @@ import "./GetStarted.css";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
-
 import Getstarted from "../../assets/3.png";
-
+import App from ".";
 const GetStarted = () => {
   const navigate = useNavigate();
 
@@ -77,6 +76,8 @@ const GetStarted = () => {
             Add Review
           </Button>
         </div>
+<div> <App/>  </div>
+
         <div className="footer">
           <div className="footerX">
             <p>&copy;2022 Interpreters</p>
