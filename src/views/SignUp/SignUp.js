@@ -54,7 +54,10 @@ const SignUp = () => {
       return updateError("Passwords does not match!", setError);
     }
     if (!isPassword(form.password))
-      return updateError("Password must contain Minimum eight characters, at least one letter, one number and one special character!", setError);
+      return updateError(
+        "Password must contain Minimum eight characters, at least one letter, one number and one special character!",
+        setError
+      );
 
     return true;
   };
@@ -68,19 +71,18 @@ const SignUp = () => {
       try {
         const responces = await Client.post("/signup", { ...form });
         if (responces.data.success) {
-          //EMAIL VERIFICATION:SEND EMAIL TO USER
           const res = await Client.post("/requestEmailVerification", {
             email: responces.data.message.email,
           });
-          {
-            res.success && (
-              <Alert severity="info">
-                <AlertTitle>Success</AlertTitle>
-                verifcation email sent successfully —{" "}
-                <strong>check it out!</strong>
-              </Alert>
-            )
-          }
+          // {
+          //   res.success && (
+          //     <Alert severity="info">
+          //       <AlertTitle>Success</AlertTitle>
+          //       verifcation email sent successfully —{" "}
+          //       <strong>check it out!</strong>
+          //     </Alert>
+          //   )
+          // }
           return res;
         } else {
           return updateError("User already exist", setError);
@@ -115,9 +117,7 @@ const SignUp = () => {
             </p>
           ) : null}
         </Grid>
-        {/* <Avatar sx={{ m: 1, backgroundColor: "#112c48", marginTop: "10px" }}>
-          <LockOutlinedIcon sx={{ color: "#87ceeb" }} />
-        </Avatar> */}
+
         <Typography component="h1" variant="h3">
           <div className="line2nd">
             <span

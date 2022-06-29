@@ -4,9 +4,9 @@ import SideBar from "../../components/Sidebar";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Client from "../../api/Client";
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 import PieChart, {
   Legend,
   Series,
@@ -244,10 +244,9 @@ const Home = () => {
               <div className="value">LKR 364526</div>
             </div> */}
             <div className="wid">
-              <h3>Cash Receivables</h3>
+              <h3>Total COD</h3>
               <CreditScoreIcon sx={{ fontSize: "40px" }} />
               <div className="value">LKR {Recievable}</div>
-              
             </div>
           </div>
 

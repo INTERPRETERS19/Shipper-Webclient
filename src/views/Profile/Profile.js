@@ -10,6 +10,7 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
+
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import SideBar from "../../components/Sidebar";
 import Client from "../../api/Client";
@@ -17,12 +18,70 @@ import photo from "../../assets/photo.png";
 
 const Profile = () => {
   const [profile, setProfile] = useState();
-  const [newUser,SetNewAuthor]=useState(
-    {
-      photo:'',    }
-  )
   const currentUser = JSON.parse(localStorage.getItem("user"));
   console.log(currentUser.id);
+  const [fileInputState, setFileInputState] = useState("");
+  const [previewSource, setPreviewSource] = useState("");
+  const [selectedFile, setSelectedFile] = useState();
+
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+    setSelectedFile(file);
+    setFileInputState(e.target.value);
+  };
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
+
+  const handleSubmitFile = (e) => {
+    e.preventDefault();
+    if (!selectedFile) return;
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
+    reader.onloadend = () => {
+      uploadImage(reader.result);
+    };
+    reader.onerror = () => {
+      console.error("AHHHHHHHH!!");
+      setErrMsg("something went wrong!");
+    };
+  };
+
+  const uploadImage = async (base64EncodedImage) => {
+    try {
+      // await fetch('/api/upload', {
+      //     method: 'POST',
+      //     body: JSON.stringify({ data: base64EncodedImage }),
+      //     headers: { 'Content-Type': 'application/json' },
+      // });
+      const res = await Client.post(`uploadImage/${currentUser.id}`, {
+        data: base64EncodedImage,
+      });
+
+      if (res.data.success) {
+        setProfile(res.data.data);
+        setFileInputState("");
+        setPreviewSource("");
+        setSuccessMsg("Image uploaded successfully");
+        console.log(res.data);
+        console.log("Success");
+      } else {
+        console.log("Failed");
+      }
+    } catch (err) {
+      console.error(err);
+      setErrMsg("Something went wrong!");
+    }
+  };
 
   const getUser = async () => {
     const res = await Client.get(`profileShipper/${currentUser.id}`);
@@ -67,10 +126,10 @@ const Profile = () => {
           <div className="left">
             <div className="box1">
               <>
-                <TableContainer component={Paper} sx={{ minWidth: 450 }}>
+                <TableContainer component={Paper} sx={{ minWidth: 410 }}>
                   <Table
                     sx={{
-                      minWidth: 450,
+                      minWidth: 420,
                     }}
                     aria-label="custom pagination table"
                   >
@@ -81,14 +140,6 @@ const Profile = () => {
                           margin: "30px",
                         }}
                       >
-                        {/* <TableRow>{profile.email} </TableRow>
-                        <TableRow>{profile.firstName} </TableRow>
-                        <TableRow>{profile.lastName} </TableRow>
-                        <TableRow>{profile.mobile_no} </TableRow>
-                        <TableRow>{profile.street} </TableRow>
-                        <TableRow>{profile.city} </TableRow>
-                        <TableRow>{profile.district} </TableRow> */}
-
                         <Info detail="First Name" value={profile.firstName} />
                         <Info detail="Last Name" value={profile.lastName} />
                         <Info
@@ -127,29 +178,48 @@ const Profile = () => {
                   alignItems: "center",
                 }}
               >
-                <img src={photo} alt="logo" height="100" width="100" />
+                {previewSource !== "" ? (
+                  <img
+                    src={previewSource}
+                    alt="chosen"
+                    height="100"
+                    width="100"
+                    style={{ borderRadius: "50%" }}
+                  />
+                ) : profile !== undefined && profile.photo !== undefined ? (
+                  <img
+                    src={profile.photo}
+                    alt="logo"
+                    height="120"
+                    width="120"
+                    style={{ borderRadius: "50%" }}
+                  />
+                ) : (
+                  <img src={photo} alt="logo" height="100" width="100" />
+                )}
               </div>
               <br />
-              {/* <form onSubmit={handleSubmit} encType='multipart/form-data'>
-                <input
-                type="file"
-                accept=".png,.jpg,.jpeg"
-                name="photo"
-                onChange={handleChange}
 
-                />
-                <input
-                  type=""
-                />
-              </form> */}
               <div className="head">
                 <p> Click here to upload your profile photo from your media.</p>
               </div>
               <br />
               <br />
+              <div className="choose">
+              <input
+                id="fileInput"
+                type="file"
+                name="image"
+                onChange={handleFileInputChange}
+                value={fileInputState}
+                className="form-input"
+                style={{ alignSelf: "center", justifyContent:"center", alignItems:"center" }}
+              />
+              </div>
               <Button
                 variant="contained"
-                type="submit"
+                // type="submit"
+                onClick={handleSubmitFile}
                 sx={{
                   backgroundColor: "#001E3C",
                   width: "70%",

@@ -22,31 +22,33 @@ import Track from "../views/Shipments/Track/Track";
 import AllShipments from "../views/Shipments/AllShipments/AllShipment";
 import DeliveredShip from "../views/Shipments/DeliveredShipments/DeliveredShipments";
 import Review from "../views/GetStarted/Review";
-import AddShipments from "../views/Shipments/AddShipments/AddShipments"
+import AddShipments from "../views/Shipments/AddShipments/AddShipments";
+import QrCode from "../views/QrCode/QrCode";
 
 const MainRoute = () => {
   return (
     <Router>
       <Routes>
-          <Route path="/" element={<GetStarted />} />
-          <Route path="/review" element={<Review />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/emailVerification" element={<EmailVerification />} />
-          <Route path="/fp" element={<ForgottenPassword />} />
-          <Route path="/passwordReset" element={<ResetPassword />} />
-          <Route path="*" element={<NotFound />} />
-          <Route element={<ProtectedRoutes />}>
+        <Route path="/" element={<GetStarted />} />
+        <Route path="/review" element={<Review />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/emailVerification" element={<EmailVerification />} />
+        <Route path="/fp" element={<ForgottenPassword />} />
+        <Route path="/passwordReset" element={<ResetPassword />} />
+        <Route path="*" element={<NotFound />} />
+        <Route element={<ProtectedRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route path="/passwordChange" element={<ChangePassword />} />
           <Route path="/changePassword" element={<ChangePassword />} />
-          <Route path="shipments/newshipments" element={<NewShipments />} />
+          <Route path="/shipments/newshipments" element={<NewShipments />} />
+          <Route path="/shipment/qrcode" element={<QrCode />} />
           <Route path="shipments/reports" element={<Reports />} />
           <Route path="returns/reports" element={<Report />} />
           <Route path="/pickups/pickuprequests" element={<Pickups />} />
           <Route path="/returns/allreturns" element={<AllReturns />} />
           <Route path="/bankdetails" element={<BankDetails />} />
-          <Route path="/profile/profile" element={<Profile />} />
+          <Route path="/viewprofile" element={<Profile />} />
           <Route path="/profile/updateprofile" element={<UpdateProfile />} />
           <Route path="/shipment/addshipments" element={<AddShipments />} />
           <Route path="/shipments/track" element={<Track />} />
