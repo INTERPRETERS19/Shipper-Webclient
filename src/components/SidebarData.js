@@ -95,6 +95,7 @@ export const SidebarData = [
     ],
   },
 
+  
   {
     title: "Account Settings",
     path: "sh",
@@ -104,11 +105,12 @@ export const SidebarData = [
     iconOpened: <RiIcons.RiArrowUpSFill />,
 
     subNav: [
-      {
-        title: "Update Profile",
-        path: "/profile/updateprofile",
-        icon: <IoIcons.IoIosPaper />,
-      },
+        {
+          title: "Update Profile",
+          path: "/profile/updateprofile",
+          icon: <IoIcons.IoIosPaper />,
+        },
+      
       {
         title: "Change Password",
         path: "/passwordChange",
