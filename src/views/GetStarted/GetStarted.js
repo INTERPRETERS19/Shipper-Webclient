@@ -76,9 +76,6 @@ const GetStarted = () => {
             Add Review
           </Button>
         </div>
-        <div>
-        <App/>
-        </div>
         <div className="footer">
           <div className="footerX">
             <p>&copy;2022 Interpreters</p>

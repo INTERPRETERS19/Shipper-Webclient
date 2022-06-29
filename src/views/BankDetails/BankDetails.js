@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect} from "react";
 import Sidebar from "../../components/Sidebar";
 import "./BankDetails.css";
 import Client from "../../api/Client";
@@ -26,54 +26,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-// function generate(element) {
-//   return [0].map((value) =>
-//     React.cloneElement(element, {
-//       key: value,
-//     })
-//   );
-// }
-// allBankDetails,
-// getAllBankDetails,
-// deleteBankDetails,
-// getdeleteBankDetails,
-// updateBankDetails,
-// getupdateBankDetails,
-
-//   const deleteBankDetails = async () => {
-//     await Client.post(`/deletebank/${currentUser.id}`)
-//       .then((response) => {})
-//       .catch((err) => {
-//         console.log("Unable to get all New BankDetails");
-//       });
-//   };
-
-//   const updateBankDetails = async () => {
-//     await Client.post(`/updatebank/${currentUser.id}`)
-//       .then((response) => {
-//         setUpdateBankDetails(response.data);
-//       })
-//       .catch((err) => {
-//         console.log("Unable to get all Pickups");
-//       });
-//   };
-
-//   return (
-//     <BankDetailsContext.Provider
-//       value={{
-//         allBankDetails,
-//         getAllBankDetails,
-//         deleteBankDetails,
-//         getdeleteBankDetails,
-//         updateBankDetails,
-//         getupdateBankDetails,
-//       }}
-//     >
-//       {props.children}
-//     </BankDetailsContext.Provider>
-//   );
-// };
-
 const BankDetails = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [expanded, setExpanded] = React.useState(false);
@@ -81,6 +33,7 @@ const BankDetails = () => {
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = (bank) => {
     setOpen(true);
+    formikUpdate.setFieldValue("id", bank._id);
     formikUpdate.setFieldValue("account_no", bank.account_no);
     formikUpdate.setFieldValue("account_holder_name", bank.account_holder_name);
     formikUpdate.setFieldValue("branch_code", bank.branch_code);
@@ -91,21 +44,7 @@ const BankDetails = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  // const { allBankDetails, getAllBankDetails } = useContext(BankDetailsContext);
-  // useEffect(() => {
-  //   getAllBankDetails();
-  // }, []);
-  // const { deleteBankDetails, getdeleteBankDetails } =
-  //   useContext(BankDetailsContext);
-  // useEffect(() => {
-  //   getdeleteBankDetails();
-  // }, []);
-  // const { updateBankDetails, getupdateBankDetails } =
-  //   useContext(BankDetailsContext);
-  // useEffect(() => {
-  //   getupdateBankDetails();
-  // }, []);
-  // console.log(allBankDetails);
+
   const getAllBankDetails = async () => {
     const res = await Client.get(`allbank/${currentUser.id}`);
     if (res.data.success) {
@@ -121,17 +60,18 @@ const BankDetails = () => {
   useEffect(() => {
     getAllBankDetails();
   }, []);
-  // console.log(allBankDetails);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
+
   const addDetails = async (values, formikActions) => {
     const res = await Client.post("/bank", {
       ...values,
       shipper_id: currentUser.id,
     });
     if (res.data.success) {
+      getAllBankDetails();
       console.log(res.data);
     } else {
       console.log(res.data);
@@ -149,12 +89,24 @@ const BankDetails = () => {
       bank_name: values.bank_name,
     });
     if (res.data.success) {
+      getAllBankDetails();
+      setOpen(false);
       console.log(res.data);
     } else {
       console.log(res.data);
     }
     formikActions.resetForm();
     formikActions.setSubmitting(false);
+  };
+
+  const deleteDetails = async (id) => {
+    const res = await Client.post(`/deletebank/${id}`);
+    if (res.data.success) {
+      getAllBankDetails();
+      console.log(res.data);
+    } else {
+      console.log(res.data);
+    }
   };
 
   const formik = useFormik({
@@ -390,7 +342,15 @@ const BankDetails = () => {
                           <Typography>
                             <ListItem
                               secondaryAction={
-                                <IconButton edge="end" aria-label="delete">
+                                <IconButton
+                                  edge="end"
+                                  aria-label="delete"
+                                  onClick={() =>
+                                    window.confirm(
+                                      "Are you sure you want to delete this bank details?"
+                                    ) && deleteDetails(bank._id)
+                                  }
+                                >
                                   <DeleteIcon />
                                 </IconButton>
                               }
@@ -531,7 +491,7 @@ const BankDetails = () => {
                                         <Button
                                           onClick={formikUpdate.handleSubmit}
                                         >
-                                          Subscribe
+                                          Update
                                         </Button>
                                       </DialogActions>
                                     </Dialog>

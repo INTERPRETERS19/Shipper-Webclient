@@ -92,7 +92,7 @@
 .review {
   background-color: rgba(65, 137, 185, 0.2);
   box-shadow: 0 0 0 1px rgba(38, 72, 116, 0.2),
-    0.1em 0.1em 0.6em rgba(69, 74, 79, 0.3);
+    0.1em 0.1em 0.6em rgba(31, 95, 168, 0.3);
 }
 .reviewheader {
   display: flex;

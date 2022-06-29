@@ -79,3 +79,11 @@
   font-size: 22px;
   text-align: center;
 }
+.choose{
+  align-items: center;
+  max-width: 50%;
+  align-content: center;
+  align-self: center;
+  padding-bottom:20px;
+  margin-bottom: 5px;
+}
