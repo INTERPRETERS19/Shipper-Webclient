@@ -10,11 +10,6 @@ import {
   TableCell,
   TableRow,
 } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import SideBar from "../../components/Sidebar";
@@ -131,10 +126,10 @@ const Profile = () => {
           <div className="left">
             <div className="box1">
               <>
-                <TableContainer component={Paper} sx={{ minWidth: 450 }}>
+                <TableContainer component={Paper} sx={{ minWidth: 410 }}>
                   <Table
                     sx={{
-                      minWidth: 450,
+                      minWidth: 420,
                     }}
                     aria-label="custom pagination table"
                   >
@@ -145,14 +140,6 @@ const Profile = () => {
                           margin: "30px",
                         }}
                       >
-                        {/* <TableRow>{profile.email} </TableRow>
-                        <TableRow>{profile.firstName} </TableRow>
-                        <TableRow>{profile.lastName} </TableRow>
-                        <TableRow>{profile.mobile_no} </TableRow>
-                        <TableRow>{profile.street} </TableRow>
-                        <TableRow>{profile.city} </TableRow>
-                        <TableRow>{profile.district} </TableRow> */}
-
                         <Info detail="First Name" value={profile.firstName} />
                         <Info detail="Last Name" value={profile.lastName} />
                         <Info
@@ -218,6 +205,7 @@ const Profile = () => {
               </div>
               <br />
               <br />
+              <div className="choose">
               <input
                 id="fileInput"
                 type="file"
@@ -225,8 +213,9 @@ const Profile = () => {
                 onChange={handleFileInputChange}
                 value={fileInputState}
                 className="form-input"
-                style={{ alignSelf: "center" }}
+                style={{ alignSelf: "center", justifyContent:"center", alignItems:"center" }}
               />
+              </div>
               <Button
                 variant="contained"
                 // type="submit"

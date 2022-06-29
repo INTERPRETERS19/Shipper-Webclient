@@ -17,7 +17,6 @@ import Reports from "../views/Shipments/Reports/Reports";
 import Report from "../views/Returns/Reports/Reports";
 import Profile from "../views/Profile/Profile";
 import UpdateProfile from "../views/Profile/UpdateProfile";
-import AddImage from "../views/Profile/AddImage";
 import EmailVerification from "../views/SignUp/emailVerification";
 import Track from "../views/Shipments/Track/Track";
 import AllShipments from "../views/Shipments/AllShipments/AllShipment";
@@ -51,7 +50,6 @@ const MainRoute = () => {
           <Route path="/bankdetails" element={<BankDetails />} />
           <Route path="/viewprofile" element={<Profile />} />
           <Route path="/profile/updateprofile" element={<UpdateProfile />} />
-          <Route path="/profile/addimage" element={<AddImage/>} />
           <Route path="/shipment/addshipments" element={<AddShipments />} />
           <Route path="/shipments/track" element={<Track />} />
           <Route path="/shipment/allshipments" element={<AllShipments />} />

@@ -4,7 +4,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField } from "@mui/material";
 import Client from "../../api/Client";
-import AddImage from "./AddImage";
+import SideBar from "../../components/Sidebar";
+import "./UpdateProfile.css"
 
 const UpdateProfile = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -67,93 +68,121 @@ const UpdateProfile = () => {
   });
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <form onSubmit={formik.handleSubmit}>
-        <TextField
-          error={Boolean(formik.touched.firstName && formik.errors.firstName)}
-          helperText={formik.touched.firstName && formik.errors.firstName}
-          label="First Name "
-          margin="normal"
-          name="firstName"
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          type="text"
-          value={formik.values.firstName}
-          variant="outlined"
-          sx={{ minWidth: "400px" }}
-        />
-        <br />
+    <div className="Dashboard">
+      <SideBar />
+      <div className="main">
+        <div className="title">
+          <h1>EditProfile</h1>
+        </div>
+        <div className="container">
+          <div className="left">
+            <div className="box1">
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <form onSubmit={formik.handleSubmit}>
+                  <TextField
+                    error={Boolean(
+                      formik.touched.firstName && formik.errors.firstName
+                    )}
+                    helperText={
+                      formik.touched.firstName && formik.errors.firstName
+                    }
+                    label="First Name "
+                    margin="normal"
+                    name="firstName"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    type="text"
+                    value={formik.values.firstName}
+                    variant="outlined"
+                    sx={{ minWidth: "400px" }}
+                  />
+                  <br />
 
-        <TextField
-          error={Boolean(formik.touched.lastName && formik.errors.lastName)}
-          helperText={formik.touched.lastName && formik.errors.lastName}
-          label="Last Name "
-          margin="normal"
-          name="lastName"
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          type="text"
-          value={formik.values.lastName}
-          variant="outlined"
-          sx={{ minWidth: "400px" }}
-        />
-        <br />
+                  <TextField
+                    error={Boolean(
+                      formik.touched.lastName && formik.errors.lastName
+                    )}
+                    helperText={
+                      formik.touched.lastName && formik.errors.lastName
+                    }
+                    label="Last Name "
+                    margin="normal"
+                    name="lastName"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    type="text"
+                    value={formik.values.lastName}
+                    variant="outlined"
+                    sx={{ minWidth: "400px" }}
+                  />
+                  <br />
 
-        <TextField
-          error={Boolean(formik.touched.street && formik.errors.street)}
-          helperText={formik.touched.street && formik.errors.street}
-          label="Street "
-          margin="normal"
-          name="street"
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          type="text"
-          value={formik.values.street}
-          variant="outlined"
-          sx={{ minWidth: "400px" }}
-        />
-        <br />
-        <TextField
-          error={Boolean(formik.touched.city && formik.errors.city)}
-          helperText={formik.touched.city && formik.errors.city}
-          label="City "
-          margin="normal"
-          name="city"
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          type="text"
-          value={formik.values.city}
-          variant="outlined"
-          sx={{ minWidth: "400px" }}
-        />
-        <br />
-        <TextField
-          error={Boolean(formik.touched.district && formik.errors.district)}
-          helperText={formik.touched.district && formik.errors.district}
-          label="District "
-          margin="normal"
-          name="district"
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          type="text"
-          value={formik.values.district}
-          variant="outlined"
-          sx={{ minWidth: "400px" }}
-        />
-        <br />
-        <br />
+                  <TextField
+                    error={Boolean(
+                      formik.touched.street && formik.errors.street
+                    )}
+                    helperText={formik.touched.street && formik.errors.street}
+                    label="Street "
+                    margin="normal"
+                    name="street"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    type="text"
+                    value={formik.values.street}
+                    variant="outlined"
+                    sx={{ minWidth: "400px" }}
+                  />
+                  <br />
+                  <TextField
+                    error={Boolean(formik.touched.city && formik.errors.city)}
+                    helperText={formik.touched.city && formik.errors.city}
+                    label="City "
+                    margin="normal"
+                    name="city"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    type="text"
+                    value={formik.values.city}
+                    variant="outlined"
+                    sx={{ minWidth: "400px" }}
+                  />
+                  <br />
+                  <TextField
+                    error={Boolean(
+                      formik.touched.district && formik.errors.district
+                    )}
+                    helperText={
+                      formik.touched.district && formik.errors.district
+                    }
+                    label="District "
+                    margin="normal"
+                    name="district"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    type="text"
+                    value={formik.values.district}
+                    variant="outlined"
+                    sx={{ minWidth: "400px" }}
+                  />
+                  <br />
+                  <br />
 
-        <Button
-          color="primary"
-          disabled={formik.isSubmitting}
-          sx={{ minWidth: "400px", textTransform: "none" }}
-          size="large"
-          type="submit"
-          variant="contained"
-        >
-          Update User
-        </Button>
-      </form>
+                  <Button
+                    color="primary"
+                    disabled={formik.isSubmitting}
+                    sx={{ minWidth: "400px", textTransform: "none" }}
+                    size="large"
+                    type="submit"
+                    variant="contained"
+                  >
+                    Update User
+                  </Button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
