@@ -15,7 +15,7 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import SideBar from "../../components/Sidebar";
 import Client from "../../api/Client";
 import photo from "../../assets/photo.png";
-
+import Alert from "../../components/Alert";
 const Profile = () => {
   const [profile, setProfile] = useState();
   const currentUser = JSON.parse(localStorage.getItem("user"));
@@ -199,12 +199,14 @@ const Profile = () => {
                 )}
               </div>
               <br />
-
+              <Alert msg={errMsg} type="danger" />
+              <Alert msg={successMsg} type="success" />
               <div className="head">
                 <p> Click here to upload your profile photo from your media.</p>
               </div>
               <br />
               <br />
+            
               <div className="choose">
               <input
                 id="fileInput"
