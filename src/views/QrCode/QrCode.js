@@ -14,8 +14,6 @@ function QrCode() {
   const [ShipmentInfo, setShipmentInfo] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(location.state.id);
-
   const getShipmentInfo = async () => {
     const res = await Client.get(`shipmentInfo/${location.state.id}`);
     setIsLoading(true);
@@ -29,7 +27,7 @@ function QrCode() {
       console.log("Failed");
     }
   };
-  console.log(location.state.id);
+  // console.log(location.state.id);
   console.log(ShipmentInfo);
   useEffect(() => {
     getShipmentInfo();
@@ -111,7 +109,7 @@ function QrCode() {
         <CardContent>
           <Grid container spacing={1}>
             <TableBody sx={{ width: "40%", backgroundColor: "#f5f5f5" }}>
-              <Info detail="ID" value={location.state.id} />
+              <Info detail="ID" value={ShipmentInfo.id} />
               <Info
                 detail="Receipient Name"
                 value={ShipmentInfo.recipient_name}

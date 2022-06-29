@@ -192,6 +192,9 @@ const EnhancedTableToolbar = (props) => {
         console.log(res.data.message);
         getShipments();
       } else {
+        if (!res.data.isNewOrDelivered) {
+          window.alert(res.data.error);
+        }
         console.log("Delete not successful");
       }
     });

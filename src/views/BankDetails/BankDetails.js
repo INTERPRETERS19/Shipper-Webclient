@@ -30,6 +30,7 @@ const BankDetails = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [expanded, setExpanded] = React.useState(false);
   const [allBankDetails, setAllBankDetails] = useState();
+  const [count, setCount] = useState();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = (bank) => {
     setOpen(true);
@@ -49,7 +50,7 @@ const BankDetails = () => {
     const res = await Client.get(`allbank/${currentUser.id}`);
     if (res.data.success) {
       setAllBankDetails(res.data.data);
-      console.log(res.data);
+      setCount(res.data.count);
 
       console.log("Success");
     } else {
@@ -100,12 +101,16 @@ const BankDetails = () => {
   };
 
   const deleteDetails = async (id) => {
-    const res = await Client.post(`/deletebank/${id}`);
-    if (res.data.success) {
-      getAllBankDetails();
-      console.log(res.data);
+    if (count > 1) {
+      const res = await Client.post(`/deletebank/${id}`);
+      if (res.data.success) {
+        getAllBankDetails();
+        console.log(count);
+      } else {
+        console.log(res.data);
+      }
     } else {
-      console.log(res.data);
+      window.alert("You must atleast have one bank details");
     }
   };
 
@@ -118,11 +123,15 @@ const BankDetails = () => {
       bank_name: "",
     },
     validationSchema: Yup.object({
-      account_no: Yup.string().required("Account no is required!"),
+      account_no: Yup.number()
+        .typeError("Account no can only contain numbers!")
+        .required("Account no is required!"),
       account_holder_name: Yup.string().required(
         "Account holder name is required!"
       ),
-      branch_code: Yup.string().required("Branch code is required!"),
+      branch_code: Yup.number()
+        .typeError("Branch code can only contain numbers!")
+        .required("Branch code is required!"),
       branch_name: Yup.string().required("Branch name is required!"),
       bank_name: Yup.string().required("Bank name is required!"),
     }),
@@ -141,11 +150,15 @@ const BankDetails = () => {
       bank_name: "",
     },
     validationSchema: Yup.object({
-      account_no: Yup.string().required("Account no is required!"),
+      account_no: Yup.number()
+        .typeError("Account no can only contain numbers!")
+        .required("Account no is required!"),
       account_holder_name: Yup.string().required(
         "Account holder name is required!"
       ),
-      branch_code: Yup.string().required("Branch code is required!"),
+      branch_code: Yup.number()
+        .typeError("Branch code can only contain numbers!")
+        .required("Branch code is required!"),
       branch_name: Yup.string().required("Branch name is required!"),
       bank_name: Yup.string().required("Bank name is required!"),
     }),
