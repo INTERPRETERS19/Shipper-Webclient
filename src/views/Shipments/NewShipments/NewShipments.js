@@ -111,6 +111,12 @@ const headCells = [
     disablePadding: true,
     label: "COD Amount",
   },
+  {
+    id: "DeliveryFee",
+    numeric: true,
+    disablePadding: true,
+    label: "DeliveryFee",
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -473,6 +479,7 @@ export default function NewShipments() {
                               : row.r_city}
                           </TableCell>
                           <TableCell align="left">{row.COD}</TableCell>
+                          <TableCell align="left">{row.delivery_fee}</TableCell>
                         </TableRow>
                       );
                     })}
