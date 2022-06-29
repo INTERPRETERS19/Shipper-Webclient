@@ -17,7 +17,7 @@ class Home extends React.Component {
         id="pie"
         type="doughnut"
         title="Return Summary"
-        palette="Soft Pastel"
+        palette="#7D9D9C"
         dataSource={returnsummary}
       >
         <Series argumentField="return"></Series>

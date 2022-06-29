@@ -30,7 +30,7 @@ const ReportComponent = (
   img.crossOrigin = "";
   img.src = "assets/logo2.png";
   // define the columns we want and their titles
-  const tableColumn = ["Id", "Recipient Name", "Description", "Status"];
+  const tableColumn = ["Id", "Recipient Name", "Description", "Current status"];
   // define an empty array of rows
   const tableRows = [];
 
