@@ -129,7 +129,7 @@ function Login() {
               <input
                 className="inputColoum"
                 type="text"
-                placeholder="UserName"
+                placeholder="Email"
                 value={values.email}
                 name="email"
                 onChange={handleInputChange}
