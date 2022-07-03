@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardContent, Grid, Button } from "@mui/material";
 import { TableBody, Typography, TableCell, TableRow } from "@mui/material";
 import QRCode from "qrcode";
@@ -34,32 +34,22 @@ function QrCode() {
   }, []);
 
   function clickHandler() {
+    const qrText = `Shipment ID: ${ShipmentInfo.id},
+      \nRecipient name:${ShipmentInfo.recipient_name},
+      \nMobile Number:${ShipmentInfo.mobile_phone_number},
+     \nStreet:${ShipmentInfo.r_no_street},
+      \nCity:${ShipmentInfo.r_city},
+      \nDistrict:${ShipmentInfo.r_district},
+     \nCOD:${ShipmentInfo.COD},
+     `;
 
-    {
-      ShipmentInfo &&
-        setText(
-          `Shipment ID: ${ShipmentInfo.id},
-       \nRecipient name:${ShipmentInfo.recipient_name},
-       \nMobile Number:${ShipmentInfo.mobile_phone_number},
-      \nStreet:${ShipmentInfo.r_no_street},
-       \nCity:${ShipmentInfo.r_city},
-       \nDistrict:${ShipmentInfo.r_district},
-      \nCOD:${ShipmentInfo.COD},
-      `
-        );
-    }
-    console.log(text);
-    generateQrCode();
+    console.log(qrText);
+    generateQrCode(qrText);
   }
-  useEffect(() => {
-    clickHandler();
-  }, []);
 
-  const qrRef = useRef(null);
-
-  const generateQrCode = async () => {
+  const generateQrCode = async (qrText) => {
     try {
-      const response = await QRCode.toDataURL(text);
+      const response = await QRCode.toDataURL(qrText);
       setImageUrl(response);
     } catch (error) {
       console.log(error);
@@ -101,7 +91,7 @@ function QrCode() {
         <br />
         <h3 className="title">Shipment Info</h3>
         <br />
-        {isLoading == "true" ? (
+        {isLoading === "true" ? (
           <Box sx={{ width: "100%" }}>
             <LinearProgress />
           </Box>
@@ -110,10 +100,9 @@ function QrCode() {
         )}
         <CardContent>
           <Grid container spacing={1}>
-
             {ShipmentInfo && (
               <TableBody sx={{ width: "40%", backgroundColor: "#f5f5f5" }}>
-              <Info detail="ID" value={ShipmentInfo.id} />
+                <Info detail="ID" value={ShipmentInfo.id} />
                 <Info
                   detail="Receipient Name"
                   value={ShipmentInfo.recipient_name}
