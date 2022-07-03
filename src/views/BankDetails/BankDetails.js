@@ -25,11 +25,13 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import MenuItem from "@mui/material/MenuItem";
 
 const BankDetails = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
   const [expanded, setExpanded] = React.useState(false);
   const [allBankDetails, setAllBankDetails] = useState();
+  const [count, setCount] = useState();
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = (bank) => {
     setOpen(true);
@@ -44,12 +46,29 @@ const BankDetails = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const Banks = [
+    "BOC",
+    "Commercial Bank",
+    "NSB",
+    "HNB",
+    "Peoples' Bank",
+    "Seylan Bank",
+    "Sampath Bank",
+    "HSBC",
+    "Axis Bank Ltd",
+    "Amana Bank",
+    "CITIBANK N.A.",
+    "NTB",
+    "PUBLIC BANK BERHAD",
+    "UNION BANK OF COLOMBO PLC",
+    "DFCC",
+    "NDB",
+  ];
   const getAllBankDetails = async () => {
     const res = await Client.get(`allbank/${currentUser.id}`);
     if (res.data.success) {
       setAllBankDetails(res.data.data);
-      console.log(res.data);
+      setCount(res.data.count);
 
       console.log("Success");
     } else {
@@ -100,12 +119,16 @@ const BankDetails = () => {
   };
 
   const deleteDetails = async (id) => {
-    const res = await Client.post(`/deletebank/${id}`);
-    if (res.data.success) {
-      getAllBankDetails();
-      console.log(res.data);
+    if (count > 1) {
+      const res = await Client.post(`/deletebank/${id}`);
+      if (res.data.success) {
+        getAllBankDetails();
+        console.log(count);
+      } else {
+        console.log(res.data);
+      }
     } else {
-      console.log(res.data);
+      window.alert("You must atleast have one bank details");
     }
   };
 
@@ -118,11 +141,15 @@ const BankDetails = () => {
       bank_name: "",
     },
     validationSchema: Yup.object({
-      account_no: Yup.string().required("Account no is required!"),
-      account_holder_name: Yup.string().required(
-        "Account holder name is required!"
-      ),
-      branch_code: Yup.string().required("Branch code is required!"),
+      account_no: Yup.number()
+        .typeError("Account no can only contain numbers!")
+        .required("Account no is required!"),
+      account_holder_name: Yup.string()
+        .matches(/^[aA-zZ\s]+$/, "Only alphabets are allowed for this field ")
+        .required("Account holder name is required!"),
+      branch_code: Yup.number()
+        .typeError("Branch code can only contain numbers!")
+        .required("Branch code is required!"),
       branch_name: Yup.string().required("Branch name is required!"),
       bank_name: Yup.string().required("Bank name is required!"),
     }),
@@ -141,11 +168,15 @@ const BankDetails = () => {
       bank_name: "",
     },
     validationSchema: Yup.object({
-      account_no: Yup.string().required("Account no is required!"),
+      account_no: Yup.number()
+        .typeError("Account no can only contain numbers!")
+        .required("Account no is required!"),
       account_holder_name: Yup.string().required(
         "Account holder name is required!"
       ),
-      branch_code: Yup.string().required("Branch code is required!"),
+      branch_code: Yup.number()
+        .typeError("Branch code can only contain numbers!")
+        .required("Branch code is required!"),
       branch_name: Yup.string().required("Branch name is required!"),
       bank_name: Yup.string().required("Bank name is required!"),
     }),
@@ -261,7 +292,14 @@ const BankDetails = () => {
                         type="text"
                         value={formik.values.bank_name}
                         variant="outlined"
-                      />
+                        select
+                      >
+                        {Banks.map((option) => (
+                          <MenuItem key={option} value={option}>
+                            {option}
+                          </MenuItem>
+                        ))}
+                      </TextField>
                     </div>
                   </div>
                   <Button
@@ -482,7 +520,17 @@ const BankDetails = () => {
                                           type="text"
                                           value={formikUpdate.values.bank_name}
                                           variant="outlined"
-                                        />
+                                          select
+                                        >
+                                          {Banks.map((option) => (
+                                            <MenuItem
+                                              key={option}
+                                              value={option}
+                                            >
+                                              {option}
+                                            </MenuItem>
+                                          ))}
+                                        </TextField>
                                       </DialogContent>
                                       <DialogActions>
                                         <Button onClick={handleClose}>

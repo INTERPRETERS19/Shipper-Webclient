@@ -192,6 +192,9 @@ const EnhancedTableToolbar = (props) => {
         console.log(res.data.message);
         getShipments();
       } else {
+        if (!res.data.isNewOrDelivered) {
+          window.alert(res.data.error);
+        }
         console.log("Delete not successful");
       }
     });
@@ -221,14 +224,7 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h4"
-          id="tableTitle"
-          component="div"
-        >
-          <b>All Shipments</b>
-        </Typography>
+        <h2>All Shipments</h2>
       )}
 
       {numSelected > 0 ? (
@@ -244,11 +240,7 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Filter list">
-          <IconButton>
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
+        ""
       )}
     </Toolbar>
   );

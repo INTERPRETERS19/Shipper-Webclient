@@ -6,7 +6,6 @@ import Sidebar from "../../../components/Sidebar";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import TextField from "@mui/material/TextField";
-import { Typography } from "@mui/material";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -33,10 +32,9 @@ export default function Track() {
     if (searchInput !== "") {
       const filteredData = APIData.filter((item) => {
         return Object.values(item)
-          .join('')
+          .join("")
           .toLowerCase()
           .includes(searchInput.toLowerCase());
-          
       });
       setFilteredResults(filteredData);
     } else {
@@ -49,13 +47,12 @@ export default function Track() {
       <Sidebar />
       <div
         className="main"
-        style={{ marginLeft: "280px", paddingTop: "100px" }}
+        style={{ marginLeft: "300px", paddingTop: "100px" }}
       >
         <div></div>
         <div style={{ display: "flex", flexDirection: "column" }}>
-          <Typography variant="h4" sx={{ marginLeft: "30px" }}>
-            <b>Search Shipments</b>
-          </Typography>
+          <h2>Search Shipments</h2>
+
           <br />
           <div className="Search">
             <TextField

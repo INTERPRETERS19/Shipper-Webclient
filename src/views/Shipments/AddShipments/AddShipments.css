@@ -1,29 +1,27 @@
 .AddShipments {
-    min-height: 100vh;
-    max-height: 100%;
-    background-color: #e5e9ef;
-    
-  }
-  .AddShipments .main {
-    margin-left: 280px;
-    max-height: 100vh;
-    padding-top: 60px;
-    /* padding: 60px; */
-  }
-  
-  .AddShipments .title {
-    padding: 15px;
-    padding-left: 35px;
-  }
-  
-  .button_align{
-    float: right;
-  }
-  
-  .AddShipments .formBox {
-    background-color: #ffffff;
-    padding-right: 80px;
-    padding-left: 30px;
-    border-radius: 5px;
-    padding-bottom: 70px;
-  }
+  min-height: 100vh;
+  max-height: 100%;
+  background-color: #e5e9ef;
+}
+.AddShipments .main {
+  margin-left: 280px;
+  max-height: 100vh;
+  padding-top: 60px;
+}
+
+.AddShipments .title {
+  padding: 15px;
+  padding-left: 35px;
+}
+
+.button_align {
+  float: right;
+}
+
+.AddShipments .formBox {
+  background-color: #ffffff;
+  padding-right: 80px;
+  padding-left: 30px;
+  border-radius: 5px;
+  padding-bottom: 70px;
+}

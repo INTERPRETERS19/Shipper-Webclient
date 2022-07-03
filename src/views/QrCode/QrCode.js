@@ -3,35 +3,38 @@ import { Card, CardContent, Grid, Button } from "@mui/material";
 import { TableBody, Typography, TableCell, TableRow } from "@mui/material";
 import QRCode from "qrcode";
 import SideBar from "../../components/Sidebar";
+import Box from "@mui/material/Box";
+import LinearProgress from "@mui/material/LinearProgress";
 import { useLocation } from "react-router-dom";
 import Client from "../../api/Client";
 function QrCode() {
   const location = useLocation();
-  const [text, setText] = useState(1);
+  const [text, setText] = useState(0);
   const [imageUrl, setImageUrl] = useState("");
-  const [ShipmentInfo, setShipmentInfo] = useState();
-
-  console.log(location.state.id);
+  const [ShipmentInfo, setShipmentInfo] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   const getShipmentInfo = async () => {
     const res = await Client.get(`shipmentInfo/${location.state.id}`);
+    setIsLoading(true);
     if (res.data.success) {
       setShipmentInfo(res.data.data);
       console.log(res.data);
 
       console.log("Success");
+      setIsLoading(false);
     } else {
       console.log("Failed");
     }
   };
-  console.log(location.state.id);
+  // console.log(location.state.id);
   console.log(ShipmentInfo);
-
   useEffect(() => {
     getShipmentInfo();
   }, []);
 
   function clickHandler() {
+
     {
       ShipmentInfo &&
         setText(
@@ -56,7 +59,6 @@ function QrCode() {
 
   const generateQrCode = async () => {
     try {
-      console.log(ShipmentInfo.COD);
       const response = await QRCode.toDataURL(text);
       setImageUrl(response);
     } catch (error) {
@@ -92,17 +94,26 @@ function QrCode() {
       <Card
         sx={{
           paddingLeft: "320px",
-          paddingTop: "100px",
+          paddingTop: "65px",
         }}
       >
-        <h2 className="title">Generate Shipment QR code</h2>
+        <h1 className="title">Generate Shipment QR code</h1>
         <br />
-
+        <h3 className="title">Shipment Info</h3>
+        <br />
+        {isLoading == "true" ? (
+          <Box sx={{ width: "100%" }}>
+            <LinearProgress />
+          </Box>
+        ) : (
+          ""
+        )}
         <CardContent>
           <Grid container spacing={1}>
+
             {ShipmentInfo && (
               <TableBody sx={{ width: "40%", backgroundColor: "#f5f5f5" }}>
-                <Info detail="ID" value={location.state.id} />
+              <Info detail="ID" value={ShipmentInfo.id} />
                 <Info
                   detail="Receipient Name"
                   value={ShipmentInfo.recipient_name}
@@ -154,6 +165,7 @@ function QrCode() {
               >
                 Generate
               </Button>
+              <br />
             </Grid>
           </Grid>
         </CardContent>
