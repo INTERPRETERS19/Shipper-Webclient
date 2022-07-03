@@ -43,6 +43,7 @@ function Login() {
         const responces = await client.post("/signin", { ...values });
         if (responces.data.success) {
           setProfile(responces.data.user);
+          // console.log(responces.data.user);
           localStorage.setItem("user", JSON.stringify(responces.data.user));
           setIsLoggedIn(true);
           navigate("/home");
@@ -128,7 +129,7 @@ function Login() {
               <input
                 className="inputColoum"
                 type="text"
-                placeholder="UserName"
+                placeholder="Email"
                 value={values.email}
                 name="email"
                 onChange={handleInputChange}

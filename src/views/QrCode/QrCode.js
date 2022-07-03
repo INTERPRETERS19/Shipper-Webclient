@@ -34,18 +34,20 @@ function QrCode() {
   }, []);
 
   function clickHandler() {
-    setIsLoading(true);
-    setText(
-      `Shipment ID: ${ShipmentInfo.id},
-     \nRecipient name:${ShipmentInfo.recipient_name},
-     \nMobile Number:${ShipmentInfo.mobile_phone_number},
-    \nStreet:${ShipmentInfo.r_no_street},
-     \nCity:${ShipmentInfo.r_city},
-     \nDistrict:${ShipmentInfo.r_district},
-    \nCOD:${ShipmentInfo.COD},
-    `
-    );
-    // setIsLoading(false);
+
+    {
+      ShipmentInfo &&
+        setText(
+          `Shipment ID: ${ShipmentInfo.id},
+       \nRecipient name:${ShipmentInfo.recipient_name},
+       \nMobile Number:${ShipmentInfo.mobile_phone_number},
+      \nStreet:${ShipmentInfo.r_no_street},
+       \nCity:${ShipmentInfo.r_city},
+       \nDistrict:${ShipmentInfo.r_district},
+      \nCOD:${ShipmentInfo.COD},
+      `
+        );
+    }
     console.log(text);
     generateQrCode();
   }
@@ -108,22 +110,27 @@ function QrCode() {
         )}
         <CardContent>
           <Grid container spacing={1}>
-            <TableBody sx={{ width: "40%", backgroundColor: "#f5f5f5" }}>
-              <Info detail="ID" value={ShipmentInfo.id} />
-              <Info
-                detail="Receipient Name"
-                value={ShipmentInfo.recipient_name}
-              />
-              <Info
-                detail="Mobile Number"
-                value={ShipmentInfo.mobile_phone_number}
-              />
-              <Info detail="Street" value={ShipmentInfo.r_no_street} />
-              <Info detail="City" value={ShipmentInfo.r_city} />
-              <Info detail="District" value={ShipmentInfo.r_district} />
-              <Info detail="COD" value={ShipmentInfo.COD} /> <br />
-            </TableBody>
 
+            {ShipmentInfo && (
+              <TableBody sx={{ width: "40%", backgroundColor: "#f5f5f5" }}>
+              <Info detail="ID" value={ShipmentInfo.id} />
+                <Info
+                  detail="Receipient Name"
+                  value={ShipmentInfo.recipient_name}
+                />
+                <Info
+                  detail="Mobile Number"
+                  value={ShipmentInfo.mobile_phone_number}
+                />
+                <Info detail="Street" value={ShipmentInfo.r_no_street} />
+                <Info detail="City" value={ShipmentInfo.r_city} />
+                <Info detail="District" value={ShipmentInfo.r_district} />
+                <Info detail="COD" value={ShipmentInfo.COD} />
+                <br />
+                <br />
+                <br />
+              </TableBody>
+            )}
             <Grid
               item
               xl={7}

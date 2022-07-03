@@ -66,6 +66,12 @@ const headCells = [
     label: "Phone Number",
   },
   {
+    id: "COD Amount",
+    numeric: true,
+    disablePadding: true,
+    label: "COD Amount",
+  },
+  {
     id: "Description",
     numeric: false,
     disablePadding: false,
@@ -77,18 +83,7 @@ const headCells = [
     disablePadding: false,
     label: "City",
   },
-  {
-    id: "COD",
-    numeric: true,
-    disablePadding: true,
-    label: "COD(LKR)",
-  },
-  {
-    id: "Weight",
-    numeric: false,
-    disablePadding: true,
-    label: "Weight(Kg)",
-  },
+
   {
     id: "Status",
     numeric: false,
@@ -307,6 +302,7 @@ export default function AllReturns() {
                           >
                             {row.mobile_phone_number}
                           </TableCell>
+                          <TableCell align="left">{row.COD}</TableCell>
                           <TableCell align="left">{row.description}</TableCell>
                           {/* <TableCell align="left">
                             {" "}
@@ -319,10 +315,6 @@ export default function AllReturns() {
                             {row.receipient_address !== undefined
                               ? ""
                               : row.r_city}
-                          </TableCell>
-                          <TableCell align="left">{row.COD}</TableCell>
-                          <TableCell align="left">
-                            {row.shipment_weight}
                           </TableCell>
                           <TableCell align="left">
                             {row.current_status}
