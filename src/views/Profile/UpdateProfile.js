@@ -18,6 +18,7 @@ const UpdateProfile = () => {
         console.log(res.data);
         formik.setFieldValue("firstName", res.data.data.firstName);
         formik.setFieldValue("lastName", res.data.data.lastName);
+        formik.setFieldValue("mobile_no", res.data.data.mobile_no);
         formik.setFieldValue("street", res.data.data.street);
         formik.setFieldValue("city", res.data.data.city);
         formik.setFieldValue("district", res.data.data.district);
@@ -51,16 +52,21 @@ const UpdateProfile = () => {
     initialValues: {
       firstName: "",
       lastName: "",
+      mobile_no: "",
       street: "",
       city: "",
       district: "",
     },
     validationSchema: Yup.object({
-      firstName: Yup.string(),
-      lastName: Yup.string(),
-      street: Yup.string(),
-      city: Yup.string(),
-      district: Yup.string(),
+      firstName: Yup.string().required("Firstname is required"),
+      lastName: Yup.string().required("lastname is required"),
+      mobile_no: Yup.string()
+        .required("mobile_no is required")
+        .min(10, "Mobile no should contain at least 10 numbers")
+        .max(10, "Mobile no should contain maximum 10 numbers"),
+      street: Yup.string().required("Street is required"),
+      city: Yup.string().required("City is required"),
+      district: Yup.string().required("District ID is required"),
     }),
     onSubmit: (values, formikActions) => {
       updateUser(values, formikActions);
@@ -112,6 +118,25 @@ const UpdateProfile = () => {
                     onChange={formik.handleChange}
                     type="text"
                     value={formik.values.lastName}
+                    variant="outlined"
+                    sx={{ minWidth: "400px" }}
+                  />
+                  <br />
+
+                  <TextField
+                    error={Boolean(
+                      formik.touched.mobile_no && formik.errors.mobile_no
+                    )}
+                    helperText={
+                      formik.touched.mobile_no && formik.errors.mobile_no
+                    }
+                    label="mobile no "
+                    margin="normal"
+                    name="mobile_no"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    type="text"
+                    value={formik.values.mobile_no}
                     variant="outlined"
                     sx={{ minWidth: "400px" }}
                   />

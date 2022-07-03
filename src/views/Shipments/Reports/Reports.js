@@ -140,7 +140,7 @@ export const Reports = () => {
               <br />
 
               <Button
-                color="primary"
+                color="inherit"
                 onClick={formik.resetForm}
                 sx={{
                   minWidth: "150px",

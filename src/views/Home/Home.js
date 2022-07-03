@@ -18,6 +18,7 @@ const Home = () => {
   const [pending, setPending] = useState(0);
   const [FailtoDeliver, setFailtoDeliver] = useState(0);
   const [PickUp, setPickUp] = useState(0);
+  const [PickedUp, setPickedUp] = useState(0);
   const [Rescheduled, setRescheduled] = useState(0);
   const [OutForDelivery, setOutForDelivery] = useState(0);
   const [New, setNew] = useState(0);
@@ -48,6 +49,10 @@ const Home = () => {
     {
       return: "Pickup request",
       val: PickUp,
+    },
+    {
+      return: "Pickedup request",
+      val: PickedUp,
     },
   ];
 
@@ -105,6 +110,21 @@ const Home = () => {
       const res = await Client.get(`getPickUp/${currentUser.id}`);
       if (res.data.success) {
         setPickUp(res.data.count);
+        console.log(res.data.count);
+        console.log("Success");
+      } else {
+        console.log("Failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getpickedUp = async () => {
+    try {
+      const res = await Client.get(`getPickedUp/${currentUser.id}`);
+      if (res.data.success) {
+        setPickedUp(res.data.count);
         console.log(res.data.count);
         console.log("Success");
       } else {
@@ -194,6 +214,9 @@ const Home = () => {
 
   useEffect(() => {
     getpickUp();
+  }, []);
+  useEffect(() => {
+    getpickedUp();
   }, []);
 
   useEffect(() => {
