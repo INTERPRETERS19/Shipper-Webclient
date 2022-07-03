@@ -244,7 +244,7 @@ const Home = () => {
               <div className="value">LKR 364526</div>
             </div> */}
             <div className="wid">
-              <h3>Cash Receivables</h3>
+              <h3>Total COD</h3>
               <CreditScoreIcon sx={{ fontSize: "40px" }} />
               <div className="value">LKR {Recievable}</div>
             </div>

@@ -1,5 +1,6 @@
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import logo2 from "../assets/logo2.PNG";
 // Date Fns is used to format the dates we receive
 // from our API call
 import { format } from "date-fns";
@@ -22,6 +23,12 @@ const ReportComponent = (
   // initialize jsPDF
   const doc = new jsPDF({ lineHeight: 1.7 });
 
+  var img = new Image();
+  img.onload = function () {
+    doc.addImage(this, 10, 10);
+  };
+  img.crossOrigin = "";
+  img.src = "assets/logo2.png";
   // define the columns we want and their titles
   const tableColumn = ["Id", "Recipient Name", "Description", "Status"];
   // define an empty array of rows

@@ -123,7 +123,8 @@ function ChangePassword() {
               />
               <br />
               <TextField
-                error={Boolean(
+
+error={Boolean(
                   formik.touched.confirmPassword &&
                     formik.errors.confirmPassword
                 )}

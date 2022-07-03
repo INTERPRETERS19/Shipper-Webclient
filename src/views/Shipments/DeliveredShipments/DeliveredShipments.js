@@ -183,14 +183,7 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography
-          sx={{ flex: "1 1 100%", padding: 3 }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          All Delivered Shipments
-        </Typography>
+        <h2> All Delivered Shipments</h2>
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">

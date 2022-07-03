@@ -197,14 +197,7 @@ const EnhancedTableToolbar = (props) => {
           component="div"
         ></Typography>
       ) : (
-        <Typography
-          sx={{ flex: "1 1 100%", padding: 3 }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          New Shipments
-        </Typography>
+        <h2> New Shipments</h2>
       )}
 
       {numSelected > 0 ? (
