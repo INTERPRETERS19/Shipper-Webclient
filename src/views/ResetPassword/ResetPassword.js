@@ -24,7 +24,7 @@ function ResetPassword() {
       userId: searchParams.get("id"),
     });
     if (res.data) {
-      navigate("/home");
+      navigate("/login");
     } else {
       setError(true);
     }
@@ -39,6 +39,10 @@ function ResetPassword() {
       password: Yup.string()
         .trim()
         .min(8, "Password is too short!")
+        .matches(
+          /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+          "Must Contain 8 Characters, One Letter, One Number and One Special Case Character"
+        )
         .required("Password is required!"),
       confirmPassword: Yup.string().equals(
         [Yup.ref("password"), null],
