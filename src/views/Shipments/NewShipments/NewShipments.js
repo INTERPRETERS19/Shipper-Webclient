@@ -111,6 +111,12 @@ const headCells = [
     disablePadding: true,
     label: "COD Amount",
   },
+  {
+    id: "DeliveryFee",
+    numeric: true,
+    disablePadding: true,
+    label: "DeliveryFee",
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -260,6 +266,7 @@ export default function NewShipments() {
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
   const [selected, setSelected] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openPopup, setOpenPopup] = useState(false);
@@ -472,6 +479,7 @@ export default function NewShipments() {
                               : row.r_city}
                           </TableCell>
                           <TableCell align="left">{row.COD}</TableCell>
+                          <TableCell align="left">{row.delivery_fee}</TableCell>
                         </TableRow>
                       );
                     })}
