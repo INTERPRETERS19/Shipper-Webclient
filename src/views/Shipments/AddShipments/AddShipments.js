@@ -1,11 +1,12 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Grid, Typography, Button, TextField, MenuItem } from "@mui/material";
-
+import IconButton from "@mui/material/IconButton";
 import Sidebar from "../../../components/Sidebar";
 import "./AddShipments.css";
 import Client from "../../../api/Client";
 import { useNavigate } from "react-router-dom";
+import CalculateIcon from "@mui/icons-material/Calculate";
 
 const DISTRICTS = [
   "Colombo",
@@ -68,7 +69,6 @@ const AddShipments = () => {
       description: "",
       quantity: "",
       COD: "",
-      prepaid: "",
       handling: "",
       payment_method: "",
     },
@@ -98,7 +98,6 @@ const AddShipments = () => {
       COD: Yup.number()
         .min(0, "Cannot be less than 0")
         .required("COD is required"),
-      prepaid: Yup.boolean().required("Prepaid is required"),
       handling: Yup.string().required("Handling is required"),
       payment_method: Yup.string().required("Payment method is required"),
     }),
@@ -116,354 +115,340 @@ const AddShipments = () => {
       <Sidebar />
       <div className="main">
         <div className="title">
-          <Typography variant="h4" style={{ paddingTop: "20px" }}>
-            Add Shipments
-          </Typography>
-          <br />
-          <div className="formBox">
-            <form onSubmit={formik.handleSubmit}>
-              <Grid container spacing={10}>
-                <Grid item xs={4}>
-                  <TextField
-                    error={Boolean(
-                      formik.touched.recipient_name &&
-                        formik.errors.recipient_name
-                    )}
-                    helperText={
-                      formik.touched.recipient_name &&
-                      formik.errors.recipient_name
-                    }
-                    label="Recipient Name *"
-                    margin="normal"
-                    name="recipient_name"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.recipient_name}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                  />
-
-                  <TextField
-                    error={Boolean(
-                      formik.touched.mobile_phone_number &&
-                        formik.errors.mobile_phone_number
-                    )}
-                    helperText={
-                      formik.touched.mobile_phone_number &&
-                      formik.errors.mobile_phone_number
-                    }
-                    label="Mobile phone number *"
-                    margin="normal"
-                    name="mobile_phone_number"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.mobile_phone_number}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                  />
-
-                  <TextField
-                    error={Boolean(
-                      formik.touched.secondary_phone_number &&
-                        formik.errors.secondary_phone_number
-                    )}
-                    helperText={
-                      formik.touched.secondary_phone_number &&
-                      formik.errors.secondary_phone_number
-                    }
-                    label="Secondary phone number"
-                    margin="normal"
-                    name="secondary_phone_number"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.secondary_phone_number}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                  />
-
-                  <TextField
-                    error={Boolean(
-                      formik.touched.description && formik.errors.description
-                    )}
-                    helperText={
-                      formik.touched.description && formik.errors.description
-                    }
-                    label="Description *"
-                    margin="normal"
-                    name="description"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.description}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                  />
-
-                  <TextField
-                    error={Boolean(
-                      formik.touched.prepaid && formik.errors.prepaid
-                    )}
-                    helperText={formik.touched.prepaid && formik.errors.prepaid}
-                    label="Prepaid *"
-                    margin="normal"
-                    name="prepaid"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.prepaid}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                    id="outlined-select-prepaid"
-                    select
-                  >
-                    {[
-                      ["Yes", true],
-                      ["No", false],
-                    ].map((option) => (
-                      <MenuItem key={option[0]} value={option[1]}>
-                        {option[0]}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-
-                <Grid item xs={4}>
-                  <TextField
-                    error={Boolean(
-                      formik.touched.r_no_street && formik.errors.r_no_street
-                    )}
-                    helperText={
-                      formik.touched.r_no_street && formik.errors.r_no_street
-                    }
-                    label="Recipient Address *"
-                    margin="normal"
-                    name="r_no_street"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.r_no_street}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                  />
-
-                  <TextField
-                    error={Boolean(
-                      formik.touched.r_district && formik.errors.r_district
-                    )}
-                    helperText={
-                      formik.touched.r_district && formik.errors.r_district
-                    }
-                    label="District *"
-                    margin="normal"
-                    name="r_district"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.r_district}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                    id="outlined-select-r_district"
-                    select
-                  >
-                    {DISTRICTS.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-
-                  <TextField
-                    error={Boolean(
-                      formik.touched.r_city && formik.errors.r_city
-                    )}
-                    helperText={formik.touched.r_city && formik.errors.r_city}
-                    label="City *"
-                    margin="normal"
-                    name="r_city"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.r_city}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                  />
-                  <TextField
-                    error={Boolean(
-                      formik.touched.quantity && formik.errors.quantity
-                    )}
-                    helperText={
-                      formik.touched.quantity && formik.errors.quantity
-                    }
-                    label="Quantity *"
-                    margin="normal"
-                    name="quantity"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="number"
-                    value={formik.values.quantity}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                  />
-
-                  <TextField
-                    error={Boolean(
-                      formik.touched.handling && formik.errors.handling
-                    )}
-                    helperText={
-                      formik.touched.handling && formik.errors.handling
-                    }
-                    label="Handling *"
-                    margin="normal"
-                    name="handling"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.handling}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                    id="outlined-select-handling"
-                    select
-                  >
-                    {["Standard", "Fragile"].map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-
-                <Grid item xs={4}>
-                  <TextField
-                    error={Boolean(
-                      formik.touched.shipment_weight &&
-                        formik.errors.shipment_weight
-                    )}
-                    helperText={
-                      formik.touched.shipment_weight &&
-                      formik.errors.shipment_weight
-                    }
-                    label="Shipment Weight *"
-                    margin="normal"
-                    name="shipment_weight"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="number"
-                    value={formik.values.shipment_weight}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                  />
-
-                  <TextField
-                    error={Boolean(formik.touched.DV && formik.errors.DV)}
-                    helperText={formik.touched.DV && formik.errors.DV}
-                    label="Declared Value"
-                    margin="normal"
-                    name="DV"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="number"
-                    value={formik.values.DV}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                  />
-
-                  <TextField
-                    error={Boolean(
-                      formik.touched.r_postal_code &&
-                        formik.errors.r_postal_code
-                    )}
-                    helperText={
-                      formik.touched.r_postal_code &&
-                      formik.errors.r_postal_code
-                    }
-                    label="Postal Code"
-                    margin="normal"
-                    name="r_postal_code"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.r_postal_code}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                  />
-
-                  <TextField
-                    error={Boolean(formik.touched.COD && formik.errors.COD)}
-                    helperText={formik.touched.COD && formik.errors.COD}
-                    label="COD value *"
-                    margin="normal"
-                    name="COD"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="number"
-                    value={formik.values.COD}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                  />
-
-                  <TextField
-                    error={Boolean(
-                      formik.touched.payment_method &&
-                        formik.errors.payment_method
-                    )}
-                    helperText={
-                      formik.touched.payment_method &&
-                      formik.errors.payment_method
-                    }
-                    label="Payment Method *"
-                    margin="normal"
-                    name="payment_method"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="text"
-                    value={formik.values.payment_method}
-                    variant="outlined"
-                    sx={{ minWidth: "350px" }}
-                    id="outlined-select-payment-method"
-                    select
-                  >
-                    {["Cash", "Card"].map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </Grid>
-              </Grid>
-              <br/>
-              <div className="button_align">
-                {/* <Button
-                  color="primary"
-                  sx={{
-                    minWidth: "350px",
-                    textTransform: "none",
-                    backgroundColor: "#495057",
-                  }}
-                  size="large"
-                  //   type="reset"
-                  variant="contained"
-                  onClick={() => window.location.reload(false)}
-                >
-                  Clear
-                </Button> */}
-                <Button
-                  disabled={formik.isSubmitting}
-                  sx={{
-                    minWidth: "200px",
-                    textTransform: "none"
-                  }}
-                  size="large"
-                  type="submit"
-                  variant="contained"
-                >
-                  Add Shipment
-                </Button>
-              </div>
-            </form>
+          <div>
+            <center>
+              <Button
+                variant="text"
+                onClick={() => navigate("/DeliveryFeePlan")}
+              >
+                Click Here to View the Delivery Fee Plan Before Adding your
+                Shipment !!!
+              </Button>{" "}
+            </center>
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <Typography variant="h4" style={{ paddingTop: "20px" }}>
+                Add Shipments
+              </Typography>
+              <IconButton
+                color="primary"
+                aria-label="calculator"
+                onClick={() => navigate("/Calculator")}
+                sx={{ display: "flex", marginLeft: "900px", paddingTop: "30px"}}
+              >
+                <CalculateIcon />
+              </IconButton>
+            </div>
           </div>
+        </div>
+        <div className="formBox">
+          <form onSubmit={formik.handleSubmit}>
+            <Grid container spacing={10}>
+              <Grid item xs={4}>
+                <TextField
+                  error={Boolean(
+                    formik.touched.recipient_name &&
+                      formik.errors.recipient_name
+                  )}
+                  helperText={
+                    formik.touched.recipient_name &&
+                    formik.errors.recipient_name
+                  }
+                  label="Recipient Name *"
+                  margin="normal"
+                  name="recipient_name"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.recipient_name}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                />
+
+                <TextField
+                  error={Boolean(
+                    formik.touched.mobile_phone_number &&
+                      formik.errors.mobile_phone_number
+                  )}
+                  helperText={
+                    formik.touched.mobile_phone_number &&
+                    formik.errors.mobile_phone_number
+                  }
+                  label="Mobile phone number *"
+                  margin="normal"
+                  name="mobile_phone_number"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.mobile_phone_number}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                />
+
+                <TextField
+                  error={Boolean(
+                    formik.touched.secondary_phone_number &&
+                      formik.errors.secondary_phone_number
+                  )}
+                  helperText={
+                    formik.touched.secondary_phone_number &&
+                    formik.errors.secondary_phone_number
+                  }
+                  label="Secondary phone number"
+                  margin="normal"
+                  name="secondary_phone_number"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.secondary_phone_number}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                />
+
+                <TextField
+                  error={Boolean(
+                    formik.touched.description && formik.errors.description
+                  )}
+                  helperText={
+                    formik.touched.description && formik.errors.description
+                  }
+                  label="Description *"
+                  margin="normal"
+                  name="description"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.description}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                />
+
+                <TextField
+                  error={Boolean(
+                    formik.touched.r_no_street && formik.errors.r_no_street
+                  )}
+                  helperText={
+                    formik.touched.r_no_street && formik.errors.r_no_street
+                  }
+                  label="Recipient Address *"
+                  margin="normal"
+                  name="r_no_street"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.r_no_street}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                />
+              </Grid>
+
+              <Grid item xs={4}>
+                <TextField
+                  error={Boolean(
+                    formik.touched.r_district && formik.errors.r_district
+                  )}
+                  helperText={
+                    formik.touched.r_district && formik.errors.r_district
+                  }
+                  label="District *"
+                  margin="normal"
+                  name="r_district"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.r_district}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                  id="outlined-select-r_district"
+                  select
+                >
+                  {DISTRICTS.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+
+                <TextField
+                  error={Boolean(formik.touched.r_city && formik.errors.r_city)}
+                  helperText={formik.touched.r_city && formik.errors.r_city}
+                  label="City *"
+                  margin="normal"
+                  name="r_city"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.r_city}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                />
+                <TextField
+                  error={Boolean(
+                    formik.touched.quantity && formik.errors.quantity
+                  )}
+                  helperText={formik.touched.quantity && formik.errors.quantity}
+                  label="Quantity *"
+                  margin="normal"
+                  name="quantity"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="number"
+                  value={formik.values.quantity}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                />
+
+                <TextField
+                  error={Boolean(
+                    formik.touched.handling && formik.errors.handling
+                  )}
+                  helperText={formik.touched.handling && formik.errors.handling}
+                  label="Handling *"
+                  margin="normal"
+                  name="handling"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.handling}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                  id="outlined-select-handling"
+                  select
+                >
+                  {["Standard", "Fragile"].map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+
+                <TextField
+                  error={Boolean(
+                    formik.touched.shipment_weight &&
+                      formik.errors.shipment_weight
+                  )}
+                  helperText={
+                    formik.touched.shipment_weight &&
+                    formik.errors.shipment_weight
+                  }
+                  label="Shipment Weight *"
+                  margin="normal"
+                  name="shipment_weight"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="number"
+                  value={formik.values.shipment_weight}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                />
+              </Grid>
+
+              <Grid item xs={4}>
+                <TextField
+                  error={Boolean(formik.touched.DV && formik.errors.DV)}
+                  helperText={formik.touched.DV && formik.errors.DV}
+                  label="Declared Value"
+                  margin="normal"
+                  name="DV"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="number"
+                  value={formik.values.DV}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                />
+
+                <TextField
+                  error={Boolean(
+                    formik.touched.r_postal_code && formik.errors.r_postal_code
+                  )}
+                  helperText={
+                    formik.touched.r_postal_code && formik.errors.r_postal_code
+                  }
+                  label="Postal Code"
+                  margin="normal"
+                  name="r_postal_code"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.r_postal_code}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                />
+
+                <TextField
+                  error={Boolean(formik.touched.COD && formik.errors.COD)}
+                  helperText={formik.touched.COD && formik.errors.COD}
+                  label="COD value *"
+                  margin="normal"
+                  name="COD"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="number"
+                  value={formik.values.COD}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                />
+
+                <TextField
+                  error={Boolean(
+                    formik.touched.payment_method &&
+                      formik.errors.payment_method
+                  )}
+                  helperText={
+                    formik.touched.payment_method &&
+                    formik.errors.payment_method
+                  }
+                  label="Payment Method *"
+                  margin="normal"
+                  name="payment_method"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  type="text"
+                  value={formik.values.payment_method}
+                  variant="outlined"
+                  sx={{ minWidth: "350px" }}
+                  id="outlined-select-payment-method"
+                  select
+                >
+                  {["Cash", "Card"].map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            </Grid>
+            <br />
+            <div className="button_align">
+              <Button
+                color="primary"
+                sx={{
+                  minWidth: "180px",
+                  textTransform: "none",
+                  backgroundColor: "#495057",
+                  marginRight: 2,
+                }}
+                size="large"
+                //   type="reset"
+                variant="contained"
+                onClick={() => window.location.reload(false)}
+              >
+                Clear
+              </Button>
+              <Button
+                disabled={formik.isSubmitting}
+                sx={{
+                  minWidth: "180px",
+                  textTransform: "none",
+                }}
+                size="large"
+                type="submit"
+                variant="contained"
+              >
+                Add Shipment
+              </Button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

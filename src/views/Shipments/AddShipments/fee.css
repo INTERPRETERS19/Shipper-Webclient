@@ -1,0 +1,29 @@
+
+#fees {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 50px;
+  margin-left: 280px;
+}
+
+#fees td, #fees th {
+  border: 2px solid #ddd;
+  padding: 20px;
+}
+
+#fees tr:nth-child(even){background-color: #f2f2f2;}
+
+#fees tr:hover {background-color: #ddd;}
+
+#fees th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #091564;
+  color: white;
+}
+
+#fees td {
+    width: 450px;
+}
