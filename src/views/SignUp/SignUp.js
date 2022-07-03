@@ -13,11 +13,13 @@ import { useNavigate } from "react-router-dom";
 import {
   isPassword,
   isValidEmail,
+  isName,
   isValidObjField,
   updateError,
+  updateSuccess,
+  isContact
 } from "../../components/Models/validation";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
+
 
 const initialState = {
   firstName: "",
@@ -34,6 +36,7 @@ const initialState = {
 const SignUp = () => {
   const [form, setForm] = useState(initialState);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const navigate = useNavigate();
 
@@ -44,8 +47,17 @@ const SignUp = () => {
     if (!isValidObjField(form))
       return updateError("Required all fields!", setError);
 
+    if (!isName(form.firstName))
+      return updateError("Invalid first name, avoid numbers,symbols and spaces", setError);
+
+    if (!isName(form.lastName))
+      return updateError("Invalid last name, avoid numbers,symbols and spaces", setError);
+
     if (!isValidEmail(form.email))
       return updateError("Please enter a valid email!", setError);
+
+    if (!isContact(form.mobile_no))
+      return updateError("Invalid contact number!", setError);
 
     // if (!form.password.trim() || form.password.length < 8) {
     //   return updateError("Password must contain minimum of 8 characters!", setError);
@@ -54,10 +66,7 @@ const SignUp = () => {
       return updateError("Passwords does not match!", setError);
     }
     if (!isPassword(form.password))
-      return updateError(
-        "Password must contain Minimum eight characters, at least one letter, one number and one special character!",
-        setError
-      );
+      return updateSuccess("Password must contain Minimum eight characters, at least one letter, one number and one special character!", setError);
 
     return true;
   };
@@ -70,20 +79,15 @@ const SignUp = () => {
     if (validate()) {
       try {
         const responces = await Client.post("/signup", { ...form });
+
         if (responces.data.success) {
           const res = await Client.post("/requestEmailVerification", {
             email: responces.data.message.email,
+
           });
-          // {
-          //   res.success && (
-          //     <Alert severity="info">
-          //       <AlertTitle>Success</AlertTitle>
-          //       verifcation email sent successfully —{" "}
-          //       <strong>check it out!</strong>
-          //     </Alert>
-          //   )
-          // }
-          return res;
+
+          return updateSuccess("An email has been sent to your account, please verify!!!", setSuccess);
+
         } else {
           return updateError("User already exist", setError);
         }
@@ -116,9 +120,21 @@ const SignUp = () => {
               {error}
             </p>
           ) : null}
+          {success ? (
+            <p
+              style={{
+                color: "#00E800",
+                fontSize: 18,
+                textAlign: "center",
+              }}
+            >
+              {success}
+            </p>
+          ) : null}
         </Grid>
 
-        <Typography component="h1" variant="h3">
+
+<Typography component="h1" variant="h3">
           <div className="line2nd">
             <span
               style={{ color: "#87ceeb", fontWeight: "900", fontSize: "60px" }}

@@ -60,10 +60,9 @@ const UpdateProfile = () => {
     validationSchema: Yup.object({
       firstName: Yup.string().required("Firstname is required"),
       lastName: Yup.string().required("lastname is required"),
-      mobile_no: Yup.string()
-        .required("mobile_no is required")
-        .min(10, "Mobile no should contain at least 10 numbers")
-        .max(10, "Mobile no should contain maximum 10 numbers"),
+      mobile_no: Yup.number("Phone number is use only number")
+        .min(10, "Phone number must be 10 characters!")
+        .required("Phone number is Required"),
       street: Yup.string().required("Street is required"),
       city: Yup.string().required("City is required"),
       district: Yup.string().required("District ID is required"),

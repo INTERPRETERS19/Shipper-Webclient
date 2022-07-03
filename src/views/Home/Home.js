@@ -4,9 +4,6 @@ import SideBar from "../../components/Sidebar";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Client from "../../api/Client";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Switch from "@mui/material/Switch";
 import PieChart, {
   Legend,
   Series,
