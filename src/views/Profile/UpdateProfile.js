@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { Button, TextField } from "@mui/material";
 import Client from "../../api/Client";
 import SideBar from "../../components/Sidebar";
-import "./UpdateProfile.css"
+import "./UpdateProfile.css";
 
 const UpdateProfile = () => {
   const currentUser = JSON.parse(localStorage.getItem("user"));
