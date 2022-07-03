@@ -1,5 +1,4 @@
 import { useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Button, TextField } from "@mui/material";
@@ -7,15 +6,12 @@ import "./Reports.css";
 import SideBar from "../../../components/Sidebar";
 
 import { ShipmentContext } from "../../../context/ShipmentProvider/ShipmentProvider";
-import Client from "../../../api/Client";
 import ReportComponent from "../../../components/ReportComponent";
 
 export const Reports = () => {
-  const navigate = useNavigate();
   const { allShipments, getAllShipments } = useContext(ShipmentContext);
   useEffect(() => {
     getAllShipments();
-    // console.log(allShipments);
   }, []);
 
   const formik = useFormik({
@@ -34,7 +30,6 @@ export const Reports = () => {
     }),
     onSubmit: (values, formikActions) => {
       if (allShipments !== undefined) {
-        console.log(allShipments);
         const reportShipments = allShipments.data.filter(
           (shipment) =>
             shipment.created_at >= values.startDate &&
@@ -89,8 +84,6 @@ export const Reports = () => {
           totalDV
         );
       }
-      // createReport(values, formikActions);
-      // navigate("/machines");
     },
   });
 
@@ -99,7 +92,7 @@ export const Reports = () => {
       <SideBar />
       <div className="mainS">
         <div className="title">
-          <h2 style={{ padding: "25px" }}>Shipment Report</h2>
+          <h1 style={{ padding: "20px" }}>Shipment Report</h1>
           <div style={{ display: "flex", justifyContent: "center" }}>
             <form onSubmit={formik.handleSubmit}>
               <br />
@@ -164,7 +157,6 @@ export const Reports = () => {
 
               <Button
                 color="primary"
-                // disabled={formik.isSubmitting}
                 sx={{ minWidth: "150px", textTransform: "none", margin: 2 }}
                 size="large"
                 type="submit"

@@ -4,6 +4,7 @@ import Client from "../../api/Client";
 export const ShipmentContext = createContext();
 export const ShipmentProvider = (props) => {
   const [allShipments, setAllShipments] = useState();
+  const [loading, setLoading] = useState(true);
   const [allNewShipments, setAllNewShipments] = useState();
   const [allPickups, setAllPickups] = useState();
   const [allReturnShipments, setAllReturnShipments] = useState();
@@ -15,6 +16,7 @@ export const ShipmentProvider = (props) => {
     await Client.get(`/allshipment/${currentUser.id}`)
       .then((response) => {
         setAllShipments(response.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log("Unable to get all shipments");
@@ -25,6 +27,7 @@ export const ShipmentProvider = (props) => {
     await Client.get(`/allNewshipment/${currentUser.id}`)
       .then((response) => {
         setAllNewShipments(response.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log("Unable to get all New shipments");
@@ -36,6 +39,7 @@ export const ShipmentProvider = (props) => {
     await Client.get(`/allpickup/${currentUser.id}`)
       .then((response) => {
         setAllPickups(response.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log("Unable to get all Pickups");
@@ -45,6 +49,7 @@ export const ShipmentProvider = (props) => {
     await Client.get(`/delivered/${currentUser.id}`)
       .then((response) => {
         setAlldeliveredShipments(response.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log("Unable to get all Delivered shipments");
@@ -56,6 +61,7 @@ export const ShipmentProvider = (props) => {
     await Client.get(`/returns/${currentUser.id}`)
       .then((response) => {
         setAllReturnShipments(response.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log("Unable to get all Return shipments");

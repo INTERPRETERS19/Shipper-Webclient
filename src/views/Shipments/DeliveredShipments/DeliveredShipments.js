@@ -125,6 +125,7 @@ function EnhancedTableHead(props) {
             align="Left"
             padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
+            sx={{ fontWeight: 900 }}
           >
             {headCell.label}
           </TableCell>
@@ -183,14 +184,7 @@ const EnhancedTableToolbar = (props) => {
           {numSelected} selected
         </Typography>
       ) : (
-        <Typography
-          sx={{ flex: "1 1 100%", padding: 3 }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          All Delivered Shipments
-        </Typography>
+        <h2> All Delivered Shipments</h2>
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
@@ -376,7 +370,15 @@ export default function Alldelivered() {
                           >
                             {row.created_at.substring(0, 10)}
                           </TableCell>
-                          <TableCell align="left">{row.id}</TableCell>
+                          <TableCell
+                            align="left"
+                            component="th"
+                            id={labelId}
+                            scope="row"
+                            padding="none"
+                          >
+                            {row.id}
+                          </TableCell>
                           <TableCell align="left">
                             {row.recipient_name}
                           </TableCell>

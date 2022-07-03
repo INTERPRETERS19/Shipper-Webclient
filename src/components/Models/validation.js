@@ -12,7 +12,7 @@ export const updateWarning = (warning, stateUpdater) => {
   stateUpdater(warning);
   setTimeout(() => {
     stateUpdater("");
-  }, 5000);
+  }, 3000);
 };
 
 export const isValidEmail = (value) => {

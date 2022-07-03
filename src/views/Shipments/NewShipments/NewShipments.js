@@ -111,6 +111,12 @@ const headCells = [
     disablePadding: true,
     label: "COD Amount",
   },
+  {
+    id: "DeliveryFee",
+    numeric: true,
+    disablePadding: true,
+    label: "DeliveryFee",
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -166,16 +172,11 @@ const EnhancedTableToolbar = (props) => {
       if (res.data.success) {
         console.log(res.data.message);
         getShipments();
-        // numSelected = 0;
       } else {
         console.log("Delete not successful");
       }
     });
   };
-  // let data = [
-  //   { id: 1, name: "Ford", color: "Red" },
-  //   { id: 2, name: "Hyundai", color: "Blue" },
-  // ];
   const componentA = () => {
     navigate("/shipment/qrcode", { state: { id: selectedShipments } });
   };
@@ -200,18 +201,9 @@ const EnhancedTableToolbar = (props) => {
           color="inherit"
           variant="subtitle1"
           component="div"
-        >
-          {/* {numSelected} selected */}
-        </Typography>
+        ></Typography>
       ) : (
-        <Typography
-          sx={{ flex: "1 1 100%", padding: 3 }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          New Shipments
-        </Typography>
+        <h2> New Shipments</h2>
       )}
 
       {numSelected > 0 ? (
@@ -227,7 +219,6 @@ const EnhancedTableToolbar = (props) => {
           </IconButton>
         </Tooltip>
       ) : (
-        //QrCodeIcon
         ""
       )}
       {numSelected > 0 ? (
@@ -255,11 +246,11 @@ export default function NewShipments() {
   const { allNewShipments, getAllNewShipments } = useContext(ShipmentContext);
   useEffect(() => {
     getAllNewShipments();
-    // console.log(allShipments);
   }, []);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("calories");
   const [selected, setSelected] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openPopup, setOpenPopup] = useState(false);
@@ -472,6 +463,7 @@ export default function NewShipments() {
                               : row.r_city}
                           </TableCell>
                           <TableCell align="left">{row.COD}</TableCell>
+                          <TableCell align="left">{row.delivery_fee}</TableCell>
                         </TableRow>
                       );
                     })}

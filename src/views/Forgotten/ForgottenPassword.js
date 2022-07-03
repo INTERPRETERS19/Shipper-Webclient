@@ -46,6 +46,7 @@ function ForgottenPassword() {
       email: Yup.string()
         .trim()
         .email("Must be a valid email")
+
         .required("Email is required!"),
     }),
     onSubmit: (values) => {

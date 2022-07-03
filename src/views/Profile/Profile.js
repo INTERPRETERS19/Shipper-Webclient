@@ -137,7 +137,7 @@ const Profile = () => {
                       <TableBody
                         sx={{
                           paddingLeft: "100px",
-                          margin: "30px",
+                          margin: "20px",
                         }}
                       >
                         <Info detail="First Name" value={profile.firstName} />
@@ -206,17 +206,21 @@ const Profile = () => {
               </div>
               <br />
               <br />
-            
+
               <div className="choose">
-              <input
-                id="fileInput"
-                type="file"
-                name="image"
-                onChange={handleFileInputChange}
-                value={fileInputState}
-                className="form-input"
-                style={{ alignSelf: "center", justifyContent:"center", alignItems:"center" }}
-              />
+                <input
+                  id="fileInput"
+                  type="file"
+                  name="image"
+                  onChange={handleFileInputChange}
+                  value={fileInputState}
+                  className="form-input"
+                  style={{
+                    alignSelf: "center",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                />
               </div>
               <Button
                 variant="contained"

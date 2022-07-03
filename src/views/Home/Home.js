@@ -252,7 +252,7 @@ const Home = () => {
           />
         </div>
         <div>
-          <h2 style={{ padding: "25px" }}>Performance Overview</h2>
+          <h2 style={{ padding: "15px" }}>Performance Overview</h2>
         </div>
         <div className="container">
           <div className="left">
