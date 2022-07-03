@@ -54,7 +54,7 @@ export default function Track() {
         <div></div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <Typography variant="h4" sx={{ marginLeft: "30px" }}>
-            <b>Track Shipments</b>
+            <b>Search Shipments</b>
           </Typography>
           <br />
           <div className="Search">

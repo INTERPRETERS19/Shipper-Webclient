@@ -25,6 +25,7 @@ import Review from "../views/GetStarted/Review";
 import AddShipments from "../views/Shipments/AddShipments/AddShipments";
 import QrCode from "../views/QrCode/QrCode";
 import DeliveryFeePlan from "../views/Shipments/AddShipments/DeliveryFeePlan";
+import Calculator from "../views/Shipments/AddShipments/Calculator";
 
 const MainRoute = () => {
   return (
@@ -61,6 +62,7 @@ const MainRoute = () => {
           <Route path="/shipments/track" element={<Track />} />
           <Route path="/bankdetails" element={<BankDetails />} />
           <Route path="/DeliveryFeePlan" element={<DeliveryFeePlan />} />
+          <Route path="/Calculator" element={<Calculator />} />
           <Route path="/shipment/allshipments" element={<AllShipments />} />
           <Route
             path="/shipment/deliveredshipments"

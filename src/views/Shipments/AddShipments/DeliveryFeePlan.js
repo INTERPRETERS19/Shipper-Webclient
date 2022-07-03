@@ -4,7 +4,7 @@ import { Table } from "@mui/material";
 import "./fee.css";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 
 const DeliveryFeePlan = () => {
   const [fee, setFee] = useState([]);
@@ -25,7 +25,14 @@ const DeliveryFeePlan = () => {
   const navigate = useNavigate();
   return (
     <div>
-        <Button variant="text" onClick={() => navigate("/shipment/addshipments")} sx={{padding:5, fontSize:"20px"}} startIcon={<ArrowBackIosIcon />} >Go Back</Button>
+      <Button
+        variant="text"
+        onClick={() => navigate("/shipment/addshipments")}
+        sx={{ padding: 5, fontSize: "20px" }}
+        startIcon={<ArrowBackIosIcon />}
+      >
+        Go Back
+      </Button>
       <div
         className="item-container"
         style={{
@@ -34,13 +41,11 @@ const DeliveryFeePlan = () => {
           justifyContent: "center",
         }}
       >
-        
-
         {fee.map((fees) => (
           <table key={fees._id} id="fees">
             <div>
-              <tr >
-                <th >Category</th>
+              <tr>
+                <th>Category</th>
                 <th>Delivery Fee (Rs.)</th>
               </tr>{" "}
               <tr>
@@ -81,7 +86,11 @@ const DeliveryFeePlan = () => {
             <div>
               {" "}
               <td>Greater than 20kg</td>
-              <td> {fees.category5} + Standard Fee ({fees.standard_fee}) + { fees.additional} for each additional 1kg weight </td>{" "}
+              <td>
+                {" "}
+                {fees.category5} + Standard Fee ({fees.standard_fee}) +{" "}
+                {fees.additional} for each additional 1kg weight{" "}
+              </td>{" "}
             </div>
           </table>
         ))}
@@ -89,7 +98,5 @@ const DeliveryFeePlan = () => {
     </div>
   );
 };
-
-
 
 export default DeliveryFeePlan;
