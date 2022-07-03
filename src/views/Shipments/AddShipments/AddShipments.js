@@ -1,14 +1,12 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Grid, Typography, Button, TextField, MenuItem } from "@mui/material";
-import DeliveryFeePlan from "./DeliveryFeePlan";
 import IconButton from "@mui/material/IconButton";
 import Sidebar from "../../../components/Sidebar";
 import "./AddShipments.css";
 import Client from "../../../api/Client";
 import { useNavigate } from "react-router-dom";
 import CalculateIcon from "@mui/icons-material/Calculate";
-import Calculator from "./Calculator";
 
 const DISTRICTS = [
   "Colombo",
